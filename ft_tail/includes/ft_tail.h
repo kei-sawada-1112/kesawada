@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 15:58:18 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 16:53:02 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ void	display_filename(const char *filename);
 void	handle_lines(char *start_pos, char **lines, int *current_line);
 void	display_lines(char **buffer_split, int first, int last);
 
-void	parse_options(int argc, char **argv, t_options *options);
+// parse_options.c オプションの解析
+int		parse_options(int argc, char **argv, t_options *options);
+int		check_options(char **argv, t_options *options, int *i);
+void	set_filenames(int argc, char **argv, t_options *options, int i);
+int		is_valid_number(char *num);
+
 void 	execute_tail(t_options *options);
 
 void	free_memory(void **any, size_t length);
