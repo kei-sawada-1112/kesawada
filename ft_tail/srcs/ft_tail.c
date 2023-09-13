@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:39:33 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 20:54:32 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 21:10:54 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	ft_tail(int argc, char **argv)
 	options.n = 10;
 	options.file_count = 0;
 	options.option_count = 0;
-	options.plus_flag = 0;
 	options.flag = '\0';
+	options.plus_flag = 0;
+	options.q_flag = 0;
 	if (!parse_options(argc, argv, &options))
 		return ;
 	execute_tail(&options);

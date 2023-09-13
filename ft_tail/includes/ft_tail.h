@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 20:54:47 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 21:05:38 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_options
 	int		option_count;
 	int		plus_flag;
 	char	flag;
+	char	q_flag;
 }	t_options;
 
 // ftシリーズ

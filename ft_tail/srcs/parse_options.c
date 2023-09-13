@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:33:23 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 20:09:01 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 21:20:33 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ int	check_and_set_flag(char **argv, t_options *options, int i)
 {
 	if (argv[i][1] == 'n' || argv[i][1] == 'b' || argv[i][1] == 'c')
 		options->flag = argv[i][1];
+	else if (argv[i][1] == 'q')
+	{
+		options->q_flag = 'q';
+		return (1);
+	}
 	else if (!(argv[i][1] >= '0' && argv[i][1] <= '9'))
 	{
 		write(1, "tail: invalid option -- ", 24);
@@ -73,11 +78,14 @@ int	parse_options(int argc, char **argv, t_options *options)
 	int		i;
 
 	i = 2;
-	while (i < argc && argv[i][0] == '-' && !options->file_count && argv[i][1])
+	while (i < argc)
 	{
-		options->option_count++;
-		if (!check_and_set_flag(argv, options, i))
-			return (0);
+		if (argv[i][0] == '-')
+		{
+			options->option_count++;
+			if (!check_and_set_flag(argv, options, i))
+				return (0);
+		}
 		i++;
 	}
 	options->file_count = argc - 2 - options->option_count;

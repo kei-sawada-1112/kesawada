@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:52:13 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 21:00:20 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 21:06:50 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	display(t_options *options, char **buf_sp, size_t size, int index)
 {
-	if (options->file_count != 1)
+	if (options->file_count != 1 && !options->q_flag)
 		display_filename(options->filenames[index]);
 	if (options->plus_flag)
 		display_lines(buf_sp, options->n, size);
