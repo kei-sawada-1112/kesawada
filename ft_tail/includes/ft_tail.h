@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 18:09:13 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 20:06:18 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 
+// flag にはオプションの n, b, c とかがはいる
 typedef struct s_options
 {
 	int		n;
@@ -30,6 +31,7 @@ typedef struct s_options
 	char	flag;
 }	t_options;
 
+// ftシリーズ
 int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
 char	*ft_strtok(const char *str, const char *delim);
@@ -57,8 +59,8 @@ void	display_lines(char **buffer_split, int first, int last);
 int		parse_options(int argc, char **argv, t_options *options);
 int		check_options(char **argv, t_options *options, int *i);
 void	set_filenames(int argc, char **argv, t_options *options, int i);
-int		is_valid_number(char *num);
 
+// memory.c メモリの確保と解放
 void	free_memory(void **any, size_t length);
 void	**alloc_memory(size_t num_elements);
 
@@ -67,5 +69,9 @@ int		open_file_or_stdin(const char *filename);
 char	*dynamic_read(int fd);
 char	*resize_buffer(char *buffer, size_t *current_size, size_t total_read);
 void	free_resources(char *buffer, char **buffer_split, size_t size, int fd);
+
+// useful_func.c いろいろ
+void	check_sign(char *num_part, t_options *options);
+int		is_valid_number(char *num);
 
 #endif
