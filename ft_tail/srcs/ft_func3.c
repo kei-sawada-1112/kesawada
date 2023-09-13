@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:28:56 by kei               #+#    #+#             */
-/*   Updated: 2023/09/12 18:38:19 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 16:30:15 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,41 +52,43 @@ int ft_count_str(char *str, char *delimiter)
 	return (count + 1);
 }
 
+static char	*alloc_token(char *start, char *end)
+{
+	char *result;
+
+	if (end)
+		result = ft_strndup(start, end - start);
+	else
+		result = ft_strdup(start);
+	return (result);
+}
+
 char **ft_split(char *str, char *delimiter)
 {
 	char	**result;
 	char	*next;
 	int		i;
-	int		count;
 
-	count = ft_count_str(str, delimiter);
-	result = (char **)malloc(sizeof(char *) * (count + 1));
+	result = (char **)malloc(sizeof(char *) * (ft_count_str(str, delimiter) + 1));
 	if (!result)
 		return (NULL);
-	next = ft_strstr(str, delimiter);
 	i = 0;
-	while (next && *str)
+	while (*str)
 	{
-        result[i] = (char *)malloc(next - str + 1);
-        if (!result[i])
-        {
-			while (i > 0)
-				free(result[i--]);
-			free(result);
+		next = ft_strstr(str, delimiter);
+		result[i] = alloc_token(str, next);
+		if (!result[i])
+		{
+			free_memory((void **)result, i - 1);
 			return (NULL);
 		}
-		ft_memcpy(result[i], str, next - str);
-		result[i][next - str] = '\0';
+		if (!next)
+			break;
 		str = next + ft_strlen(delimiter);
-		next = ft_strstr(str, delimiter);
-        i++;
-    }
-    if (*str)
-        result[i] = ft_strdup(str);
-	else
-		result[i] = NULL;
-    result[i + 1] = NULL;
-    return (result);
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
 }
 
 size_t	ft_count_elements(char **array)
