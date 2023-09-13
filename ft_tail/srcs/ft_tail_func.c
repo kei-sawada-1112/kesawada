@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:12:44 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 11:44:22 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 09:57:28 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-void	display_tail_error(const char *filename)
+void	display_tail_error(char *filename)
 {
 	if (!filename)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 12:44:35 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 11:41:56 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/12 17:33:49 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ int	ft_strncmp(const char *str1, const char *str2, size_t num)
 	ustr2 = (unsigned char *)str2;
 	while (*ustr1 && *ustr2 && i < num)
 	{
-		if (*ustr1 != *ustr2)
+		if (*ustr1 == *ustr2)
+		{
+			ustr1++;
+			ustr2++;
+		}
+		else
 			return (*ustr1 - *ustr2);
-		ustr1++;
-		ustr2++;
-		i++;
 	}
-	return (0);
+	return (*ustr1 - *ustr2);
 }
 
 char	*ft_strtok(const char *str, const char *delim)
