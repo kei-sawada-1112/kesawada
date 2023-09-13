@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 17:32:28 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 18:09:13 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ typedef struct s_options
 	int		file_count;
 	int		option_count;
 	int		plus_flag;
-	int		n_flag;
-	int		c_flag;
-	int		b_flag;
+	char	flag;
 }	t_options;
 
 int		ft_strcmp(const char *str1, const char *str2);
@@ -48,6 +46,7 @@ size_t	ft_count_elements(char **array);
 void	display_n_option(t_options *options, int index);
 
 void	ft_tail(int argc, char **argv);
+void	execute_tail(t_options *options);
 void	display_tail_error(char *filename);
 char	*get_next_line(char **start_pos);
 void	display_filename(const char *filename);
@@ -59,8 +58,6 @@ int		parse_options(int argc, char **argv, t_options *options);
 int		check_options(char **argv, t_options *options, int *i);
 void	set_filenames(int argc, char **argv, t_options *options, int i);
 int		is_valid_number(char *num);
-
-void	execute_tail(t_options *options);
 
 void	free_memory(void **any, size_t length);
 void	**alloc_memory(size_t num_elements);
