@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 20:06:18 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 20:54:47 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	*ft_realloc(void *ptr, size_t original_size, size_t new_size);
 char	**ft_split(char *str, char *delimiter);
 size_t	ft_count_elements(char **array);
 
+// display_contents.c
 void	display_n_option(t_options *options, int index);
+void	display_c_option(t_options *options, int index);
+void	display_b_option(t_options *options, int index);
 
 void	ft_tail(int argc, char **argv);
 void	execute_tail(t_options *options);

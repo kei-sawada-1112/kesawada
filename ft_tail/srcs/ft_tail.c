@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:39:33 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 17:50:06 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 20:54:32 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	execute_tail(t_options *options)
 		if (options->flag == 'n')
 			display_n_option(options, i);
 		else if (options->flag == 'c')
-			display_n_option(options, i);
+			display_c_option(options, i);
 		else if (options->flag == 'b')
-			display_n_option(options, i);
+			display_b_option(options, i);
 		else
 			display_n_option(options, i);
 		i++;

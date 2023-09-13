@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:52:13 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 17:29:05 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 21:00:20 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,59 @@ void	display_n_option(t_options *options, int index)
 	display(options, buffer_split, size, index);
 	free(buffer);
 	free_memory((void **)buffer_split, size - 1);
+	close(fd);
+}
+
+void	display_c_option(t_options *options, int index)
+{
+	int		fd;
+	char	*buffer;
+
+	fd = open_file_or_stdin(options->filenames[index]);
+	if (fd < 0)
+	{
+		display_tail_error(options->filenames[index]);
+		return ;
+	}
+	buffer = dynamic_read(fd);
+	if (!buffer)
+	{
+		close(fd);
+		return ;
+	}
+	if (options->plus_flag)
+		write (1, buffer + options->n, ft_strlen(buffer) - options->n);
+	else
+		write (1, buffer + ft_strlen(buffer) - options->n, options->n);
+	free(buffer);
+	close(fd);
+}
+
+void	display_b_option(t_options *options, int index)
+{
+	int		fd;
+	int		bytes;
+	char	*buffer;
+
+	fd = open_file_or_stdin(options->filenames[index]);
+	if (fd < 0)
+	{
+		display_tail_error(options->filenames[index]);
+		return ;
+	}
+	buffer = dynamic_read(fd);
+	if (!buffer)
+	{
+		close(fd);
+		return ;
+	}
+	bytes = 512 * (options->n - 1);
+	if (ft_strlen(buffer) < bytes)
+		write (1, buffer, ft_strlen(buffer));
+	if (options->plus_flag)
+		write (1, buffer + bytes, ft_strlen(buffer) - bytes);
+	else
+		write (1, buffer + ft_strlen(buffer) - bytes, bytes);
+	free(buffer);
 	close(fd);
 }
