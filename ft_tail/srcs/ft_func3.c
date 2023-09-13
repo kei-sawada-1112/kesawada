@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:28:56 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 16:30:15 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 17:20:52 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ char	*ft_strstr(const char *haystack, const char *needle)
 	return (NULL);
 }
 
-int ft_count_str(char *str, char *delimiter)
+int	ft_count_str(char *str, char *delimiter)
 {
-    int		count;
-    char	*next;
+	int		count;
+	char	*next;
 
 	count = 0;
 	next = ft_strstr(str, delimiter);
 	while (next && *str)
 	{
-    	count++;
-    	str = next + ft_strlen(delimiter);
-    	next = ft_strstr(str, delimiter);
+		count++;
+		str = next + ft_strlen(delimiter);
+		next = ft_strstr(str, delimiter);
 	}
 	return (count + 1);
 }
 
 static char	*alloc_token(char *start, char *end)
 {
-	char *result;
+	char	*result;
 
 	if (end)
 		result = ft_strndup(start, end - start);
@@ -63,13 +63,13 @@ static char	*alloc_token(char *start, char *end)
 	return (result);
 }
 
-char **ft_split(char *str, char *delimiter)
+char	**ft_split(char *str, char *delimiter)
 {
 	char	**result;
 	char	*next;
 	int		i;
 
-	result = (char **)malloc(sizeof(char *) * (ft_count_str(str, delimiter) + 1));
+	result = malloc(sizeof(char *) * (ft_count_str(str, delimiter) + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -83,7 +83,7 @@ char **ft_split(char *str, char *delimiter)
 			return (NULL);
 		}
 		if (!next)
-			break;
+			break ;
 		str = next + ft_strlen(delimiter);
 		i++;
 	}

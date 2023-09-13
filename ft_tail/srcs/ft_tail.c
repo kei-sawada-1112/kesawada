@@ -6,13 +6,14 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:39:33 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 16:53:18 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 17:29:30 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_tail.h"
 
-void	ft_tail(int argc, char **argv) {
+void	ft_tail(int argc, char **argv)
+{
 	t_options	options;
 
 	options.n = 10;
@@ -28,17 +29,17 @@ void	ft_tail(int argc, char **argv) {
 	free(options.filenames);
 }
 
-void execute_tail(t_options *options)
+void	execute_tail(t_options *options)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < options->file_count)
 	{
-		//if (options->n_flag)
+		if (options->n_flag)
 			display_n_option(options, i);
-		//else
-		//	display_no_option(options->filenames[i]);
+		else
+			display_n_option(options, i);
 		i++;
 		if (!(i == options->file_count))
 			write(1, "\n", 1);

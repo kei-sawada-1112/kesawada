@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:12:44 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 09:57:28 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 17:11:08 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ void	handle_lines(char *start_pos, char **lines, int *current_line)
 	}
 }
 
-void display_filename(const char *filename)
+void	display_filename(const char *filename)
 {
-    write(1, "==> ", 4);
-    write(1, filename, ft_strlen(filename));
-    write(1, " <==", 4);
-    write(1, "\n", 1);
+	write(1, "==> ", 4);
+	write(1, filename, ft_strlen(filename));
+	write(1, " <==", 4);
+	write(1, "\n", 1);
 }
 
 void	display_lines(char **buffer_split, int first, int last)
 {
-	size_t len;
+	size_t	len;
 
 	while (first <= last && buffer_split[first])
 	{

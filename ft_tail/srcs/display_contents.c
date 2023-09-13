@@ -6,20 +6,20 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:52:13 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 15:56:08 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 17:29:05 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_tail.h"
 
-void display_file_contents(t_options *options, char **buffer_split, size_t size, int index)
+void	display(t_options *options, char **buf_sp, size_t size, int index)
 {
 	if (options->file_count != 1)
 		display_filename(options->filenames[index]);
 	if (options->plus_flag)
-		display_lines(buffer_split, options->n, size);
+		display_lines(buf_sp, options->n, size);
 	else
-		display_lines(buffer_split, size - options->n, size);
+		display_lines(buf_sp, size - options->n, size);
 }
 
 void	display_n_option(t_options *options, int index)
@@ -33,17 +33,17 @@ void	display_n_option(t_options *options, int index)
 	if (fd < 0)
 	{
 		display_tail_error(options->filenames[index]);
-		return;
+		return ;
 	}
 	buffer = dynamic_read(fd);
 	if (!buffer)
 	{
 		close(fd);
 		return ;
-    }
+	}
 	buffer_split = ft_split(buffer, "\n");
 	size = ft_count_elements(buffer_split);
-	display_file_contents(options, buffer_split, size, index);
+	display(options, buffer_split, size, index);
 	free(buffer);
 	free_memory((void **)buffer_split, size - 1);
 	close(fd);
