@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:37:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 15:22:38 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 15:58:18 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	*get_next_line(char **start_pos);
 void	display_filename(const char *filename);
 void	handle_lines(char *start_pos, char **lines, int *current_line);
 void	display_lines(char **buffer_split, int first, int last);
-char	*dynamic_read(int fd, size_t *total_size);
 
 void	parse_options(int argc, char **argv, t_options *options);
 void 	execute_tail(t_options *options);
@@ -60,5 +59,10 @@ void 	execute_tail(t_options *options);
 void	free_memory(void **any, size_t length);
 void	**alloc_memory(size_t num_elements);
 
+// file_controller.c ファイルを読んだり閉じたり
+int		open_file_or_stdin(const char *filename);
+char	*dynamic_read(int fd);
+char	*resize_buffer_if_needed(char *buffer, size_t *current_block_size, size_t total_read);
+void free_resources(char *buffer, char **buffer_split, size_t size, int fd);
 
 #endif
