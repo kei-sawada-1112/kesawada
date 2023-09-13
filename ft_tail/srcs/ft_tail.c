@@ -6,37 +6,38 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 21:39:33 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 10:23:16 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/13 15:23:43 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_tail.h"
 
 void	ft_tail(int argc, char **argv) {
-	TailOptions	options;
+	t_options	options;
 
-	options.filenames = (char **)alloc_memory(argc - 2);
-	if (!options.filenames)
-		return ;
-	if (argc == 3)
-		ft_tail_no_option(argv[2]);
-	else
-	{
+	options.file_count = 0;
+	options.option_count = 0;
+	options.plus_flag = 0;
+	options.n_flag = 0;
+	options.b_flag = 0;
+	options.c_flag = 0;
+	// if (argc == 3)
+	// 	display_no_option(argv[2]);
+	// else
+	// {
 		parse_options(argc, argv, &options);
 		execute_tail(&options);
-	}
-	if (options.filenames)
 		free(options.filenames);
+	//}
 }
 
-void	parse_options(int argc, char **argv, TailOptions *options)
+void	parse_options(int argc, char **argv, t_options *options)
 {
 	int		i;
 	int 	file_index;
 	char	*num_part;
 
 	i = 2;
-	file_index = 0;
 	num_part = NULL;
 	while (i < argc)
 	{
@@ -44,17 +45,21 @@ void	parse_options(int argc, char **argv, TailOptions *options)
 		{
 			if (ft_strncmp(argv[i], "-n", 2) == 0)
 			{
+				options->option_count++;
 				if (argv[i][2])
-					num_part = argv[i][2];
+					num_part = &argv[i][2];
 				else
+				{
 					num_part = argv[++i];
+					options->option_count++;
+				}
 				if (num_part[0] == '+')
 				{
-					options->lines = ft_atoi(&num_part[1]);
+					options->n = ft_atoi(&num_part[1]);
 					options->plus_flag = 1;
 				}
 				else
-					options->lines = ft_atoi(num_part);
+					options->n = ft_atoi(num_part);
 			}
 			else if (ft_strncmp(argv[i], "-b", 2) == 0)
 			{
@@ -62,31 +67,42 @@ void	parse_options(int argc, char **argv, TailOptions *options)
 				// （この例では実装は省略されています）
 			}
 		}
-		else
-		{
-			options->filenames[file_index] = argv[i];
-			options->file_count++;
-			file_index++;
-		}
 		i++;
 	}
+	options->filenames = malloc(sizeof(char *) * (argc - 2 - options->option_count));
+	if (!options->filenames)
+		return ;
+	i = 2 + options->option_count;
+	file_index = 0;
+	while (i < argc)
+	{
+		options->filenames[file_index] = argv[i];
+		options->file_count++;
+		file_index++;
+		i++;
+	}
+	printf("file_count: %d\n", options->file_count);
+	printf("option_count: %d\n", options->option_count);
 }
 
-void execute_tail(TailOptions *options)
+void execute_tail(t_options *options)
 {
 	int		i;
 
 	i = 0;
 	while (i < options->file_count)
 	{
-		ft_tail_no_option(options->filenames[i]);
+		//if (options->n_flag)
+			display_n_option(options, i);
+		//else
+		//	display_no_option(options->filenames[i]);
 		i++;
 		if (!(i == options->file_count))
 			write(1, "\n", 1);
 	}
 }
 
-void	ft_tail(char *filename)
+void	display_n_option(t_options *options, int index)
 {
 	int		fd;
 	char	*buffer;
@@ -94,13 +110,13 @@ void	ft_tail(char *filename)
 	size_t	length;
 	size_t	size;
 
-	if (!filename)
+	if (!options->filenames[index])
 		fd = STDIN_FILENO;
 	else
-		fd = open(filename, O_RDONLY);
+		fd = open(options->filenames[index], O_RDONLY);
 	if (fd < 0)
 	{
-		display_tail_error(filename);
+		display_tail_error(options->filenames[index]);
 		return;
 	}
 	buffer = dynamic_read(fd, &length);
@@ -111,8 +127,12 @@ void	ft_tail(char *filename)
     }
 	buffer_split = ft_split(buffer, "\n");
 	size = ft_count_elements(buffer_split);
-	display_filename(filename);
-	display_lines(buffer_split, size - 10, size);
+	if (options->file_count != 1)
+		display_filename(options->filenames[index]);
+	if (options->plus_flag)
+		display_lines(buffer_split, options->n, size);
+	else
+		display_lines(buffer_split, size - options->n, size);
 	free(buffer);
 	free_memory((void **)buffer_split, size - 1);
 	close(fd);
