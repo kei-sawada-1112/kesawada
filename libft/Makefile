@@ -1,0 +1,25 @@
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+NAME = libft
+SRC = srcs
+INC = includes
+SRCS = $(SRC)/.c
+OBJS = $(SRC:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -I $(INC) -o $^ $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -I $(INC) -c $< -o $@
+
+clean:
+	rm -r $(OBJS)
+
+fclean: clean
+	rm -r $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
