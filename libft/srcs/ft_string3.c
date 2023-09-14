@@ -6,43 +6,37 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 12:43:14 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 14:42:31 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 21:28:50 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 
-char	*ft_strchr(char *s, char c)
+char	*ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{
-		if (*s == c)
-			return (s);
+		if ((char)*s == (char)c)
+			return ((char *)s);
 		s++;
 	}
-	if (*s == c)
-		return (s);
+	if ((char)c == '\0')
+		return ((char *)s);
 	return (NULL);
 }
 
-char	*ft_strstr(char *haystack, const char *needle)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	char		*hay;
-	const char	*nee;
+	size_t	needle_len;
 
 	if (!*needle)
-		return (haystack);
+		return ((char *)haystack);
+	needle_len = ft_strlen(needle);
 	while (*haystack)
 	{
-		hay = haystack;
-		nee = needle;
-		while (*hay && *nee && *hay == *nee)
-		{
-			hay++;
-			nee++;
-		}
-		if (!*nee)
-			return (haystack);
+		if (*haystack == *needle && !ft_strncmp(haystack, needle, needle_len))
+			return ((char *)haystack);
 		haystack++;
 	}
 	return (NULL);
@@ -55,7 +49,6 @@ int	ft_isspace(char c)
 	return (0);
 }
 
-// const char* で引数をわたし、char * で返す場合内部で必ず malloc している。呼び出し元でfreeを 忘れないこと！！
 char	*ft_strtrim(const char *str)
 {
 	char	*start;

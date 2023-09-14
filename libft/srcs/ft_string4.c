@@ -6,17 +6,18 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:37:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 14:58:37 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 17:58:10 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
-static int	ft_numlen(int n)
+int	ft_numlen(int n)
 {
-	int len;
+	int	len;
 
 	if (n == 0)
 		return (1);
@@ -59,4 +60,61 @@ char	*ft_itoa(int n)
 		len--;
 	}
 	return (str);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	num;
+	int	sign;
+
+	num = 0;
+	sign = 1;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+')
+		str++;
+	else if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (num * sign);
+}
+
+char	*ft_strrchr(const char *str, const char c)
+{
+	char	*last;
+
+	last = NULL;
+	while (*str)
+	{
+		if (*str == c)
+			last = (char *)str;
+		str++;
+	}
+	if (c == '\0')
+		return ((char *)str);
+	return (last);
+}
+
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
+{
+	size_t	needle_len;
+
+	if (!*needle)
+		return ((char *)haystack);
+	needle_len = ft_strlen(needle);
+	while (*haystack && n >= needle_len)
+	{
+		if (*haystack == *needle && !ft_strncmp(haystack, needle, needle_len))
+			return ((char *)haystack);
+		haystack++;
+		n--;
+	}
+	return (NULL);
 }

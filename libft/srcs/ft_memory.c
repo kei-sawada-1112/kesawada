@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:54:15 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 14:34:24 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 19:45:45 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ void	*ft_realloc(void *ptr, size_t original_size, size_t new_size)
 		return (NULL);
 	if (ptr && original_size)
 	{
-		ft_memcpy(new_ptr, ptr, original_size);
+		if (original_size < new_size)
+			ft_memcpy(new_ptr, ptr, original_size);
+		else
+			ft_memcpy(new_ptr, ptr, new_size);
 		free(ptr);
 	}
 	return (new_ptr);

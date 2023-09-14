@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 10:32:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 21:22:43 by kei              ###   ########.fr       */
+/*   Created: 2023/09/14 21:25:07 by kei               #+#    #+#             */
+/*   Updated: 2023/09/14 21:25:23 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "libft.h"
 
-int	main(void)
+int	ft_pow(int x, int y)
 {
-	char	str[] = "1234.5678";
-
-	printf("result: %f\n", atof(str));
+	if (y == 0)
+		return (1);
+	return (x * ft_pow(x, y - 1));
 }
