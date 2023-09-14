@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 12:05:11 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 12:43:23 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 13:52:50 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_strcat(char *s1, const char *s2)
 {
-	char *ret;
+	char	*ret;
 
 	ret = s1;
 	if (!*s2)
@@ -43,7 +43,7 @@ char	*ft_strcat(char *s1, const char *s2)
 
 char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	char *ret;
+	char	*ret;
 
 	ret = s1;
 	if (!*s2)
@@ -87,5 +87,3 @@ char	*ft_strncpy(char *s1, const char *s2, size_t n)
 	}
 	return (s1);
 }
-
-
