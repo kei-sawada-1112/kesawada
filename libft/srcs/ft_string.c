@@ -6,13 +6,14 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 12:05:11 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 12:06:55 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 12:43:23 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	len;
 
@@ -25,22 +26,66 @@ size_t	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strcat(char *s1, char *s2)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	if (*s2)
+	char *ret;
+
+	ret = s1;
+	if (!*s2)
 		return (s1);
 	while (*s1)
 		s1++;
 	while (*s2)
 		*s1++ = *s2++;
 	*s1 = '\0';
+	return (ret);
+}
+
+char	*ft_strncat(char *s1, const char *s2, size_t n)
+{
+	char *ret;
+
+	ret = s1;
+	if (!*s2)
+		return (s1);
+	while (*s1)
+		s1++;
+	while (*s2 && n > 0)
+	{
+		*s1++ = *s2++;
+		n--;
+	}
+	*s1 = '\0';
+	return (ret);
+}
+
+char	*ft_strcpy(char *s1, const char *s2)
+{
+	char	*ret;
+
+	ret = s1;
+	while (*s2)
+		*s1++ = *s2++;
+	*s1 = '\0';
+	return (ret);
+}
+
+char	*ft_strncpy(char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && s2[i])
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	while (i < n)
+	{
+		s1[i] = '\0';
+		i++;
+	}
 	return (s1);
 }
 
-char	*ft_strncat(char *s1, char *s2, size_t n)
-{
 
-}
-
-char	*ft_strchr(const char *s, char c);
-char	*ft_strstr(const char *haystack, const char *needle);

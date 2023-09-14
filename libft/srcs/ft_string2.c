@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:43:41 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 12:03:04 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 12:39:44 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strdup(const char *s)
 	char	*dup;
 	size_t	i;
 
-	dup = (char *)malloc(ft_strlen(s) + 1);
+	dup = (char *)malloc(ft_strlen((char *)s) + 1);
 	if (!dup)
 		return (NULL);
 	i = 0;

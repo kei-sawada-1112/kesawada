@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:40:07 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 11:57:53 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/14 12:31:59 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ char	ft_toupper(char c);
 char	ft_tolower(char c);
 
 // ft_string.c
-size_t	ft_strlen(char *str);
-char	*ft_strcat(char *s1, char *s2);
-char	*ft_strncat(char *s1, char *s2, size_t n);
-char	*ft_strchr(const char *s, char c);
-char	*ft_strstr(const char *haystack, const char *needle);
+size_t	ft_strlen(const char *str);
+char	*ft_strcat(char *s1, const char *s2);
+char	*ft_strncat(char *s1, const char *s2, size_t n);
+char	*ft_strcpy(char *s1, const char *s2);
+char	*ft_strncpy(char *s1, const char *s2, size_t n);
+char	*ft_strchr(char *s, char c);
+char	*ft_strstr(char *haystack, const char *needle);
 
 // ft_string2.c
 int	ft_strcmp(const char *str1, const char *str2);
