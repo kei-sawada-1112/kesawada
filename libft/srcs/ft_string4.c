@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:37:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 17:58:10 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 13:11:40 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,7 @@ int	ft_atoi(const char *str)
 
 	num = 0;
 	sign = 1;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+')
-		str++;
-	else if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
+	str = preprocess(str, &sign);
 	while (*str >= '0' && *str <= '9')
 	{
 		num = num * 10 + (*str - '0');

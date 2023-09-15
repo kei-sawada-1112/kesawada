@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 12:43:14 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 21:28:50 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 13:10:59 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_strtrim(const char *str)
 	return (ret);
 }
 
-size_t	ft_count_words(char const *str)
+size_t	count_words(char const *str)
 {
 	size_t	count;
 	int		flag;

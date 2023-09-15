@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 20:42:24 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 21:37:21 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 13:11:45 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,20 @@ static double	get_frac(const char **nptr)
 	return (frac);
 }
 
+char	*preprocess(const char *nptr, int *sign)
+{
+	while (ft_isspace(*nptr))
+		nptr++;
+	if (*nptr == '+')
+		nptr++;
+	else if (*nptr == '-')
+	{
+		*sign = -1;
+		nptr++;
+	}
+	return (char *)nptr;
+}
+
 double	ft_atof(const char *nptr)
 {
 	double	res;
@@ -79,14 +93,7 @@ double	ft_atof(const char *nptr)
 
 	res = 0.0;
 	sign = 1;
-	while (ft_isspace(*nptr))
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		if (*nptr == '-')
-			sign = -1;
-		nptr++;
-	}
+	nptr = preprocess(nptr, &sign);
 	while (*nptr >= '0' && *nptr <= '9')
 	{
 		res = res * 10 + (*nptr - '0');

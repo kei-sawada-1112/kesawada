@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 NAME = libft
 SRC = srcs
 INC = includes
-SRCS = $(SRC)/main.c $(SRC)/ft_alphabet.c $(SRC)/ft_checker.c $(SRC)/ft_string.c $(SRC)/ft_string2.c $(SRC)/ft_string3.c $(SRC)/ft_string4.c $(SRC)/ft_string5.c $(SRC)/ft_string6.c $(SRC)/ft_memory.c $(SRC)/ft_memory2.c
+SRCS = $(SRC)/main.c $(SRC)/ft_alphabet.c $(SRC)/ft_checker.c $(SRC)/ft_string.c $(SRC)/ft_string2.c $(SRC)/ft_string3.c $(SRC)/ft_string4.c $(SRC)/ft_string5.c $(SRC)/ft_string6.c $(SRC)/ft_string7.c $(SRC)/ft_memory.c $(SRC)/ft_memory2.c $(SRC)/ft_math.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
