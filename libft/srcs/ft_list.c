@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_list.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 10:32:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:07:47 by kei              ###   ########.fr       */
+/*   Created: 2023/09/15 22:11:52 by kei               #+#    #+#             */
+/*   Updated: 2023/09/15 22:12:17 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+#include "libft.h"
 
-int	main(void)
+void *ft_bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *))
 {
-	char	str = ' ';
-	printf("result: %d\n", ft_isgraph(str));
+	
 }

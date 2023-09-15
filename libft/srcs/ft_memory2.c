@@ -6,28 +6,33 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:59:49 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 18:23:13 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 22:57:05 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t n)
 {
 	unsigned char	*udst;
 	unsigned char	*usrc;
 
 	udst = (unsigned char *)dst;
 	usrc = (unsigned char *)src;
-	while (n--)
+	if (usrc < udst && udst < usrc + n)
 	{
-		*udst = *usrc;
-		if (*usrc == (unsigned char)c)
-			return (udst + 1);
-		udst++;
-		usrc++;
+		udst += n;
+		usrc += n;
+		while (n-- > 0)
+			*(--udst) = *(--usrc);
 	}
-	return (NULL);
+	else
+	{
+		while (n-- > 0)
+			*udst++ = *usrc++;
+	}
+	return (dst);
 }
 
 int	ft_memcmp(const void *mem1, const void *mem2, size_t n)
@@ -62,6 +67,24 @@ void	*ft_memalloc(size_t n)
 		i++;
 	}
 	return ((void *)mem);
+}
+
+void	*ft_realloc(void *ptr, size_t original_size, size_t new_size)
+{
+	void	*new_ptr;
+
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (ptr && original_size)
+	{
+		if (original_size < new_size)
+			ft_memcpy(new_ptr, ptr, original_size);
+		else
+			ft_memcpy(new_ptr, ptr, new_size);
+		free(ptr);
+	}
+	return (new_ptr);
 }
 
 void	ft_memdel(void **mem)

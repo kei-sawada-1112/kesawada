@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 20:42:24 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 13:11:45 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 13:26:59 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*preprocess(const char *nptr, int *sign)
 		*sign = -1;
 		nptr++;
 	}
-	return (char *)nptr;
+	return ((char *)nptr);
 }
 
 double	ft_atof(const char *nptr)

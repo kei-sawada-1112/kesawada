@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:54:15 by kei               #+#    #+#             */
-/*   Updated: 2023/09/14 19:45:45 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 22:55:54 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,6 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-void	*ft_memmove(void *dst, const void *src, size_t n)
-{
-	unsigned char	*udst;
-	unsigned char	*usrc;
-
-	udst = (unsigned char *)dst;
-	usrc = (unsigned char *)src;
-	if (usrc < udst && udst < usrc + n)
-	{
-		udst += n;
-		usrc += n;
-		while (n-- > 0)
-			*(--udst) = *(--usrc);
-	}
-	else
-	{
-		while (n-- > 0)
-			*udst++ = *usrc++;
-	}
-	return (dst);
-}
-
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*us;
@@ -63,6 +41,21 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	return (NULL);
 }
 
+void	*ft_memrchr(const void *s, int c, size_t n)
+{
+	unsigned char	*us;
+	unsigned char	uc;
+
+	us = (unsigned char *)s;
+	uc = (unsigned char)c;
+	while (n-- > 0)
+	{
+		if (us[n] == uc)
+			return ((void *)&us[n]);
+	}
+	return (NULL);
+}
+
 void	*ft_memcpy(void *dst, const void *src, size_t size)
 {
 	unsigned char	*d;
@@ -75,20 +68,20 @@ void	*ft_memcpy(void *dst, const void *src, size_t size)
 	return (dst);
 }
 
-void	*ft_realloc(void *ptr, size_t original_size, size_t new_size)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	void	*new_ptr;
+	unsigned char	*udst;
+	unsigned char	*usrc;
 
-	new_ptr = malloc(new_size);
-	if (!new_ptr)
-		return (NULL);
-	if (ptr && original_size)
+	udst = (unsigned char *)dst;
+	usrc = (unsigned char *)src;
+	while (n--)
 	{
-		if (original_size < new_size)
-			ft_memcpy(new_ptr, ptr, original_size);
-		else
-			ft_memcpy(new_ptr, ptr, new_size);
-		free(ptr);
+		*udst = *usrc;
+		if (*usrc == (unsigned char)c)
+			return (udst + 1);
+		udst++;
+		usrc++;
 	}
-	return (new_ptr);
+	return (NULL);
 }
