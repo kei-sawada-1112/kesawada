@@ -6,14 +6,14 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 22:24:33 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:08:06 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 23:11:38 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-char 	*ft_strrev(char *str)
+char	*ft_strrev(char *str)
 {
 	char	*tmp;
 	size_t	i;
@@ -32,7 +32,7 @@ char 	*ft_strrev(char *str)
 	return (str);
 }
 
-char 	*ft_strset(char *str, int ch)
+char	*ft_strset(char *str, int ch)
 {
 	char	*ret;
 

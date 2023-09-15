@@ -6,14 +6,14 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:34:53 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 14:03:34 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 23:11:18 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-int ft_isxdigit(int c)
+int	ft_isxdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -24,14 +24,14 @@ int ft_isxdigit(int c)
 	return (0);
 }
 
-int ft_iscntrl(int c)
+int	ft_iscntrl(int c)
 {
 	if (!(c >= 32 && c <= 126))
 		return (1);
 	return (0);
 }
 
-int ft_ispunct(int c)
+int	ft_ispunct(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (0);
@@ -42,14 +42,14 @@ int ft_ispunct(int c)
 	return (1);
 }
 
-int ft_isupper(int c)
+int	ft_isupper(int c)
 {
 	if (c >= 'A' && c <= 'Z')
 		return (1);
 	return (0);
 }
 
-int ft_islower(int c)
+int	ft_islower(int c)
 {
 	if (c >= 'a' && c <= 'z')
 		return (1);

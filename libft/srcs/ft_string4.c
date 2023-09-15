@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:37:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 13:11:40 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 23:14:36 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,18 @@ char	*ft_strrchr(const char *str, const char c)
 	return (last);
 }
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
+char	*ft_strnstr(const char *hay, const char *nee, size_t n)
 {
-	size_t	needle_len;
+	size_t	nee_len;
 
-	if (!*needle)
-		return ((char *)haystack);
-	needle_len = ft_strlen(needle);
-	while (*haystack && n >= needle_len)
+	if (!*nee)
+		return ((char *)hay);
+	nee_len = ft_strlen(nee);
+	while (*hay && n >= nee_len)
 	{
-		if (*haystack == *needle && !ft_strncmp(haystack, needle, needle_len))
-			return ((char *)haystack);
-		haystack++;
+		if (*hay == *nee && !ft_strncmp(hay, nee, nee_len))
+			return ((char *)hay);
+		hay++;
 		n--;
 	}
 	return (NULL);

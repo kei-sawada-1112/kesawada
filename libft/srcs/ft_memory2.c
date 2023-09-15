@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:59:49 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 22:57:05 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/15 23:15:18 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ void	*ft_memalloc(size_t n)
 	return ((void *)mem);
 }
 
-void	*ft_realloc(void *ptr, size_t original_size, size_t new_size)
+void	*ft_realloc(void *ptr, size_t orig_size, size_t new_size)
 {
 	void	*new_ptr;
 
 	new_ptr = malloc(new_size);
 	if (!new_ptr)
 		return (NULL);
-	if (ptr && original_size)
+	if (ptr && orig_size)
 	{
-		if (original_size < new_size)
-			ft_memcpy(new_ptr, ptr, original_size);
+		if (orig_size < new_size)
+			ft_memcpy(new_ptr, ptr, orig_size);
 		else
 			ft_memcpy(new_ptr, ptr, new_size);
 		free(ptr);
