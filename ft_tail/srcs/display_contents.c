@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 15:52:13 by kei               #+#    #+#             */
-/*   Updated: 2023/09/13 21:06:50 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/17 14:11:53 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,20 @@ void	display_b_option(t_options *options, int index)
 		write (1, buffer + ft_strlen(buffer) - bytes, bytes);
 	free(buffer);
 	close(fd);
+}
+
+void	display_lines(char **buffer_split, int first, int last)
+{
+	size_t	len;
+
+	while (first <= last && buffer_split[first])
+	{
+		if (buffer_split[first] == NULL)
+			len = 0;
+		else
+			len = ft_strlen(buffer_split[first]);
+		write(1, buffer_split[first], len);
+		write(1, "\n", 1);
+		first++;
+	}
 }
