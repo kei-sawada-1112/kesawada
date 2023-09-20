@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:40:07 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:16:01 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/20 12:49:04 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include <stdlib.h>
 
 // ft_checker.c
-int					ft_isalpha(char c);
-int					ft_isdigit(char c);
-int					ft_isalnum(char c);
-int					ft_isascii(char c);
-int					ft_isprint(char c);
+int					ft_isalpha(int c);
+int					ft_isdigit(int c);
+int					ft_isalnum(int c);
+int					ft_isascii(int c);
+int					ft_isprint(int c);
 
 // ft_alphabet.c
 char				ft_toupper(char c);
@@ -81,11 +81,11 @@ int					ft_isgraph(int c);
 // ft_list.c
 
 // ft_memory.c
-void				*ft_memset(void *s, int c, size_t n);
-void				*ft_memchr(const void *s, int c, size_t n);
-void				*ft_memrchr(const void *s, int c, size_t n);
-void				*ft_memcpy(void *dst, const void *src, size_t size);
-void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
+void				*ft_memset(void *s, int c, size_t count);
+void				*ft_memchr(const void *s, int c, size_t count);
+void				*ft_memrchr(const void *s, int c, size_t count);
+void				*ft_memcpy(void *dst, const void *src, size_t count);
+void				*ft_memccpy(void *dst, const void *src, int c, size_t count);
 
 // ft_memory2.c
 int					ft_memcmp(const void *mem1, const void *mem2, size_t n);

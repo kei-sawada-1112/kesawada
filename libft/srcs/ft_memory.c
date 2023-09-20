@@ -6,33 +6,33 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:54:15 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 22:55:54 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/20 12:50:26 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, int c, size_t count)
 {
 	unsigned char	uc;
 	unsigned char	*us;
 
 	uc = (unsigned char)c;
 	us = (unsigned char *)s;
-	while (n-- > 0)
+	while (count-- > 0)
 		*us++ = uc;
 	return (s);
 }
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t count)
 {
 	unsigned char	*us;
 	unsigned char	uc;
 
 	us = (unsigned char *)s;
 	uc = (unsigned char)c;
-	while (n-- > 0)
+	while (count-- > 0)
 	{
 		if (*us == uc)
 			return ((void *)us);
@@ -41,41 +41,41 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	return (NULL);
 }
 
-void	*ft_memrchr(const void *s, int c, size_t n)
+void	*ft_memrchr(const void *s, int c, size_t count)
 {
 	unsigned char	*us;
 	unsigned char	uc;
 
 	us = (unsigned char *)s;
 	uc = (unsigned char)c;
-	while (n-- > 0)
+	while (count-- > 0)
 	{
-		if (us[n] == uc)
-			return ((void *)&us[n]);
+		if (us[count] == uc)
+			return ((void *)&us[count]);
 	}
 	return (NULL);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t size)
+void	*ft_memcpy(void *dst, const void *src, size_t count)
 {
 	unsigned char	*d;
 	unsigned char	*s;
 
 	d = (unsigned char *)dst;
 	s = (unsigned char *)src;
-	while (size--)
+	while (count--)
 		*d++ = *s++;
 	return (dst);
 }
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t count)
 {
 	unsigned char	*udst;
 	unsigned char	*usrc;
 
 	udst = (unsigned char *)dst;
 	usrc = (unsigned char *)src;
-	while (n--)
+	while (count--)
 	{
 		*udst = *usrc;
 		if (*usrc == (unsigned char)c)

@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:37:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:14:36 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/20 12:16:46 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,29 @@ int	ft_atoi(const char *str)
 	}
 	return (num * sign);
 }
+
+// int	atoi(const char *str)
+// {
+// 	long long	res;
+// 	int			sign;
+
+// 	res = 0;
+// 	sign = 1;
+// 	str = process_sign(str, &sign);
+// 	while (*str >= '0' && *str <= '9')
+// 	{
+// 		if (res > LONG_MAX / 10 || (res == LONG_MAX / 10 && *str
+// 				- '0' > LONG_MAX % 10))
+// 		{
+// 			if (sign == 1)
+// 				return ((int)LONG_MAX);
+// 			return ((int)LONG_MIN);
+// 		}
+// 		res = res * 10 + (*str - '0');
+// 		str++;
+// 	}
+// 	return ((int)sign * res);
+// }
 
 char	*ft_strrchr(const char *str, const char c)
 {

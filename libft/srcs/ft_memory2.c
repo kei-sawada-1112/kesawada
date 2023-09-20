@@ -6,33 +6,33 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:59:49 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:15:18 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/20 12:59:08 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t count)
 {
 	unsigned char	*udst;
 	unsigned char	*usrc;
 
-	udst = (unsigned char *)dst;
+	udst = (unsigned char *)dest;
 	usrc = (unsigned char *)src;
-	if (usrc < udst && udst < usrc + n)
+	if (usrc < udst && udst < usrc + count)
 	{
-		udst += n;
-		usrc += n;
-		while (n-- > 0)
+		udst += count;
+		usrc += count;
+		while (count-- > 0)
 			*(--udst) = *(--usrc);
 	}
 	else
 	{
-		while (n-- > 0)
+		while (count-- > 0)
 			*udst++ = *usrc++;
 	}
-	return (dst);
+	return (dest);
 }
 
 int	ft_memcmp(const void *mem1, const void *mem2, size_t n)
@@ -92,3 +92,31 @@ void	ft_memdel(void **mem)
 	free(mem);
 	mem = NULL;
 }
+
+// ねっとでみたやつ
+// void	*calloc(size_t count, size_t size)
+// {
+// 	void	*ptr;
+
+// 	if (count && size && SIZE_MAX / count < size)
+// 		return (NULL);
+// 	if (count == 0 || size == 0)
+// 	{
+// 		ptr = malloc(1);
+// 		if (ptr != NULL)
+// 		{
+// 			memset(ptr, 0, 1);
+// 			return (ptr);
+// 		}
+// 		else
+// 			return (NULL);
+// 	}
+// 	ptr = malloc(count * size);
+// 	if (ptr != NULL)
+// 	{
+// 		bzero(ptr, count * size);
+// 		return (ptr);
+// 	}
+// 	else
+// 		return (NULL);
+// }

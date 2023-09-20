@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memory3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 10:32:22 by kei               #+#    #+#             */
-/*   Updated: 2023/09/15 23:15:41 by kei              ###   ########.fr       */
+/*   Created: 2023/09/20 12:51:37 by kei               #+#    #+#             */
+/*   Updated: 2023/09/20 12:56:47 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
 
-int	main(void)
+void	ft_bzero(void *s, size_t n)
 {
-	printf("result: %d\n", ft_isgraph(str));
-	return (0);
+	unsigned char	*ustr;
+	size_t			i;
+
+	ustr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ustr[i] = '\0';
+		i++;
+	}
 }
