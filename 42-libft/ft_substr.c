@@ -28,7 +28,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	count = len - (size_t)start;
 	if (count >= ft_strlen(s))
-		return (char *)(s);
+	{
+		ret = ft_strdup(s);
+		return (ret);
+	}
 	ret = (char *)malloc(count + 1);
 	if (!ret)
 		return (NULL);

@@ -16,6 +16,7 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
+#include <fcntl.h>
 
 char    nibai(unsigned int index, char c)
 {
@@ -66,14 +67,12 @@ int	main(void)
 	printf("c = %s, %zu\n", "weoifa", ft_strlen("weoifa"));
 	printf("c = %s, %zu\n", "efwahf21893jfa", ft_strlen("efwahf21893jfa"));
 
-	/*
-	write (1, "\n", 1);
-	write (1, "ft_memcpy\n", 11);
-	printf("c = %s, %d\n", "", ft_memcpy(""));
-	printf("c = %s, %d\n", "aie", ft_memcpy("aie"));
-	printf("c = %s, %d\n", "weoifa", ft_memcpy("weoifa"));
-	printf("c = %s, %d\n", "efwahf21893jfa", ft_memcpy("efwahf21893jfa"));
-	*/
+	// write (1, "\n", 1);
+	// write (1, "ft_memcpy\n", 11);
+	// printf("c = %s, %d\n", "", ft_memcpy(""));
+	// printf("c = %s, %d\n", "aie", ft_memcpy("aie"));
+	// printf("c = %s, %d\n", "weoifa", ft_memcpy("weoifa"));
+	// printf("c = %s, %d\n", "efwahf21893jfa", ft_memcpy("efwahf21893jfa"));
 
 	write (1, "\n", 1);
 	write (1, "ft_strchr\n", 11);
@@ -142,16 +141,24 @@ int	main(void)
 
 	ft_putchar_fd('a', 0);
 	ft_putstr_fd("aiueo", 0);
-	ft_putendl_fd("aiueo", 0);
+	//ft_putendl_fd("aiueo", 0);
 
-	write (1, "\n", 1);
-	write (1, "ft_strtrim\n", 11);
-	printf("ft_strtrim = %s\n", ft_strtrim("abcde", "d"));
-	
 	// write (1, "\n", 1);
 	// write (1, "ft_strtrim\n", 11);
-	// printf("ft_strtrim = %s\n", ft_strtrim("aiueo", "ie"));
+	// printf("ft_strtrim = %s\n", ft_strtrim("abcde", "d"));
 	
+	// write (1, "\n", 1);
+	// write (1, "ft_putendl_fd\n", 11);
+	// int fd = open("test", O_WRONLY);
+	// ft_putendl_fd("12345", fd);
+	
+	write (1, "\n", 1);
+	write (1, "ft_memcpy\n", 11);
+	char	dst[100];
+	char	*src = NULL;
+	size_t	n = 5;
+	printf("dst = %s\n", ft_memcpy(dst, NULL, 0));
+
 	// while (1)
 	// {
 		

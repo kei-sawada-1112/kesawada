@@ -56,15 +56,15 @@ int	ft_atoi(const char *str)
 	return ((int)(num * sign));
 }
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <string.h>
+// #include <stdlib.h>
 
-int	main(void)
-{
-	char	str[] = "9223372036854775806";
+// int	main(void)
+// {
+// 	char	str[] = "9223372036854775806";
 
-	printf("%d\n", ft_atoi(str));
-	printf("%d\n", atoi(str));
-}
+// 	printf("%d\n", ft_atoi(str));
+// 	printf("%d\n", atoi(str));
+// }
 

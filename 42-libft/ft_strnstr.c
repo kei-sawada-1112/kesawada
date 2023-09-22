@@ -29,13 +29,3 @@ char	*ft_strnstr(const char *hay, const char *nee, size_t count)
 	}
 	return (NULL);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	printf("ft:      %s", ft_strnstr("abbbcdefg", "bbc", 20));
-	printf("strnstr: %s", strnstr("abbbcdefg", "bbc", 20));
-}
-*/

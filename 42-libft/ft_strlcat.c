@@ -24,11 +24,10 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	if (size_dst >= size)
 		return (size_src + size);
 	i = size_dst;
-	while (*src && i < size - 1)
+	while (src[i - size_dst] && i < size - 1)
 	{
-		dst[i] = *src++;
+		dst[i] = src[i - size_dst];
 		i++;
-		src++;
 	}
 	dst[i] = '\0';
 	return (size_src + size_dst);

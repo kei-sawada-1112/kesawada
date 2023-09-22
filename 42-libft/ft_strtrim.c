@@ -82,7 +82,11 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (NULL);
 	if (*s1 == '\0' || *set == '\0')
-		return ((char *)s1);
+	{
+		ret = (char *)malloc(1);
+		*ret = '\0';
+		return (ret);
+	}
 	first = get_first(s1, set);
 	//last = get_last(first, set);
 	last = get_last(s1, set);

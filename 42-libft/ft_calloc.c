@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <errno.h>
 #include "libft.h"
 
 void	*ft_calloc(size_t count, size_t size)
@@ -22,10 +21,7 @@ void	*ft_calloc(size_t count, size_t size)
 	num = size * count;
 	ret = malloc(num);
 	if (!ret)
-	{
-		errno = ENOMEM;
 		return (NULL);
-	}
 	ft_bzero(ret, num);
 	return (ret);
 }

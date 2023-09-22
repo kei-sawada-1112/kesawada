@@ -12,12 +12,10 @@
 
 #include <unistd.h>
 #include "libft.h"
+#include <stdlib.h>
 
 void    ft_putendl_fd(char *s, int fd)
 {
-    if (fd >= 0)
-    {
-        write(fd, "\n", 1);
-        ft_putstr_fd(s, fd);
-    }
+    write(fd, "\n", 1);
+    ft_putstr_fd(s, fd);
 }
