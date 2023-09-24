@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:09:36 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/22 16:09:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:01:02 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-    if (fd >= 0)
-    {
-        while (*s)
-        {
-            ft_putchar_fd(*s, fd);
-            s++;
-        }
-    }
-    else
-        return ;
+	if (fd >= 0)
+	{
+		while (*s)
+		{
+			ft_putchar_fd(*s, fd);
+			s++;
+		}
+	}
+	else
+		return ;
 }

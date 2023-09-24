@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:51:44 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/22 14:09:19 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/24 12:51:35 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	check_n_set_sign(int n, int *sign)
 		return (0);
 	else if (n > 0)
 		*sign = 1;
-	else 
+	else
 		*sign = -1;
 	return (1);
 }
@@ -85,7 +85,7 @@ char	*ft_itoa(int n)
 		ln /= 10;
 		digit--;
 		if (digit == 0 && sign == -1)
-			break;
+			break ;
 	}
 	return (str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:40:54 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/21 19:21:35 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/24 12:50:55 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,3 @@ int	ft_atoi(const char *str)
 	}
 	return ((int)(num * sign));
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// #include <stdlib.h>
-
-// int	main(void)
-// {
-// 	char	str[] = "9223372036854775806";
-
-// 	printf("%d\n", ft_atoi(str));
-// 	printf("%d\n", atoi(str));
-// }
-

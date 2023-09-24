@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:59:43 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/23 15:32:03 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/24 13:01:29 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_calloc(size_t count, size_t size)
 		return (ret);
 	}
 	else if (count > SIZE_MAX / size || size > SIZE_MAX / count)
-			return (NULL);
+		return (NULL);
 	num = size * count;
 	ret = malloc(num);
 	if (!ret)
@@ -35,22 +35,3 @@ void	*ft_calloc(size_t count, size_t size)
 	ft_bzero(ret, num);
 	return (ret);
 }
-/*
-#include <stdio.h>
-#include <stdlib.h>
-
-int	main(void)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)ft_calloc(5, 5);
-	i = 0;
-	while (i < 35)
-	{
-		str[i] = 'a' + i;
-		i++;
-	}
-	printf("%s\n", str);
-}
-*/

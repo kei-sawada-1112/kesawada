@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:40:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/23 16:40:25 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/24 12:59:08 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ret = (char *)malloc(count + 1);
 	if (!ret)
 		return (NULL);
-	i = 0;
-	while (i < len)
-	{
+	i = -1;
+	while (++i < len)
 		ret[i] = s[start + i];
-		i++;
-	}
 	return (ret);
 }
