@@ -36,23 +36,36 @@ ft_substr.c\
 ft_tolower.c\
 ft_toupper.c
 OBJS = $(SRCS:.c=.o)
+BONUS = ft_lstnew.c\
+ft_lstadd_front.c\
+ft_lstsize.c\
+ft_lstlast.c\
+ft_lstadd_back.c\
+ft_lstdelone.c\
+ft_lstclear.c\
+ft_lstiter.c\
+ft_lstmap.c
+BOBJS = $(BONUS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c 
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	ar rc $@ $^
 	ranlib $@
 
+bonus: $(OBJS) $(BOBJS)
+	ar rc $(NAME) $^
+	ranlib $(NAME)
+
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
-re: 
-	fclean all
+re: fclean all
 
 .PHONY: all clean fclean re
