@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:51:44 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 12:51:35 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/24 18:20:15 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*alloc_str(int *digit, long *ln, int sign)
 		*ln *= -1;
 		*digit += 1;
 	}
-	ret[*digit + 1] = '\0';
+	ret[*digit] = '\0';
 	(*digit)--;
 	return (ret);
 }
