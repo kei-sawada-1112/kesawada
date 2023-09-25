@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 16:32:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 12:50:01 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/25 12:47:36 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	count_words(const char *str, char c)
 	return (count);
 }
 
-static char	*create_ret_entry(char **pstr, char c)
+static char	*create_substr(char **pstr, char c)
 {
 	char	*first;
 	char	*last;
@@ -48,29 +48,40 @@ static char	*create_ret_entry(char **pstr, char c)
 	return (ft_substr(first, 0, last - first));
 }
 
+static char	**alloc_memory(char *trimmed_str, int words)
+{
+	char **ret;
+
+	ret  = (char **)malloc(sizeof(char *) * (words + 1));
+	if (!ret)
+	{
+		free(trimmed_str);
+		return (NULL);
+	}
+	return (ret);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**ret;
 	char	*trimmed_str;
 	int		words;
 	int		i;
+	char	set[2];
 
 	if (!s)
 		return (NULL);
-	trimmed_str = ft_strtrim(s, &c);
+	set[0] = c;
+	set[1] = '\0';
+	trimmed_str = ft_strtrim(s, set);
 	if (!trimmed_str)
 		return (NULL);
 	words = count_words(trimmed_str, c);
-	ret = (char **)malloc(sizeof(char *) * (words + 1));
-	if (!ret)
-	{
-		free(trimmed_str);
-		return (NULL);
-	}
+	ret = alloc_memory(trimmed_str, words);
 	i = 0;
 	s = trimmed_str;
 	while (i < words)
-		ret[i++] = create_ret_entry((char **)&s, c);
+		ret[i++] = create_substr((char **)&s, c);
 	ret[i] = NULL;
 	free(trimmed_str);
 	return (ret);

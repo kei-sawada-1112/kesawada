@@ -6,7 +6,7 @@
 /*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 11:59:43 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 19:43:37 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/25 12:43:33 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*ft_calloc(size_t count, size_t size)
 	size_t	num;
 
 	num = 1;
-
 	if (size && count >= SIZE_MAX / size)
 		return (NULL);
 	num = size * count;
@@ -30,7 +29,7 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ret = malloc(num);
 	if (!ret)
-	 	return (NULL);
+		return (NULL);
 	ft_bzero(ret, num);
 	return (ret);
 }
