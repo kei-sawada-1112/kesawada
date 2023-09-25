@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:27:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 18:10:27 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 18:34:15 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 18:34:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <errno.h>
 
 void	*ft_memcpy(void *dst, const void *src, size_t count)
 {
@@ -20,6 +19,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t count)
 
 	d = (unsigned char *)dst;
 	s = (unsigned char *)src;
+	if (!dst && !src)
+		return (NULL);
 	while (count--)
 		*d++ = *s++;
 	return (dst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 19:51:44 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 18:20:15 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 18:31:11 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 18:31:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_n_set_sign(int n, int *sign)
 	return (1);
 }
 
-static char	*alloc_str(int *digit, long *ln, int sign)
+static char	*alloc_str(int *digit, long long *ln, int sign)
 {
 	char	*ret;
 
@@ -63,19 +63,20 @@ static char	*alloc_str(int *digit, long *ln, int sign)
 
 char	*ft_itoa(int n)
 {
-	int		digit;
-	int		sign;
-	char	*str;
-	long	ln;
+	int			digit;
+	int			sign;
+	char		*str;
+	long long	ln;
 
 	digit = count_digit(n);
 	if (!check_n_set_sign(n, &sign))
 	{
-		str = malloc(1);
+		str = malloc(2);
 		str[0] = '0';
+		str[1] = '\0';
 		return (str);
 	}
-	ln = (long)n;
+	ln = (long long)n;
 	str = alloc_str(&digit, &ln, sign);
 	if (!str)
 		return (NULL);

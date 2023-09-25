@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:34:18 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 12:55:07 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 20:34:03 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 20:34:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <stddef.h>
 
 int	ft_strncmp(const char *str1, const char *str2, size_t count)
 {
@@ -22,6 +21,8 @@ int	ft_strncmp(const char *str1, const char *str2, size_t count)
 	ustr2 = (unsigned char *)str2;
 	while (count--)
 	{
+		if (!*ustr1 && !*ustr2)
+			return (0);
 		if (*ustr1 != *ustr2)
 			return ((int)(*ustr1 - *ustr2));
 		ustr1++;

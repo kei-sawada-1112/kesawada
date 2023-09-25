@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:32:22 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/23 14:17:07 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 20:31:45 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 20:31:53 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 
 char	*ft_strchr(const char *s, int c)
 {

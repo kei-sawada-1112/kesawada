@@ -49,7 +49,7 @@ BOBJS = $(BONUS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
+%.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
@@ -66,6 +66,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: 
+	fclean all
 
 .PHONY: all clean fclean re

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 16:32:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 12:47:36 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 18:35:59 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 18:36:09 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 #include "libft.h"
 
 static int	count_words(const char *str, char c)
@@ -50,9 +50,9 @@ static char	*create_substr(char **pstr, char c)
 
 static char	**alloc_memory(char *trimmed_str, int words)
 {
-	char **ret;
+	char	**ret;
 
-	ret  = (char **)malloc(sizeof(char *) * (words + 1));
+	ret = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!ret)
 	{
 		free(trimmed_str);

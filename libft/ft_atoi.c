@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:40:54 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/24 12:50:55 by kei              ###   ########.fr       */
+/*   Created: 2023/09/25 18:29:35 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/25 18:29:38 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
-
-#include <stdio.h>
 
 static const char	*check_space_and_sign(const char *nptr, int *sign)
 {
