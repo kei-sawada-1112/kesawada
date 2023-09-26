@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:51:36 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/20 17:52:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:32:28 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 
 void	*ft_memset(void *s, int c, size_t count)
 {

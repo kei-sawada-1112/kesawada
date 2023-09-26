@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:35:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 18:36:09 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/26 13:49:24 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	char	set[2];
 
-	if (!s)
-		return (NULL);
 	set[0] = c;
 	set[1] = '\0';
 	trimmed_str = ft_strtrim(s, set);

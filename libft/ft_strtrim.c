@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 20:34:43 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 20:34:48 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:29:39 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*ret;
 	int		len;
 
-	if (!s1 || !set)
-		return (NULL);
 	if (*set == '\0')
 	{
 		ret = ft_strdup(s1);
