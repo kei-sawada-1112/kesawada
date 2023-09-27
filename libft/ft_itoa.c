@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:31:11 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/27 10:55:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/27 11:18:40 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ static char	*alloc_str(int *digit, long long *ln, int sign)
 	return (ret);
 }
 
+char	*str_zero(void)
+{
+	char	*ret;
+
+	ret = (char *)malloc(2);
+	ret[0] = '0';
+	ret[1] = '\0';
+	return (ret);
+}
+
 char	*ft_itoa(int n)
 {
 	int			digit;
@@ -71,14 +81,14 @@ char	*ft_itoa(int n)
 	digit = count_digit(n);
 	sign = check_n_set_sign(n);
 	ln = (long long)n;
+	if (n == 0)
+	{
+		str = str_zero();
+		return (str);
+	}
 	str = alloc_str(&digit, &ln, sign);
 	if (!str)
 		return (NULL);
-	if (ln == 0)
-	{
-		str[0] = '0';
-		return (str);
-	}
 	while (digit >= 0)
 	{
 		str[digit] = ln % 10 + '0';

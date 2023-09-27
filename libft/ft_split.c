@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:35:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/27 10:57:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/27 11:49:43 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,38 @@ static char	*create_substr(char **pstr, char c)
 	return (ft_substr(first, 0, last - first));
 }
 
-static char	**alloc_memory(char *s, int words)
+static char **create_ret(char const *s, int count, char c)
 {
 	char	**ret;
+	int		i;
 
-	ret = (char **)malloc(sizeof(char *) * (words + 1));
+	ret = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!ret)
-	{
-		free(s);
 		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		ret[i] = create_substr((char **)&s, c);
+		if (!ret[i])
+		{
+			while (i > 0)
+			{
+				free(ret[i - 1]);
+				i--;
+			}
+			free(ret);
+			return (NULL);
+		}
+		i++;
 	}
+	ret[i] = NULL;
 	return (ret);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**ret;
-	int		words;
-	int		i;
+	int		count;
 
-	words = count_words(s, c);
-	ret = alloc_memory((char *)s, words);
-	i = 0;
-	while (i < words)
-	{
-		ret[i] = create_substr((char **)&s, c);
-		i++;
-	}
-	ret[i] = NULL;
-	return (ret);
+	count = count_words(s, c);
+	return (create_ret(s, count, c));
 }
