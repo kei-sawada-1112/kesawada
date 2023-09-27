@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:35:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/26 13:49:24 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/27 10:57:57 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include "libft.h"
 
-static int	count_words(const char *str, char c)
+static int	count_words(char const *str, char c)
 {
 	int	count;
 	int	flag;
@@ -39,23 +39,23 @@ static char	*create_substr(char **pstr, char c)
 	char	*first;
 	char	*last;
 
+	while (**pstr && **pstr == c)
+		(*pstr)++;
 	first = *pstr;
 	while (**pstr && **pstr != c)
 		(*pstr)++;
 	last = *pstr;
-	while (**pstr && **pstr == c)
-		(*pstr)++;
 	return (ft_substr(first, 0, last - first));
 }
 
-static char	**alloc_memory(char *trimmed_str, int words)
+static char	**alloc_memory(char *s, int words)
 {
 	char	**ret;
 
 	ret = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!ret)
 	{
-		free(trimmed_str);
+		free(s);
 		return (NULL);
 	}
 	return (ret);
@@ -64,23 +64,17 @@ static char	**alloc_memory(char *trimmed_str, int words)
 char	**ft_split(char const *s, char c)
 {
 	char	**ret;
-	char	*trimmed_str;
 	int		words;
 	int		i;
-	char	set[2];
 
-	set[0] = c;
-	set[1] = '\0';
-	trimmed_str = ft_strtrim(s, set);
-	if (!trimmed_str)
-		return (NULL);
-	words = count_words(trimmed_str, c);
-	ret = alloc_memory(trimmed_str, words);
+	words = count_words(s, c);
+	ret = alloc_memory((char *)s, words);
 	i = 0;
-	s = trimmed_str;
 	while (i < words)
-		ret[i++] = create_substr((char **)&s, c);
+	{
+		ret[i] = create_substr((char **)&s, c);
+		i++;
+	}
 	ret[i] = NULL;
-	free(trimmed_str);
 	return (ret);
 }

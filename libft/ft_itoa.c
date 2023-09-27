@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:31:11 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 18:31:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:55:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static int	count_digit(int n)
 	return (digit);
 }
 
-static int	check_n_set_sign(int n, int *sign)
+static int	check_n_set_sign(int n)
 {
-	if (n == 0)
-		return (0);
-	else if (n > 0)
-		*sign = 1;
+	int	sign;
+
+	if (n >= 0)
+		sign = 1;
 	else
-		*sign = -1;
-	return (1);
+		sign = -1;
+	return (sign);
 }
 
 static char	*alloc_str(int *digit, long long *ln, int sign)
@@ -69,17 +69,16 @@ char	*ft_itoa(int n)
 	long long	ln;
 
 	digit = count_digit(n);
-	if (!check_n_set_sign(n, &sign))
-	{
-		str = malloc(2);
-		str[0] = '0';
-		str[1] = '\0';
-		return (str);
-	}
+	sign = check_n_set_sign(n);
 	ln = (long long)n;
 	str = alloc_str(&digit, &ln, sign);
 	if (!str)
 		return (NULL);
+	if (ln == 0)
+	{
+		str[0] = '0';
+		return (str);
+	}
 	while (digit >= 0)
 	{
 		str[digit] = ln % 10 + '0';

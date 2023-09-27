@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:35:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/26 13:46:16 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/27 10:58:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 
-void	print_recursively(long num, int fd)
+void	print_recursively(long long num, int fd)
 {
 	char	c;
 
@@ -26,13 +26,13 @@ void	print_recursively(long num, int fd)
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long		ln;
+	long long	ln;
 
-	ln = (long)n;
+	ln = (long long)n;
 	if (ln == 0)
 	{
 		write(fd, "0", 1);
-		return;
+		return ;
 	}
 	if (ln < 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:38:31 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/26 15:06:28 by kei              ###   ########.fr       */
+/*   Updated: 2023/09/27 10:57:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strnstr(const char *hay, const char *nee, size_t count)
 	size_t	nee_len;
 
 	if (!*nee)
-		return (char *)hay;
+		return ((char *)hay);
 	if (count == 0)
 		return (NULL);
 	nee_len = ft_strlen(nee);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 16:50:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/26 16:26:41 by kei              ###   ########.fr       */
+/*   Created: 2023/09/27 10:33:20 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/27 10:57:09 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 
 size_t	ft_strlen(const char *str)
 {
