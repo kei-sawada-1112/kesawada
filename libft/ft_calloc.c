@@ -27,7 +27,7 @@ void	*ft_calloc(size_t count, size_t size)
 	num = size * count;
 	if (num == SIZE_MAX)
 		return (NULL);
-	ret = malloc(num);
+	ret = (char *)malloc(num);
 	if (!ret)
 		return (NULL);
 	ft_bzero(ret, num);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <stddef.h>
 
 int	ft_memcmp(const void *mem1, const void *mem2, size_t count)
 {

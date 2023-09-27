@@ -10,14 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stdlib.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ret;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	if (start >= ft_strlen(s))
 	{
 		ret = malloc(1);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <stdlib.h>
 #include "libft.h"
 
 static int	count_words(char const *str, char c)
@@ -48,7 +48,7 @@ static char	*create_substr(char **pstr, char c)
 	return (ft_substr(first, 0, last - first));
 }
 
-static char **create_ret(char const *s, int count, char c)
+static char	**create_ret(char const *s, int count, char c)
 {
 	char	**ret;
 	int		i;
@@ -80,6 +80,8 @@ char	**ft_split(char const *s, char c)
 {
 	int		count;
 
+	if (!s)
+		return (NULL);
 	count = count_words(s, c);
 	return (create_ret(s, count, c));
 }

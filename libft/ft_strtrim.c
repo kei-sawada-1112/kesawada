@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stdlib.h>
 
 static int	is_set_char(char c, const char *set)
 {
@@ -49,6 +49,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*ret;
 	int		len;
 
+	if (!s1)
+		return (NULL);
 	if (*set == '\0')
 	{
 		ret = ft_strdup(s1);

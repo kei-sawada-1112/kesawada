@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
+#include <stddef.h>
 
 char	*ft_strnstr(const char *hay, const char *nee, size_t count)
 {

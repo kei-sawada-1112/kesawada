@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stddef.h>
+#include <stdlib.h>
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char	*ret;
 
+	if (!s1)
+		return (NULL);
 	ret = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!ret)
 		return (NULL);
