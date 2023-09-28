@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 18:12:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:28:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ enum e_option
 	OP_D,
 	OP_C,
 	OP_F,
-	OP_UNKNOWN,
+	OP_INVALID,
 };
+
+// opごとに実行する関数ポインタの宣言
+typedef void (*f_execute)(va_list);
 
 // op_handler
 void	handle_c(va_list args);
@@ -36,9 +39,6 @@ void	handle_per(va_list args);
 
 // ポインタの位置を取得する
 void	print_hex_addr(char *ptr);
-
-// opごとに実行する関数ポインタの宣言
-typedef void (*f_execute)(va_list);
 
 int	ft_printf(const char *input, ...);
 

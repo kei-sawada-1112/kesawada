@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:45:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 18:13:58 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:09:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 #include <stddef.h>
 #include <unistd.h>
 
-enum e_option get_option_type(char c) {
+enum e_option	get_option_type(char c) {
     char	 *location;
-	char	op_list[] = "cspdiuxX%";
+	char	*op_list;
 
+	op_list = "cspdiuxX%";
 	location = ft_strchr(op_list, c);
     if (location)
         return (location - op_list);
-    return (OP_UNKNOWN);
+    return (OP_INVALID);
 }
 
 void	execute(va_list args, enum e_option type)
@@ -42,15 +43,18 @@ int	ft_printf(const char *input, ...)
 	enum e_option	type;
 
 	va_start(args, input);
-	while (*input) {
-		if (*input == '%') {
+	while (*input)
+	{
+		if (*input == '%')
+		{
 			input++;
 			type = get_option_type(*input);
-			if (type != OP_UNKNOWN)
+			if (type != OP_INVALID)
 				execute(args, type);
 			input++;
 		}
-		else {
+		else
+		{
 			write(1, input, 1);
 			input++;
 		}
@@ -62,5 +66,5 @@ int	ft_printf(const char *input, ...)
 int	main(void)
 {
 	char	*c = "aiueo";
-	ft_printf("%s", c);
+	ft_printf("str: %s, addr: %p", c, c);
 }

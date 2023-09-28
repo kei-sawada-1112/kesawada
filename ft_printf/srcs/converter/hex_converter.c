@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 18:12:03 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:21:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	print_hex_addr(char *ptr)
 	i = sizeof(ptr) - 1;
 	while (i >= 0)
 	{
-		hex_char((unsigned long long)ptr >> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
+		hex_char((unsigned long long)ptr
+			>> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
 		hex_addr[2 * (7 - i)] = buffer[0];
 		hex_addr[2 * (7 - i) + 1] = buffer[1];
 		i--;
