@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:44:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/27 15:44:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:47:48 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ int	main(void)
 
 	// write (1, "\n", 1);
 	// write (1, "ft_strtrim\n", 11);
-	// printf("ft_strtrim = %s\n", ft_strtrim("abcdba", "acb"));
+	// printf("ft_strtrim = %s\n", ft_strtrim("   \t  \n\n \t\t  \n\n\nHello \t         Please\n Trim me !\n   \n \n \t\t\n  ", " \n\t"));
 
 	// write (1, "\n", 1);
 	// write (1, "ft_putendl_fd\n", 11);
@@ -254,11 +254,11 @@ int	main(void)
 	// printf("%d\n", INT_MIN);
 	//calloc(INT_MIN, INT_MIN);
 
-	// write (1, "\n", 1);
-	// write (1, "ft_putnbr_fd\n", 13);
-	// int fd = open("test", O_RDWR | O_CREAT, 0777);
-	// char s[42];
-	// ft_putnbr_fd(INT_MIN, fd);
+	write (1, "\n", 1);
+	write (1, "ft_putnbr_fd\n", 13);
+	int fd = open("test", O_RDWR | O_CREAT, 0777);
+	char s[42];
+	ft_putnbr_fd(INT_MIN, fd);
 
 	// t_list *l = ft_lstnew((void*)1);
 	// ft_lstadd_front(&l, ft_lstnew((void*)2));

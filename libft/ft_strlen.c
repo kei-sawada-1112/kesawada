@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:33:20 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/27 10:57:09 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:24:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 size_t	ft_strlen(const char *str)
 {
-	const char	*start;
+	size_t	len;
 
-	start = str;
+	len = 0;
 	while (*str)
+	{
 		str++;
-	return (str - start);
+		len++;
+	}
+	return (len);
 }
