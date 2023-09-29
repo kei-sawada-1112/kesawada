@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:44:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/29 12:21:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:34:03 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,10 @@ int	main(void)
 
 	printf("\nft_strtrim:  ");
 	char *strtrim_s = "  aiu eo12  345 ";
-	checker(1, !strcmp(ft_strtrim("  aiu eo12  345 ", "a"), "  aiu eo12  345 "));
-	checker(2, !strcmp(ft_strtrim("  aiu eo12  345 ", " a"), "iu eo12  345"));
-	checker(3, !strcmp(ft_strtrim("aiu eo12  345aa ", " a"), "iu eo12  345"));
-	checker(4, !strcmp(ft_strtrim("  a  aaa a ", " a"), ""));
+	checker(1, !strcmp(ft_strtrim("  aiu eo12  345 ", "aue"), "  aiu eo12  345 "));
+	checker(2, !strcmp(ft_strtrim("  aiu eo12  345 ", " aue"), "iu eo12  345"));
+	checker(3, !strcmp(ft_strtrim("aiu eo12  345aa ", " a12"), "iu eo12  345"));
+	checker(4, !strcmp(ft_strtrim("  a  aaa a ", " a12"), ""));
 	checker(5, !strcmp(ft_strtrim("abcdba", "bca"), "d"));
 
 	printf("\nft_split:  ");
@@ -203,8 +203,8 @@ int	main(void)
 		checker(2, !strcmp(striteri_s, ""));
 	}
 
-	printf("\nft_putchar_fd:  ");
-	ft_putchar_fd('a', 0);
+	// printf("\nft_putchar_fd:  ");
+	// ft_putchar_fd('a', 0);
 	// ft_putstr_fd("aiueo", 0);
 	// ft_putendl_fd("aiueo", 0);
 
@@ -241,10 +241,6 @@ int	main(void)
 	// ft_strnstr(NULL, NULL, 0);
 	// strnstr(NULL, NULL, 0));
 
-
-
-
-
 	// strcmpで segmentation fault
 	// checker(4, !strcmp(ft_strjoin(NULL, "67890"), NULL));
 
@@ -255,49 +251,6 @@ int	main(void)
 	checker(3, ft_strrchr(strrchr_s, 'o') == strrchr(strrchr_s, 'o'));
 	checker(4, ft_strrchr(strrchr_s, '\0') == strrchr(strrchr_s, '\0'));
 	checker(5, ft_strrchr(strrchr_s, '\0') - 1 == strrchr(strrchr_s, '\0') - 1);
-
-
-
-
-
-
-
-	// write (1, "\n", 1);
-	// write (1, "ft_memcmp\n", 11);
-	// printf("c = %s, %d\n", "\0", ft_memcmp(d, f, 100));
-	// //printf("c = %s, %d\n", "\0", memcmp(d, f, 100));
-
-	// const char	str1[] = "hello world !";
-	// const char	str2[] = "l r";
-	// write (1, "\n", 1);
-	// write (1, "ft_strncmp\n", 11);
-	// printf("c = %s, %d\n", "\0", ft_strncmp(str1, str2, 4));
-	// printf("c = %s, %d\n", "\0", strncmp(str1, str2, 4));
-
-	// write (1, "\n", 1);
-	// write (1, "ft_itoa\n", 8);
-	// printf("ft_itoa: %s\n", ft_itoa(0));
-	// printf("ft_itoa: %s\n", ft_itoa(INT_MIN));
-	// printf("ft_itoa: %s\n", ft_itoa(INT_MAX));
-
-
-	// write (1, "\n", 1);
-	// write (1, "ft_substr\n", 11);
-	// printf("c = %s, %s\n", "a", ft_substr("abcde", 5, 5));
-
-	// write (1, "\n", 1);
-	// write (1, "ft_strmapi\n", 11);
-	// printf("ft_strmapi: %s\n", ft_strmapi("abcde", nibai));
-
-	// write (1, "\n", 1);
-	// write (1, "ft_strchr\n", 11);
-	// printf("c = %s, %s\n", "\0", ft_strchr("aiueo", 'i'));
-
-
-
-	// write (1, "\n", 1);
-	// write (1, "ft_strtrim\n", 11);
-	// printf("ft_strtrim = %s\n", ft_strtrim("   \t  \n\n \t\t  \n\n\nHello \t         Please\n Trim me !\n   \n \n \t\t\n  ", " \n\t"));
 
 	// write (1, "\n", 1);
 	// write (1, "ft_putendl_fd\n", 11);
@@ -316,7 +269,7 @@ int	main(void)
 	// char s[42];
 	// ft_putnbr_fd(INT_MIN, fd);
 
-	//system("leaks a.out");
+	// system("leaks a.out");
 
 	// t_list *l = ft_lstnew((void*)1);
 	// ft_lstadd_front(&l, ft_lstnew((void*)2));
