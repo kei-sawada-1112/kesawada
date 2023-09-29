@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:44:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 09:47:48 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:21:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-char    nibai(unsigned int index, char c)
+char    add_index(unsigned int index, char c)
 {
-    c = index * c;
+    c = index + c;
     return (c);
+}
+
+void	ptr_add_index(unsigned int index, char *s)
+{
+	*s += index;
 }
 
 void	checker(int i, int result) {
@@ -102,10 +107,23 @@ int	main(void)
 	// strlen(NULL);
 	// ft_strlen(NULL);
 
-	printf("\nft_memcpy:  ");
-	char	memcpy_s[20];
+	printf("\nft_strlcat:  ");
+	char *strlcat_s = "aiueo12345";
+	checker(1, ft_strlcat(strlcat_s, "67890", 0) == strlcat(strlcat_s, "67890", 0));
+	checker(2, ft_strlcat(strlcat_s, "67890", 3) == strlcat(strlcat_s, "67890", 3));
+	checker(3, ft_strlcat(strlcat_s, "67890", 5) == strlcat(strlcat_s, "67890", 5));
+	checker(4, ft_strlcat(strlcat_s, "67890", 6) == strlcat(strlcat_s, "67890", 6));
 
-	checker(1, ft_memcpy(memcpy_s, "", 0) == memcpy(memcpy_s, "", 0));
+	// illegal hardware instruction
+	// strlcat(strlcat_s, "67890", 15);
+
+	// bus error
+	// ft_strlcat(strlcat_s, "67890", 15)
+
+	// printf("\nft_memcpy:  ");
+	// char	memcpy_s[20];
+
+	// checker(1, ft_memcpy(memcpy_s, "", 0) == memcpy(memcpy_s, "", 0));
 	// checker(2, ft_memcpy(memcpy_s, "", 5) == memcpy(memcpy_s, "", 5));
 	// checker(3, ft_memcpy(memcpy_s, "12345", 0) == memcpy(memcpy_s, "12345", 0));
 	// checker(4, ft_memcpy(memcpy_s, "12345", 3) == memcpy(memcpy_s, "12345", 3));
@@ -128,9 +146,70 @@ int	main(void)
 	// ft_memcpy(NULL, "12345", 5);
 	// memcpy(NULL, "12345", 5);
 
+	// sanitizeのチェック
+	printf("\nft_substr:  ");
+	char *substr_s = "aiueo12345";
+	checker(1, !strcmp(ft_substr(substr_s, 0, 0), ""));
+	checker(2, !strcmp(ft_substr(substr_s, 0, SIZE_MAX), "aiueo12345"));
+	checker(3, !strcmp(ft_substr(substr_s, 0, -1), "aiueo12345"));
+	checker(4, !strcmp(ft_substr(substr_s, 100, 1), ""));
+	checker(5, !strcmp(ft_substr(substr_s, 9, 100), "5"));
+	checker(6, !strcmp(ft_substr(substr_s, 5, 10), "12345"));
+
+	printf("\nft_strjoin:  ");
+	char *strjoin_s = "aiueo12345";
+	checker(1, !strcmp(ft_strjoin("", ""), ""));
+	checker(2, !strcmp(ft_strjoin("", "67890"), "67890"));
+	checker(3, !strcmp(ft_strjoin(strjoin_s, ""), "aiueo12345"));
+
+	printf("\nft_strtrim:  ");
+	char *strtrim_s = "  aiu eo12  345 ";
+	checker(1, !strcmp(ft_strtrim("  aiu eo12  345 ", "a"), "  aiu eo12  345 "));
+	checker(2, !strcmp(ft_strtrim("  aiu eo12  345 ", " a"), "iu eo12  345"));
+	checker(3, !strcmp(ft_strtrim("aiu eo12  345aa ", " a"), "iu eo12  345"));
+	checker(4, !strcmp(ft_strtrim("  a  aaa a ", " a"), ""));
+	checker(5, !strcmp(ft_strtrim("abcdba", "bca"), "d"));
+
+	printf("\nft_split:  ");
+	char	*split_s = "  aiue o123 45  ";
+	checker(1, !strcmp(ft_split(split_s, 'a')[0], "  "));
+	checker(2, !strcmp(ft_split(split_s, 'a')[1], "iue o123 45  "));
+	checker(3, !strcmp(ft_split(split_s, ' ')[0], "aiue"));
+	checker(4, !strcmp(ft_split(split_s, ' ')[1], "o123"));
+	checker(5, !strcmp(ft_split(split_s, ' ')[2], "45"));
+
+	printf("\nft_itoa:  ");
+	checker(1, !strcmp(ft_itoa(12345), "12345"));
+	checker(2, !strcmp(ft_itoa(-12345), "-12345"));
+	checker(3, !strcmp(ft_itoa(0), "0"));
+	checker(4, !strcmp(ft_itoa(INT_MAX), "2147483647"));
+	checker(5, !strcmp(ft_itoa(INT_MIN), "-2147483648"));
+	checker(6, !strcmp(ft_itoa(INT_MAX + 1), "-2147483648"));
+	checker(7, !strcmp(ft_itoa(INT_MIN - 1), "2147483647"));
+
+	printf("\nft_strmapi:  ");
+	checker(1, !strcmp(ft_strmapi("1234", add_index), "1357"));
+	checker(2, !strcmp(ft_strmapi("", add_index), ""));
+
+	printf("\nft_striteri:  ");
+	{
+		char	striteri_s[] = "1234";
+		ft_striteri(striteri_s, ptr_add_index);
+		checker(1, !strcmp(striteri_s, "1357"));
+	}
+	{
+		char	striteri_s[] = "";
+		ft_striteri(striteri_s, ptr_add_index);
+		checker(2, !strcmp(striteri_s, ""));
+	}
+
+	printf("\nft_putchar_fd:  ");
+	ft_putchar_fd('a', 0);
+	// ft_putstr_fd("aiueo", 0);
+	// ft_putendl_fd("aiueo", 0);
+
 	printf("\nft_strchr:  ");
 	char	*strchr_s = "aiueo12345";
-
 	checker(1, ft_strchr(strchr_s, 'a') == strchr(strchr_s, 'a'));
 	checker(2, ft_strchr(strchr_s, '5') == strchr(strchr_s, '5'));
 	checker(3, ft_strchr(strchr_s, 'o') == strchr(strchr_s, 'o'));
@@ -162,37 +241,26 @@ int	main(void)
 	// ft_strnstr(NULL, NULL, 0);
 	// strnstr(NULL, NULL, 0));
 
-//	printf("c = %s, %s\n", "a", ft_strnstr("abbbcdefg", "bbc", 20));
-	printf("\nft_substr:  ");
-	char *substr_s = "aiueo12345";
-	checker(1, !strcmp(ft_substr(substr_s, 0, 0), ""));
-	checker(2, !strcmp(ft_substr(substr_s, 0, SIZE_MAX), "aiueo12345"));
-	checker(3, !strcmp(ft_substr(substr_s, 0, -1), "aiueo12345"));
-	checker(4, !strcmp(ft_substr(substr_s, 100, 1), ""));
-	checker(5, !strcmp(ft_substr(substr_s, 9, 100), "5"));
-	checker(6, !strcmp(ft_substr(substr_s, 5, 10), "12345"));
 
-	// write (1, "\n", 1);
-	// char *s = "libft-test-tokyo";
-	// printf("1 = %s\n", ft_substr(s, 0, 42000));
-	// printf("2 = %s\n", ft_substr(s, 100, 1));
-	// printf("3 = %s\n", ft_substr(s, 15, 100));
-	// printf("4 = %s\n", ft_substr(s, 5, 10));
 
-	// write (1, "\n", 1);
-	// write (1, "ft_strlcat\n", 11);
-	// printf("c = %s, %zu\n", "a", ft_strlcat("abcde", "123", 3));
 
-	// write (1, "\n", 1);
-	// write (1, "ft_strjoin\n", 11);
-	// printf("c = %s, %s\n", "a", ft_strjoin("aiueo", "12345"));
 
-	// write (1, "\n", 1);
-	// write (1, "ft_strrchr\n", 11);
-	// printf("c = %s, %s\n", "\0", ft_strrchr("aiueo", '\0'));
+	// strcmpで segmentation fault
+	// checker(4, !strcmp(ft_strjoin(NULL, "67890"), NULL));
 
-	// int		d[] = {1, 2, 3};
-	// int		f[] = {1, 2, 2};
+	printf("\nft_strrchr:  ");
+	char	*strrchr_s = "aiueo12345";
+	checker(1, ft_strrchr(strrchr_s, 'a') == strrchr(strrchr_s, 'a'));
+	checker(2, ft_strrchr(strrchr_s, '5') == strrchr(strrchr_s, '5'));
+	checker(3, ft_strrchr(strrchr_s, 'o') == strrchr(strrchr_s, 'o'));
+	checker(4, ft_strrchr(strrchr_s, '\0') == strrchr(strrchr_s, '\0'));
+	checker(5, ft_strrchr(strrchr_s, '\0') - 1 == strrchr(strrchr_s, '\0') - 1);
+
+
+
+
+
+
 
 	// write (1, "\n", 1);
 	// write (1, "ft_memcmp\n", 11);
@@ -205,16 +273,6 @@ int	main(void)
 	// write (1, "ft_strncmp\n", 11);
 	// printf("c = %s, %d\n", "\0", ft_strncmp(str1, str2, 4));
 	// printf("c = %s, %d\n", "\0", strncmp(str1, str2, 4));
-
-	// write (1, "\n", 1);
-	// write (1, "ft_split\n", 11);
-	// char	**result = ft_split("  Tripo uille  ", ' ');
-	// int i = 0;
-	// while (i < 3)
-	// {
-	// 	printf("result[] = %s\n", result[0]);
-	// 	i++;
-	// }
 
 	// write (1, "\n", 1);
 	// write (1, "ft_itoa\n", 8);
@@ -235,9 +293,7 @@ int	main(void)
 	// write (1, "ft_strchr\n", 11);
 	// printf("c = %s, %s\n", "\0", ft_strchr("aiueo", 'i'));
 
-	// ft_putchar_fd('a', 0);
-	// ft_putstr_fd("aiueo", 0);
-	// ft_putendl_fd("aiueo", 0);
+
 
 	// write (1, "\n", 1);
 	// write (1, "ft_strtrim\n", 11);
@@ -254,11 +310,13 @@ int	main(void)
 	// printf("%d\n", INT_MIN);
 	//calloc(INT_MIN, INT_MIN);
 
-	write (1, "\n", 1);
-	write (1, "ft_putnbr_fd\n", 13);
-	int fd = open("test", O_RDWR | O_CREAT, 0777);
-	char s[42];
-	ft_putnbr_fd(INT_MIN, fd);
+	// write (1, "\n", 1);
+	// write (1, "ft_putnbr_fd\n", 13);
+	// int fd = open("test", O_RDWR | O_CREAT, 0777);
+	// char s[42];
+	// ft_putnbr_fd(INT_MIN, fd);
+
+	//system("leaks a.out");
 
 	// t_list *l = ft_lstnew((void*)1);
 	// ft_lstadd_front(&l, ft_lstnew((void*)2));
