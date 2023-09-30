@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:35:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 11:10:32 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:16:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**create_ret(char const *s, int count, char c)
 		ret[i] = create_substr((char **)&s, c);
 		if (!ret[i])
 		{
-			while (--i > 0)
+			while (--i)
 				free(ret[i]);
 			free(ret);
 			return (NULL);

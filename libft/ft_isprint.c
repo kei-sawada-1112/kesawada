@@ -6,15 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:49:34 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/20 18:30:18 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:02:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isprint(int c)
 {
-	if (c > 126 || c < 0)
-		return (0);
-	if (c >= 32 && c <= 126)
-		return (1);
-	return (0);
+	return (c >= 32 && c <= 126);
 }

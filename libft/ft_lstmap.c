@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:59:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 11:48:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:06:26 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*map;
 	t_list	*current_node;
 
-	if (!lst || !f)
+	if (!lst || !f || !del)
 		return (NULL);
 	map = ft_lstnew(f(lst->content));
 	if (!map)

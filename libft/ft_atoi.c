@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:29:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 18:29:38 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/30 13:14:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static const char	*check_space_and_sign(const char *nptr, int *sign)
 
 int	ft_atoi(const char *str)
 {
-	long	num;
-	long	lim;
-	int		sign;
+	long long	num;
+	long long	lim;
+	int			sign;
 
 	num = 0;
 	lim = LONG_MAX / 10;

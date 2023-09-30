@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:30:19 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/25 18:30:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:01:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_calloc(size_t count, size_t size)
 	num = 1;
 	if (!size || !count)
 		return (ft_calloc(1, 1));
-	if (size > SIZE_MAX / count && count > SIZE_MAX / size)
+	if (size > SIZE_MAX / count)
 		return (NULL);
 	num = size * count;
 	if (num == SIZE_MAX)
