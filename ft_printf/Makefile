@@ -10,11 +10,18 @@ INC_DIR = includes
 SRC_DIR = srcs
 HANDLER_DIR = op_handler
 CONVERTER_DIR = converter
+PROCESSOR_DIR = processor
+BUFFER_HANDLER_DIR = buffer_handler
+GETTER_DIR = getter
 
 SRCS = ft_printf.c\
 $(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
 $(SRC_DIR)/$(HANDLER_DIR)/op_handler2.c\
 $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+$(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
+$(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
+$(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
+$(SRC_DIR)/$(GETTER_DIR)/get_value.c\
 
 OBJS = $(SRCS:.c=.o)
 BONUS =

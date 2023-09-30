@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 18:21:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 01:37:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "libft.h"
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdint.h>
+
+#include <stdio.h>
 
 void	hex_char(char c, char *buffer)
 {
@@ -32,25 +35,27 @@ void	hex_char(char c, char *buffer)
 	}
 }
 
-void	print_hex_addr(char *ptr)
+char	*convert_to_hex(char *ptr)
 {
-	char	hex_addr[sizeof(ptr) * 2];
+	char	*hex_addr;
 	char	buffer[2];
 	int		i;
 
-	write(1, "0x", 2);
 	i = sizeof(ptr) - 1;
+	hex_addr = malloc(sizeof(ptr) * 2 + 3);
+	hex_addr[0] = '0';
+	hex_addr[1] = 'x';
+	hex_addr[sizeof(ptr) * 2] = '\0';
 	while (i >= 0)
 	{
-		hex_char((unsigned long long)ptr
+		hex_char((uintptr_t)ptr
 			>> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
-		hex_addr[2 * (7 - i)] = buffer[0];
-		hex_addr[2 * (7 - i) + 1] = buffer[1];
+		hex_addr[2 * (sizeof(ptr) - 1 - i) + 2] = buffer[0];
+		hex_addr[2 * (sizeof(ptr) - 1 - i) + 3] = buffer[1];
 		i--;
 	}
 	i = 0;
 	while (hex_addr[i] == '0')
 		i++;
-	write(1, &hex_addr[i], 2 * sizeof(ptr) - i);
-	write(1, "\n", 1);
+	return (hex_addr + i);
 }
