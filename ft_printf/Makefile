@@ -15,7 +15,6 @@ BUFFER_HANDLER_DIR = buffer_handler
 GETTER_DIR = getter
 
 HANDLERS = $(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
-$(SRC_DIR)/$(HANDLER_DIR)/op_handler2.c\
 
 BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
 
