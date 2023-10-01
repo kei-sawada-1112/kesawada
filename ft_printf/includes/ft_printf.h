@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 01:43:24 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:35:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_format
 	char			*buffer;
 	size_t			cap;
 	size_t			width;
+	int				sign;
 	int				precision;
 	int				f_hash;
 	int				f_zero;
@@ -66,17 +67,10 @@ typedef char	*(*f_getter)(t_format *);
 
 typedef void	(*f_process)(char **, t_format *);
 
-// op_handler
-// void	handle_c(t_format *format);
-// void	handle_s(t_format *format);
-// void	handle_p(t_format *format);
-// void	handle_d(t_format *format);
-// void	handle_i(t_format *format);
-// void	handle_u(t_format *format);
-// void	handle_x(t_format *format);
-// void	handle_X(t_format *format);
-// void	handle_per(t_format *format);
 void	handle_common(t_format *format, char *(*get_value)(t_format *f));
+
+// format 初期化
+void	init_format(t_format *format);
 
 // process
 void	process_letter(char **str, t_format *format);
@@ -96,6 +90,8 @@ char	*get_char_value(t_format *format);
 char	*get_double_value(t_format *format);
 char	*get_str_value(t_format *format);
 char	*get_hex_value(t_format *format);
+char	*get_per_value(t_format *format);
+char	*get_uint_value(t_format *format);
 
 // 変換してbufferに書き込み
 char	*convert_to_hex(char *ptr);

@@ -6,15 +6,15 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:45:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 01:40:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:48:25 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 #include <stdarg.h>
-#include <stddef.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include <stdio.h>
 
@@ -31,7 +31,6 @@ void	state_based_process(char **str, t_format *format)
 
 void	init_format(t_format *format)
 {
-	init_buffer(format);
 	format->state = LETTER;
 	format->f_hash = 0;
 	format->f_minus = 0;
@@ -42,20 +41,24 @@ void	init_format(t_format *format)
 	format->prefix = 0;
 	format->type = 0;
 	format->width = 0;
+	format->sign = 1;
 }
 
 int	ft_printf(const char *input, ...)
 {
-	t_format		format;
+	t_format	format;
+	size_t		total_len;
 
 	va_start(format.args, input);
+	init_buffer(&format);
 	init_format(&format);
 	while (*input)
 		state_based_process((char **)(&input), &format);
 	write(1, format.buffer, ft_strlen(format.buffer));
 	va_end(format.args);
+	total_len = ft_strlen(format.buffer);
 	free(format.buffer);
-	return (0);
+	return (total_len);
 }
 
 #include <stdio.h>
@@ -65,10 +68,11 @@ int	main(void)
 	// char	*c = "aiueo";
 	// ft_printf("str: %s, addr: %p", c, c);
 	// 浮動小数点数の桁数
-	int num = 123456;
-	char *str = "123456";
-	ft_printf("aiueo%15s\n", str);
-	printf("aiueo%15s\n", str);
-	ft_printf("aiueo%100d\n", num);
-	printf("aiueo%100d\n", num);
+	int num = -123456;
+	//char *str = "12345";
+	//ft_printf("aiueo%%sa\n");
+	//printf("aiueo% sa\n", str);
+	//printf("aiueo%15s\n", NULL);
+	ft_printf("aiueo%011d\n", num);
+	printf("aiueo%011d\n", num);
 }

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 01:42:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:42:58 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,43 @@
 #include "libft.h"
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include <stdio.h>
 
-static void	check_space(t_format *format)
+static void	check_field(t_format *format)
 {
-	char	*space;
-	int		space_len;
+	char	*field;
+	int		field_len;
 
-	space_len = format->width - ft_strlen(format->buffer) - 1;
-	space = malloc(space_len + 1);
-	if (!space)
-		return ;
-	if (format->width != 0 && space_len > 0)
+	field = NULL;
+	field_len = format->width - ft_strlen(format->buffer) - 1;
+	printf("width: %zu\n", format->width);
+	if (field_len > 0)
 	{
-		space = ft_memset(space, ' ', space_len);
-		space[space_len] = '\0';
-		add_to_buffer(space, format);
+		field = malloc(field_len + 1);
+		if (!field)
+			return ;
+		if (format->f_zero)
+		{
+			if (format->sign == -1)
+			{
+				field[0] = '-';
+				ft_memset(field + 1, '0', field_len - 1);
+			}
+			else
+				field = ft_memset(field, '0', field_len);
+		}
+		else
+			field = ft_memset(field, ' ', field_len);
+		field[field_len] = '\0';
+		add_to_buffer(field, format);
+		free(field);
 	}
-	free(space);
+	else if (format->f_space && format->sign == 1)
+		add_to_buffer(" ", format);
+	else
+		format->f_zero = 0;
 }
 
 void	handle_common(t_format *format, char *(*get_value)(t_format *))
@@ -42,7 +60,7 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	if (format->f_plus)
 		add_to_buffer("+", format);
 	else
-		check_space(format);
+		check_field(format);
 	value = get_value(format);
 	if (value)
 	{
