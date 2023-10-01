@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 16:11:26 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:02:17 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	process_prefix(char **str, t_format *format)
 
 void	process_type(char **str, t_format *format)
 {
-	static f_getter f[] =
-	{
-		get_char_value, get_str_value, get_hexaddr_value, get_int_value, get_int_value,
-		get_uint_value, get_hex_value, get_hex_value, get_per_value
+	static t_getter	f[] = {
+		get_char_value, get_str_value, get_hexaddr_value,
+		get_int_value, get_int_value, get_uint_value,
+		get_hex_value, get_hex_value, get_per_value
 	};
+
 	handle_common(format, f[format->type]);
 	init_format(format);
 	(*str)++;
@@ -59,7 +60,6 @@ void	process_error(char **str, t_format *format)
 {
 	(void) str;
 	(void) format;
-
 	write(1, "Invalid format\n", 15);
 	format->state = LETTER;
 }

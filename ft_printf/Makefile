@@ -23,7 +23,8 @@ CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
 PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
 $(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
 
-GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c
+GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c\
+$(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
 
 SRCS = ft_printf.c\
 $(HANDLERS)\

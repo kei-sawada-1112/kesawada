@@ -6,15 +6,15 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 16:10:05 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:02:31 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <stddef.h>
+# include <stdarg.h>
+# include <stddef.h>
 
 enum e_type
 {
@@ -32,15 +32,15 @@ enum e_type
 
 enum e_state
 {
-	LETTER, // 文字列解析状態
-	FLAG,   // %直後の # などのフラグを管理する状態
-	FIELD,  // フィールド幅を調査する状態
-	PREFIX, // .以降の精度の値を調査する状態
-	TYPE,   // c, s, d などのタイプを処理する状態
-	ERROR   // エラーが発生した状態
+	LETTER,
+	FLAG,
+	FIELD,
+	PREFIX,
+	TYPE,
+	ERROR
 };
 
-#define BUFFER_SIZE 1024
+# define BUFFER_SIZE 1024
 
 typedef struct s_format
 {
@@ -60,12 +60,9 @@ typedef struct s_format
 	char			*prefix;
 }	t_format;
 
-// opごとに実行する関数ポインタの宣言
-typedef void	(*f_execute)(t_format *);
+typedef char	*(*t_getter)(t_format *);
 
-typedef char	*(*f_getter)(t_format *);
-
-typedef void	(*f_process)(char **, t_format *);
+typedef void	(*t_process)(char **, t_format *);
 
 void	handle_common(t_format *format, char *(*get_value)(t_format *f));
 

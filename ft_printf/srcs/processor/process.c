@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 13:28:19 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:00:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ void	process_letter(char **str, t_format *format)
 	i = 0;
 	while (**str && **str != '%')
 	{
-		tmp[i] = **str;
+		tmp[i] = *(*str)++;
 		if (tmp[BUFFER_SIZE - 1])
 		{
 			add_to_buffer(tmp, format);
 			ft_memset(tmp, '\0', BUFFER_SIZE);
 			i = 0;
 		}
-		(*str)++;
 		i++;
 	}
-	if (i > 0) {
+	if (i > 0)
+	{
 		tmp[i] = '\0';
 		add_to_buffer(tmp, format);
-    }
+	}
 	if (**str == '%')
 	{
 		format->state = FLAG;
@@ -61,21 +61,23 @@ static int	check_type(char c, t_format *format)
 	return (0);
 }
 
-void	process_flag(char **str, t_format *format)
+void	set_format_flags(char c, t_format *format)
 {
-	if (check_type(**str, format))
-		return ;
-	else if (**str == '0')
+	if (c == '0')
 		format->f_zero = 1;
-	else if (**str == '#')
+	else if (c == '#')
 		format->f_hash = 1;
-	else if (**str == '+')
+	else if (c == '+')
 		format->f_plus = 1;
-	else if (**str == ' ')
+	else if (c == ' ')
 		format->f_space = 1;
-	else if (**str == '-')
+	else if (c == '-')
 		format->f_minus = 1;
-	else if (**str == '%')
+}
+
+int	set_format_state(char **str, t_format *format)
+{
+	if (**str == '%')
 	{
 		format->state = LETTER;
 		add_to_buffer("%", format);
@@ -83,11 +85,20 @@ void	process_flag(char **str, t_format *format)
 	else if (ft_isdigit(**str))
 	{
 		format->state = FIELD;
-		return ;
+		return (0);
 	}
 	else if (**str == '.')
 		format->state = PREFIX;
 	else
 		format->type = TYPE_INVALID;
-	(*str)++;
+	return (1);
+}
+
+void	process_flag(char **str, t_format *format)
+{
+	if (check_type(**str, format))
+		return ;
+	set_format_flags(**str, format);
+	if (set_format_state(str, format))
+		(*str)++;
 }
