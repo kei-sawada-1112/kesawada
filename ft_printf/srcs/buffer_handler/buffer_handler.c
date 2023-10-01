@@ -6,12 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 00:22:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:25:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
+#include <stdlib.h>
 
 #include <stdio.h>
 

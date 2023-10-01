@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 01:37:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:10:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include <stdio.h>
 
@@ -35,7 +36,7 @@ void	hex_char(char c, char *buffer)
 	}
 }
 
-char	*convert_to_hex(char *ptr)
+char	*convert_to_hexaddr(char *ptr)
 {
 	char	*hex_addr;
 	char	buffer[2];
@@ -58,4 +59,50 @@ char	*convert_to_hex(char *ptr)
 	while (hex_addr[i] == '0')
 		i++;
 	return (hex_addr + i);
+}
+
+char	*recursive_convert(char *hex, unsigned int num, int *i, int type)
+{
+	char	c;
+
+	if (num == 0)
+		return (hex);
+	c = num % 16;
+	if (c < 10)
+		c += '0';
+	else
+		c += (type == TYPE_X) * 'a' + (type == TYPE_LX) * 'A' - 10;
+	recursive_convert(hex, num / 16, i, type);
+	hex[*i] = c;
+	(*i)++;
+	return (hex);
+}
+
+char	*convert_to_hex(int num, int type)
+{
+	char	*hex;
+	char	*ret;
+	int		i;
+
+	i = 0;
+	if (num == 0)
+	{
+		hex = ft_calloc(2, 1);
+		if (!hex)
+			return (NULL);
+		hex[0] = '0';
+		return (hex);
+	}
+	hex = malloc(9);
+	if (!hex)
+		return (NULL);
+	recursive_convert(hex, (unsigned int)num, &i, type);
+	hex[i] = '\0';
+	ret = malloc(i);
+	if (!ret)
+	{
+		free (hex);
+		return (NULL);
+	}
+	return (ft_memcpy(ret, hex, i + 1));
 }

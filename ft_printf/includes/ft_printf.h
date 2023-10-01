@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 12:35:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:10:05 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,14 @@ char	*get_int_value(t_format *format);
 char	*get_char_value(t_format *format);
 char	*get_double_value(t_format *format);
 char	*get_str_value(t_format *format);
-char	*get_hex_value(t_format *format);
+char	*get_hexaddr_value(t_format *format);
 char	*get_per_value(t_format *format);
 char	*get_uint_value(t_format *format);
+char	*get_hex_value(t_format *format);
 
 // 変換してbufferに書き込み
-char	*convert_to_hex(char *ptr);
+char	*convert_to_hexaddr(char *ptr);
+char	*convert_to_hex(int num, int type);
 
 int		ft_printf(const char *input, ...);
 

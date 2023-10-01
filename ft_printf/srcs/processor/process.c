@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 12:51:35 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:28:19 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,39 +61,33 @@ static int	check_type(char c, t_format *format)
 	return (0);
 }
 
-void	check_flag(char c, t_format *format)
-{
-	if (c == '0')
-		format->f_zero = 1;
-	else if (c == '#')
-		format->f_hash = 1;
-	else if (c == '+')
-		format->f_plus = 1;
-	else if (c == ' ')
-		format->f_space = 1;
-	else if (c == '-')
-		format->f_minus = 1;
-}
-
-int	check_state(char c, t_format *format)
-{
-	if (ft_isdigit(c))
-	{
-		format->state = FIELD;
-		return (0);
-	}
-	else if (c == '.')
-		format->state = PREFIX;
-	else
-		format->type = TYPE_INVALID;
-	return (1);
-}
-
 void	process_flag(char **str, t_format *format)
 {
 	if (check_type(**str, format))
 		return ;
-	check_flag(**str, format);
-	if (check_state(**str, format));
-		(*str)++;
+	else if (**str == '0')
+		format->f_zero = 1;
+	else if (**str == '#')
+		format->f_hash = 1;
+	else if (**str == '+')
+		format->f_plus = 1;
+	else if (**str == ' ')
+		format->f_space = 1;
+	else if (**str == '-')
+		format->f_minus = 1;
+	else if (**str == '%')
+	{
+		format->state = LETTER;
+		add_to_buffer("%", format);
+	}
+	else if (ft_isdigit(**str))
+	{
+		format->state = FIELD;
+		return ;
+	}
+	else if (**str == '.')
+		format->state = PREFIX;
+	else
+		format->type = TYPE_INVALID;
+	(*str)++;
 }

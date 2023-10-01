@@ -14,21 +14,26 @@ PROCESSOR_DIR = processor
 BUFFER_HANDLER_DIR = buffer_handler
 GETTER_DIR = getter
 
-SRCS = ft_printf.c\
-$(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
+HANDLERS = $(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
 $(SRC_DIR)/$(HANDLER_DIR)/op_handler2.c\
-$(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
-$(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
+
+BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
+
+CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+
+PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
 $(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
-$(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
-$(SRC_DIR)/$(GETTER_DIR)/get_value.c\
+
+GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c
+
+SRCS = ft_printf.c\
+$(HANDLERS)\
+$(BUFFER_HANDLERS)\
+$(CONVERTERS)\
+$(PROCESSORS)\
+$(GETTERS)\
 
 OBJS = $(SRCS:.c=.o)
-BONUS =
-BOBJS = $(BONUS:.c=.o)
-ifdef WITH_BONUS
-OBJS += $(BOBJS)
-endif
 
 all: $(NAME)
 
@@ -38,9 +43,6 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 	ranlib $@
-
-bonus: $(NAME)
-	@make WITH_BONUS=1
 
 clean:
 	rm -f $(OBJS) $(BOBJS)
