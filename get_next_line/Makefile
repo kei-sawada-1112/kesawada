@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=1
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=1024 -fsanitize=address
 NAME = get_next_line
 
 SRCS = get_next_line.c\

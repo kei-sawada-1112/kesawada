@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 13:04:25 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:23:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 
 // __attribute__((destructor))
 // static void destructor() {
-//     system("leaks -q a.out");
+//     system("leaks -q get_next_line");
 // }
 
 void	init_ms(t_ms *ms)
 {
 	ms->buffer = NULL;
 	ms->tmp_buffer = NULL;
-	ms->bytes_read = 0;
-	ms->capacity = BUFFER_SIZE;
-	ms->copied_len = 0;
-	ms->count = 0;
-	ms->start_pos = 0;
-	ms->state = LETTER;
 	ms->tmp_len = 0;
+	ms->capacity = BUFFER_SIZE;
+	ms->state = LETTER;
+	ms->bytes_read = 0;
+	ms->count = 0;
+	ms->copied_len = 0;
+	ms->start_pos = 0;
 }
 
 char	*get_next_line(int fd)
@@ -61,11 +61,8 @@ char	*get_next_line(int fd)
 			set_tmp_buffer(&ms);
 			re_read(&ms, fd);
 		}
-		else
-		{
-			set_next_line(&ms, &next_line);
-			return (next_line);
-		}
+		else if (ms.state == EOF)
+			break;
 	}
 	return (next_line);
 }
@@ -80,13 +77,12 @@ int	main(int argc, char **argv)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
 	next_line = NULL;
-	while (fd > 0 && i < 100)
+	while (fd > 0 && i < 26)
 	{
 		next_line = get_next_line(fd);
 		printf("%s", next_line);
 		free(next_line);
 		i++;
 	}
-	//system("leaks get_next_line");
 }
 

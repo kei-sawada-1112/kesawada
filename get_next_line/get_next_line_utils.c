@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 13:04:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:13:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	set_tmp_buffer(t_ms *ms)
 	char	*tmp_tmp;
 	size_t	tmp_tmp_len;
 
-	// printf("---set_tmp_buffer---\n");
+	printf("---set_tmp_buffer---\n");
+	print_state(ms);
 	tmp_tmp_len = ms->bytes_read - ms->copied_len;
 	tmp_tmp = (char *)malloc(ms->tmp_len + tmp_tmp_len + 1);
 	i = 0;
@@ -100,7 +101,7 @@ void	set_tmp_buffer(t_ms *ms)
 		tmp_tmp[i] = ms->tmp_buffer[i];
 		i++;
 	}
-	while (i < tmp_tmp_len + ms->tmp_len)
+	while (i < ms->tmp_len + tmp_tmp_len)
 	{
 		tmp_tmp[i] = ms->buffer[ms->copied_len + i - ms->tmp_len];
 		i++;
@@ -110,8 +111,8 @@ void	set_tmp_buffer(t_ms *ms)
 	ms->tmp_buffer = tmp_tmp;
 	ms->tmp_len += tmp_tmp_len;
 	ms->copied_len = 0;
-	// print_state(ms);
-	// printf("---set_tmp_buffer_end---\n");
+	print_state(ms);
+	printf("---set_tmp_buffer_end---\n");
 }
 
 void	re_read(t_ms *ms, int fd)
