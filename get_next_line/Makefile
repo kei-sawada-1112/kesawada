@@ -1,6 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-NAME = get_next_line.a
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=1
+NAME = get_next_line
 
 SRCS = get_next_line.c\
 get_next_line_utils.c\
@@ -13,8 +13,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	ar rcs $@ $^
-	ranlib $@
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	rm -f $(OBJS)

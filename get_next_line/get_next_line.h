@@ -6,12 +6,12 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:59:39 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 10:48:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:04:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 1024
 
 #endif
 
@@ -36,8 +36,14 @@ typedef struct	s_machine_state
 	size_t			start_pos;
 	size_t			bytes_read;
 	size_t			capacity;
-	int				is_eof;
 }	t_ms;
+
+typedef struct s_list
+{
+	char			*tmp_buffer;
+	struct s_list	*next;
+	size_t			tmp_len;
+}	t_list;
 
 void	read_letter(t_ms *ms);
 void	set_next_line(t_ms *ms, char **next_line);

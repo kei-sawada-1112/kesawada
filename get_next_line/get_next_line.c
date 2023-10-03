@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 10:46:28 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 13:04:25 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int	main(int argc, char **argv)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
 	next_line = NULL;
-	while (fd > 0 && i < 6)
+	while (fd > 0 && i < 100)
 	{
 		next_line = get_next_line(fd);
 		printf("%s", next_line);
 		free(next_line);
 		i++;
 	}
-	//system("leaks a.out");
+	//system("leaks get_next_line");
 }
 
