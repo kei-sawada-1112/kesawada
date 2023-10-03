@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/02 20:35:04 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:52:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void print_state(t_ms *ms)
 {
-    printf("State: %d\n", ms->state);
+    printf("state: %d\n", ms->state);
 	printf("count: %zu\n", ms->count);
 	printf("copied_len: %zu\n", ms->copied_len);
     printf("tmp_len: %zu\n", ms->tmp_len);
@@ -34,11 +34,14 @@ void	read_letter(t_ms *ms)
 
 	printf("---read_letter---\n");
 	i = ms->start_pos;
-	while (i < ms->bytes_read)
+	while (i < ms->capacity)
 	{
-		if (ms->buffer[i] == '\0')
+		if (i == ms->bytes_read + ms->start_pos)
 		{
-			ms->state = EOF;
+			if (ms->is_eof)
+				ms->state = EOF;
+			else
+				ms->state = NEED_READ;
 			return;
 		}
 		else if (ms->buffer[i] == '\n')
@@ -74,13 +77,11 @@ void	set_next_line(t_ms *ms, char **next_line)
 		i++;
 	}
 	(*next_line)[i] = '\0';
-	if (ms->copied_len == 0)
-		ms->copied_len = 1;
 	ms->copied_len += next_len;
 	ms->start_pos = ms->copied_len;
 	ms->state = LETTER;
-	ms->count = 0;
 	ms->tmp_len = 0;
+	ms->count = 0;
 	print_state(ms);
 	printf("---set_next_line_end---\n");
 }
@@ -99,6 +100,7 @@ void	set_tmp_buffer(t_ms *ms)
 		i++;
 	}
 	ms->tmp_buffer[i] = '\0';
+	ms->copied_len = 0;
 	print_state(ms);
 	printf("---set_tmp_buffer_end---\n");
 }
@@ -111,18 +113,19 @@ void	re_read(t_ms *ms, int fd)
 	print_state(ms);
 	free(ms->buffer);
 	ms->capacity += BUFFER_SIZE;
-	ms->buffer = (char *)malloc(ms->capacity + 1);
+	ms->buffer = (char *)malloc(ms->capacity + ms->tmp_len + 1);
 	i = 0;
 	while (i < ms->tmp_len)
 	{
 		ms->buffer[i] = ms->tmp_buffer[i];
 		i++;
 	}
-	ms->bytes_read = read(fd, ms->buffer + ms->tmp_len, ms->capacity - ms->tmp_len);
-	ms->buffer[ms->bytes_read] = '\0';
+	ms->bytes_read = read(fd, ms->buffer + ms->tmp_len, ms->capacity);
+	ms->buffer[ms->capacity + ms->tmp_len] = '\0';
 	free(ms->tmp_buffer);
 	ms->state = LETTER;
 	ms->start_pos = ms->tmp_len;
+	ms->copied_len = 0;
 	ms->count = 0;
 	print_state(ms);
 	printf("---re_read_end---\n");

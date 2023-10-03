@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/02 19:49:58 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:46:28 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
+
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q a.out");
+// }
 
 void	init_ms(t_ms *ms)
 {
@@ -57,7 +62,10 @@ char	*get_next_line(int fd)
 			re_read(&ms, fd);
 		}
 		else
-			break;
+		{
+			set_next_line(&ms, &next_line);
+			return (next_line);
+		}
 	}
 	return (next_line);
 }
@@ -65,28 +73,20 @@ char	*get_next_line(int fd)
 int	main(int argc, char **argv)
 {
 	int		fd;
+	int		i = 0;
 	char	*next_line;
-	// int		i = 0;
 
 	if (argc != 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
-	// while (fd > 0 && next_line != NULL && i < 3)
-	// {
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
+	next_line = NULL;
+	while (fd > 0 && i < 6)
+	{
 		next_line = get_next_line(fd);
 		printf("%s", next_line);
 		free(next_line);
-		// i++;
-	// }
+		i++;
+	}
+	//system("leaks a.out");
 }
 

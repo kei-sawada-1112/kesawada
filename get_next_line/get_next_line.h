@@ -6,12 +6,12 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:59:39 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/02 20:19:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:48:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 8
 
 #endif
 
@@ -22,7 +22,7 @@ enum e_state
 	LETTER,
 	NEWLINE,
 	NEED_READ,
-	EOF,
+	EOF = -1,
 };
 
 typedef struct	s_machine_state
@@ -36,6 +36,7 @@ typedef struct	s_machine_state
 	size_t			start_pos;
 	size_t			bytes_read;
 	size_t			capacity;
+	int				is_eof;
 }	t_ms;
 
 void	read_letter(t_ms *ms);
