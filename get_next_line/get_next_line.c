@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 13:23:54 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:47:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <limits.h>
 
 // __attribute__((destructor))
 // static void destructor() {
@@ -26,7 +27,10 @@ void	init_ms(t_ms *ms)
 	ms->buffer = NULL;
 	ms->tmp_buffer = NULL;
 	ms->tmp_len = 0;
-	ms->capacity = BUFFER_SIZE;
+	if (BUFFER_SIZE >= INT_MAX)
+		ms->capacity = INT_MAX - 1;
+	else
+		ms->capacity = BUFFER_SIZE;
 	ms->state = LETTER;
 	ms->bytes_read = 0;
 	ms->count = 0;
@@ -42,9 +46,11 @@ char	*get_next_line(int fd)
 	if (!ms.buffer)
 	{
 		init_ms(&ms);
-		ms.buffer = (char *)malloc(BUFFER_SIZE + 1);
-		ms.bytes_read = read(fd, ms.buffer, BUFFER_SIZE);
-		ms.buffer[BUFFER_SIZE] = '\0';
+		ms.buffer = (char *)malloc(ms.capacity + 1);
+		if (!ms.buffer)
+			return (NULL);
+		ms.bytes_read = read(fd, ms.buffer, ms.capacity);
+		ms.buffer[ms.capacity] = '\0';
 	}
 	next_line = NULL;
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 13:13:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:46:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ void	set_next_line(t_ms *ms, char **next_line)
 	// print_state(ms);
 	next_len = ms->count + ms->tmp_len;
 	*next_line = malloc(next_len + ms->tmp_len + 1);
+	if (!*next_line)
+	{
+		if (ms->buffer)
+			free(ms->buffer);
+		if (ms->tmp_buffer)
+			free(ms->buffer);
+		return ;
+	}
 	i = 0;
 	while (i < ms->tmp_len)
 	{
@@ -91,10 +99,18 @@ void	set_tmp_buffer(t_ms *ms)
 	char	*tmp_tmp;
 	size_t	tmp_tmp_len;
 
-	printf("---set_tmp_buffer---\n");
-	print_state(ms);
+	// printf("---set_tmp_buffer---\n");
+	// print_state(ms);
 	tmp_tmp_len = ms->bytes_read - ms->copied_len;
 	tmp_tmp = (char *)malloc(ms->tmp_len + tmp_tmp_len + 1);
+	if (!tmp_tmp)
+	{
+		if (ms->buffer)
+			free(ms->buffer);
+		if (ms->tmp_buffer)
+			free(ms->buffer);
+		return ;
+	}
 	i = 0;
 	while (i < ms->tmp_len)
 	{
@@ -111,8 +127,8 @@ void	set_tmp_buffer(t_ms *ms)
 	ms->tmp_buffer = tmp_tmp;
 	ms->tmp_len += tmp_tmp_len;
 	ms->copied_len = 0;
-	print_state(ms);
-	printf("---set_tmp_buffer_end---\n");
+	// print_state(ms);
+	// printf("---set_tmp_buffer_end---\n");
 }
 
 void	re_read(t_ms *ms, int fd)
@@ -120,10 +136,17 @@ void	re_read(t_ms *ms, int fd)
 	// printf("---re_read---\n");
 	// print_state(ms);
 	free(ms->buffer);
-	ms->capacity += BUFFER_SIZE;
+	ms->capacity *= 2;
 	ms->buffer = (char *)malloc(ms->capacity + 1);
+	if (!ms->buffer)
+	{
+		if (ms->buffer)
+			free(ms->buffer);
+		if (ms->tmp_buffer)
+			free(ms->buffer);
+	}
 	ms->bytes_read = read(fd, ms->buffer, ms->capacity);
-	ms->buffer[ms->capacity] = '\0';
+	ms->buffer[ms->bytes_read] = '\0';
 	ms->state = LETTER;
 	ms->start_pos = 0;
 	ms->copied_len = 0;
