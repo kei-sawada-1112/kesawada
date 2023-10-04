@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 16:46:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:21:00 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+#include <limits.h>
+
 #include <stdio.h>
 
 char	*get_int_value(t_format *format)
 {
 	int	value;
-
 	value = va_arg(format->args, int);
-	if (value < 0)
+	if (value < 0 && value != INT_MIN)
 	{
 		format->sign = -1;
 		value *= -1;
 	}
-	return (ft_itoa(value));
+	return (ft_itoa((int)value));
 }
 
 char	*get_double_value(t_format *format)
@@ -40,7 +41,7 @@ char	*get_double_value(t_format *format)
 		format->sign = -1;
 		value *= -1;
 	}
-	return (ft_itoa((int)value));
+	return (ft_itoa((double)value));
 }
 
 char	*get_char_value(t_format *format)

@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
 
-LIBFT_DIR = lib
+LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 INC_DIR = includes

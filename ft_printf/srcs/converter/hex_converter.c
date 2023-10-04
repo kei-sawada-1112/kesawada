@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 16:10:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/04 11:18:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,29 @@ void	hex_char(char c, char *buffer)
 char	*convert_to_hexaddr(char *ptr)
 {
 	char	*hex_addr;
+	char	*ret;
 	char	buffer[2];
 	int		i;
 
 	i = sizeof(ptr) - 1;
-	hex_addr = malloc(sizeof(ptr) * 2 + 3);
-	hex_addr[0] = '0';
-	hex_addr[1] = 'x';
+	hex_addr = malloc(sizeof(ptr) * 2 + 1);
+	if (!hex_addr)
+		return (ft_calloc(1, 1));
 	hex_addr[sizeof(ptr) * 2] = '\0';
 	while (i >= 0)
 	{
-		hex_char((uintptr_t)ptr
+		hex_char((unsigned long)ptr
 			>> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
-		hex_addr[2 * (sizeof(ptr) - 1 - i) + 2] = buffer[0];
-		hex_addr[2 * (sizeof(ptr) - 1 - i) + 3] = buffer[1];
+		hex_addr[2 * (sizeof(ptr) - 1 - i)] = buffer[0];
+		hex_addr[2 * (sizeof(ptr) - 1 - i) + 1] = buffer[1];
 		i--;
 	}
 	i = 0;
 	while (hex_addr[i] == '0')
 		i++;
-	return (hex_addr + i);
+	ret = ft_strjoin("0x", hex_addr + i);
+	free(hex_addr);
+	return (ret);
 }
 
 char	*recursive_convert(char *hex, unsigned int num, int *i, int type)
@@ -81,7 +84,6 @@ char	*recursive_convert(char *hex, unsigned int num, int *i, int type)
 char	*convert_to_hex(int num, int type)
 {
 	char	*hex;
-	char	*ret;
 	int		i;
 
 	i = 0;
@@ -98,11 +100,5 @@ char	*convert_to_hex(int num, int type)
 		return (NULL);
 	recursive_convert(hex, (unsigned int)num, &i, type);
 	hex[i] = '\0';
-	ret = malloc(i);
-	if (!ret)
-	{
-		free (hex);
-		return (NULL);
-	}
-	return (ft_memcpy(ret, hex, i + 1));
+	return (hex);
 }
