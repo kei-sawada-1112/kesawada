@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/03 20:47:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/05 16:12:40 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,41 @@
 #include <stdio.h>
 #include <limits.h>
 
-// __attribute__((destructor))
-// static void destructor() {
-//     system("leaks -q get_next_line");
-// }
+#include <string.h>
 
-void	init_ms(t_ms *ms)
+void	reset_param(t_ms *ms, int fd)
 {
-	ms->buffer = NULL;
-	ms->tmp_buffer = NULL;
-	ms->tmp_len = 0;
-	if (BUFFER_SIZE >= INT_MAX)
-		ms->capacity = INT_MAX - 1;
-	else
-		ms->capacity = BUFFER_SIZE;
+	ms->fd = fd;
 	ms->state = LETTER;
-	ms->bytes_read = 0;
 	ms->count = 0;
 	ms->copied_len = 0;
 	ms->start_pos = 0;
+	ms->tmp_buffer = NULL;
+	ms->tmp_len = 0;
+}
+
+int	init_ms(t_ms *ms, int fd)
+{
+	if (!*ms->buffer)
+	{
+		ms->bytes_read = read(fd, ms->buffer, BUFFER_SIZE);
+		if (ms->bytes_read < 0)
+			return (-1);
+		reset_param(ms, fd);
+	}
+	return (1);
+}
+
+int	eof_function(t_ms *ms, char **next_line)
+{
+	if (!ms->count && !ms->tmp_len)
+	{
+		if (ms->tmp_buffer)
+			free(ms->tmp_buffer);
+		return (-1);
+	}
+	set_next_line(ms, next_line);
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -43,16 +59,8 @@ char	*get_next_line(int fd)
 	static t_ms	ms;
 	char		*next_line;
 
-	if (!ms.buffer)
-	{
-		init_ms(&ms);
-		ms.buffer = (char *)malloc(ms.capacity + 1);
-		if (!ms.buffer)
-			return (NULL);
-		ms.bytes_read = read(fd, ms.buffer, ms.capacity);
-		ms.buffer[ms.capacity] = '\0';
-	}
-	next_line = NULL;
+	if (BUFFER_SIZE == 0 || fd < 0 || init_ms(&ms, fd) == -1)
+		return (NULL);
 	while (1)
 	{
 		if (ms.state == LETTER)
@@ -60,35 +68,16 @@ char	*get_next_line(int fd)
 		else if (ms.state == NEWLINE)
 		{
 			set_next_line(&ms, &next_line);
-			return (next_line);
+			break ;
 		}
 		else if (ms.state == NEED_READ)
+			re_read(&ms);
+		else if (ms.state == GNL_EOF)
 		{
-			set_tmp_buffer(&ms);
-			re_read(&ms, fd);
+			if (eof_function(&ms, &next_line) == -1)
+				return (NULL);
+			break ;
 		}
-		else if (ms.state == EOF)
-			break;
 	}
 	return (next_line);
 }
-
-int	main(int argc, char **argv)
-{
-	int		fd;
-	int		i = 0;
-	char	*next_line;
-
-	if (argc != 2)
-		return (0);
-	fd = open(argv[1], O_RDONLY);
-	next_line = NULL;
-	while (fd > 0 && i < 26)
-	{
-		next_line = get_next_line(fd);
-		printf("%s", next_line);
-		free(next_line);
-		i++;
-	}
-}
-
