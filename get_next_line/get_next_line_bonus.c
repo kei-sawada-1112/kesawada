@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 19:37:27 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:37:43 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <unistd.h>
 #include <stdlib.h>
 
-int	init_ms(t_ms *ms, int fd)
+t_ms	*get_current_ms(t_ms *ms, int fd)
 {
-	if (!*ms->buffer)
+	int	i;
+
+	i = 0;
+	while (ms[i].used == 1)
 	{
-		ms->bytes_read = read(fd, ms->buffer, BUFFER_SIZE);
-		if (ms->bytes_read < 0)
-			return (-1);
-		ms->fd = fd;
+		if (ms[i].fd == fd)
+			return (&ms[i]);
+		i++;
 	}
-	return (1);
+	if (!*ms[i].buffer)
+	{
+		ms[i].bytes_read = read(fd, ms[i].buffer, BUFFER_SIZE);
+		if (ms[i].bytes_read < 0)
+			return (NULL);
+		ms[i].fd = fd;
+		ms[i].used = 1;
+	}
+	return (&ms[i]);
 }
 
 int	endline_function(t_ms *ms, char **next_line)
@@ -40,20 +50,22 @@ int	endline_function(t_ms *ms, char **next_line)
 
 char	*get_next_line(int fd)
 {
-	static t_ms	ms;
+	static t_ms	ms[100];
 	char		*next_line;
+	t_ms		*current_ms;
 
-	if (BUFFER_SIZE == 0 || fd < 0 || init_ms(&ms, fd) == -1)
+	current_ms = get_current_ms(ms, fd);
+	if (!current_ms || BUFFER_SIZE == 0 || fd < 0)
 		return (NULL);
 	while (1)
 	{
-		if (ms.state == LETTER)
-			read_letter(&ms);
-		else if (ms.state == NEED_READ)
-			re_read(&ms);
-		else if (ms.state == NEWLINE || ms.state == GNL_EOF)
+		if (current_ms->state == LETTER)
+			read_letter(current_ms);
+		else if (current_ms->state == NEED_READ)
+			re_read(current_ms);
+		else if (current_ms->state == NEWLINE || current_ms->state == GNL_EOF)
 		{
-			if (endline_function(&ms, &next_line) == -1)
+			if (endline_function(current_ms, &next_line) == -1)
 				return (NULL);
 			break ;
 		}

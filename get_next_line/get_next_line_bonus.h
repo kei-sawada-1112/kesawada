@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 19:08:31 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 19:37:04 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/05 19:24:13 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stddef.h>
 
@@ -38,6 +38,7 @@ typedef struct s_machine_state
 	size_t			copied_len;
 	size_t			start_pos;
 	int				bytes_read;
+	int				used;
 }	t_ms;
 
 void	read_letter(t_ms *ms);
