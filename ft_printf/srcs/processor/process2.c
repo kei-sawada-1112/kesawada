@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 17:02:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:32:49 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	process_type(char **str, t_format *format)
 	};
 
 	handle_common(format, f[format->type]);
-	init_format(format);
+	format->state = LETTER;
 	(*str)++;
 }
 

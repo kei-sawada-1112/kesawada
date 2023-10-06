@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 13:25:44 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:45:04 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,40 @@ void	init_buffer(t_format *format)
 	format->cap = 0;
 }
 
+void	add_null_to_buffer(t_format *format)
+{
+	char	*new_buffer;
+	while (format->len + 1 > format->cap)
+	{
+		format->cap += BUFFER_SIZE;
+		new_buffer = (char *)malloc(format->cap);
+		ft_strlcpy(new_buffer, format->buffer, format->len + 1);
+		free(format->buffer);
+		format->buffer = new_buffer;
+	}
+	ft_memcpy(new_buffer, "\0", 1);
+	format->len += 1;
+}
+
 void	add_to_buffer(const char *str, t_format *format)
 {
 	char	*new_buffer;
 	size_t	len_str;
-	size_t	len_buffer;
 
 	len_str = ft_strlen(str);
-	len_buffer = ft_strlen(format->buffer);
-	while (len_buffer + len_str > format->cap)
+	while (format->len + len_str > format->cap)
 	{
 		format->cap += BUFFER_SIZE;
 		new_buffer = (char *)malloc(format->cap);
-		ft_strlcpy(new_buffer, format->buffer, len_buffer + 1);
+		if (!new_buffer)
+		{
+			free(format->buffer);
+			return ;
+		}
+		ft_strlcpy(new_buffer, format->buffer, format->len);
 		free(format->buffer);
 		format->buffer = new_buffer;
 	}
-	ft_strlcpy(format->buffer + len_buffer, str, len_str + 1);
+	ft_strlcpy(format->buffer + format->len, str, len_str + 1);
+	format->len += len_str;
 }

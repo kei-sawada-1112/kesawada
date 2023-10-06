@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/04 11:21:00 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:44:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ char	*get_char_value(t_format *format)
 
 char	*get_str_value(t_format *format)
 {
-	return (ft_strdup(va_arg(format->args, char *)));
+	char	*value;
+
+	value = va_arg(format->args, char *);
+	if (!value)
+		return (ft_strdup("(null)"));
+	else
+		return (ft_strdup(value));
 }
 
 char	*get_hexaddr_value(t_format *format)

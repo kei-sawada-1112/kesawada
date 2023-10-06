@@ -30,6 +30,7 @@ $(LIBFT_DIR)/ft_bzero.o\
 $(LIBFT_DIR)/ft_calloc.o\
 $(LIBFT_DIR)/ft_isdigit.o\
 $(LIBFT_DIR)/ft_itoa.o\
+$(LIBFT_DIR)/ft_memcpy.o\
 $(LIBFT_DIR)/ft_memset.o\
 $(LIBFT_DIR)/ft_strchr.o\
 $(LIBFT_DIR)/ft_strdup.o\

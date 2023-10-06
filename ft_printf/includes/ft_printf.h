@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 17:02:31 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:39:52 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_format
 	char			*buffer;
 	size_t			cap;
 	size_t			width;
+	size_t			len;
 	int				sign;
 	int				precision;
 	int				f_hash;
@@ -80,6 +81,7 @@ void	process_error(char **str, t_format *format);
 // buffer_handler
 void	init_buffer(t_format *format);
 void	add_to_buffer(const char *str, t_format *format);
+void	add_null_to_buffer(t_format *format);
 
 // getter
 char	*get_int_value(t_format *format);

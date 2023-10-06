@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:45:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/04 11:23:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 20:40:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	state_based_process(char **str, t_format *format)
 void	init_format(t_format *format)
 {
 	format->state = LETTER;
+	format->cap = BUFFER_SIZE;
+	format->len = 0;
 	format->f_hash = 0;
 	format->f_minus = 0;
 	format->f_plus = 0;
@@ -47,41 +49,42 @@ void	init_format(t_format *format)
 int	ft_printf(const char *input, ...)
 {
 	t_format	format;
-	size_t		total_len;
 
 	va_start(format.args, input);
 	init_buffer(&format);
 	init_format(&format);
 	while (*input)
 		state_based_process((char **)(&input), &format);
-	write(1, format.buffer, ft_strlen(format.buffer));
+	write(1, format.buffer, format.len);
 	va_end(format.args);
-	total_len = ft_strlen(format.buffer);
 	free(format.buffer);
-	return (total_len);
+	return (format.len);
 }
 
-int	main(void)
-{
-	// char	*c = "aiueo";
-	// ft_printf("str: %s, addr: %p", c, c);
-//	unsigned int num = 123456;
-	int num = INT_MAX;
-	char *str = "12345";
-	ft_printf("aiueo%%sa\n");
-	printf("aiueo%%sa\n");
+// int	main(void)
+// {
+// 	// char	*c = "aiueo";
+// 	// ft_printf("str: %s, addr: %p", c, c);
+// //	unsigned int num = 123456;
+// 	// int num = INT_MAX;
+// 	// char *str = "12345";
+// 	// ft_printf("aiueo%%sa\n");
+// 	// printf("aiueo%%sa\n");
+// //int	i;
+// 	//i = ft_printf("aiueo%ca\n", 0);
+// 	ft_printf("aiueo%saaaa\n", "");
+// 	// i = printf("aiueo%ca\n", 0);
+// 	// ft_printf("i: %d\n", i);
+// 	//printf("aiueo%ca\n", 0);
 
-	ft_printf("aiueo%ca\n", 'a');
-	printf("aiueo%ca\n", 'a');
+// 	// ft_printf("aiueo%p\n", str);
+// 	// printf("aiueo%p\n", str);
 
-	ft_printf("aiueo%p\n", str);
-	printf("aiueo%p\n", str);
+// 	// ft_printf("aaa%#15Xbbb\n", num);
+// 	// printf("aaa%#15Xbbb\n", num);
 
-	ft_printf("aaa%#15Xbbb\n", num);
-	printf("aaa%#15Xbbb\n", num);
+// 	// ft_printf("aaa%100dbbb\n", num);
+// 	// printf("aaa%100dbbb\n", num);
 
-	ft_printf("aaa%100dbbb\n", num);
-	printf("aaa%100dbbb\n", num);
-
-	//system("leaks a.out");
-}
+// 	//system("leaks a.out");
+// }
