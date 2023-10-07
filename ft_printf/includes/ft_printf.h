@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/06 19:39:52 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:06:27 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ typedef struct s_format
 	int				f_plus;
 	int				f_minus;
 	int				f_space;
+	int				f_dot;
 	char			*prefix;
+	char			*field;
 }	t_format;
 
 typedef char	*(*t_getter)(t_format *);
@@ -96,6 +98,7 @@ char	*get_hex_value(t_format *format);
 // 変換してbufferに書き込み
 char	*convert_to_hexaddr(char *ptr);
 char	*convert_to_hex(int num, int type);
+char	*ft_uitoa(unsigned int num);
 
 int		ft_printf(const char *input, ...);
 

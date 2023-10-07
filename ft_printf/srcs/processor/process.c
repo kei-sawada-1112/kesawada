@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 17:00:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:07:13 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,16 @@ int	set_format_state(char **str, t_format *format)
 		format->state = LETTER;
 		add_to_buffer("%", format);
 	}
-	else if (ft_isdigit(**str))
+	else if (ft_isdigit(**str) && **str != '0')
 	{
 		format->state = FIELD;
 		return (0);
 	}
 	else if (**str == '.')
+	{
 		format->state = PREFIX;
+		format->f_dot = 1;
+	}
 	else
 		format->type = TYPE_INVALID;
 	return (1);

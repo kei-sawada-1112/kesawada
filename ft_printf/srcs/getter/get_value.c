@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/06 20:44:24 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/06 23:25:38 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 #include "ft_printf.h"
 #include <stdarg.h>
 #include <stdlib.h>
-
 #include <limits.h>
-
-#include <stdio.h>
 
 char	*get_int_value(t_format *format)
 {
 	int	value;
 	value = va_arg(format->args, int);
-	if (value < 0 && value != INT_MIN)
+	if (value < 0)
 	{
-		format->sign = -1;
-		value *= -1;
+		if (value != INT_MIN)
+		{
+			value *= -1;
+			format->sign = -1;
+		}
+		format->f_plus = 0;
 	}
 	return (ft_itoa((int)value));
 }
@@ -72,5 +73,7 @@ char	*get_hexaddr_value(t_format *format)
 	char	*value;
 
 	value = va_arg(format->args, char *);
+	if (!value)
+		return (ft_strdup("0x0"));
 	return (convert_to_hexaddr(value));
 }

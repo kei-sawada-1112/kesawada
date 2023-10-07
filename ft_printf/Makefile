@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+#CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
 
@@ -18,6 +18,7 @@ HANDLERS = $(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
 BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
 
 CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+$(SRC_DIR)/$(CONVERTER_DIR)/ft_uitoa.c\
 
 PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
 $(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/06 20:45:04 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:44:13 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 #include <stdio.h>
+#include <unistd.h>
 
 void	init_buffer(t_format *format)
 {
@@ -46,6 +47,13 @@ void	add_to_buffer(const char *str, t_format *format)
 	size_t	len_str;
 
 	len_str = ft_strlen(str);
+	if (len_str > format->precision && format->type == TYPE_S && format->f_dot)
+	{
+		len_str = format->precision;
+		printf("aaa");
+	}
+	if (len_str == 0)
+		return ;
 	while (format->len + len_str > format->cap)
 	{
 		format->cap += BUFFER_SIZE;

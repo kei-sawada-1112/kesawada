@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/01 16:48:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 10:46:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_printf.h"
 #include <stdarg.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include <stdio.h>
 
@@ -35,23 +36,23 @@ char	*get_uint_value(t_format *format)
 	unsigned int	value;
 
 	value = va_arg(format->args, unsigned int);
-	return (ft_itoa(value));
+	return (ft_uitoa(value));
 }
 
 char	*get_hex_value(t_format *format)
 {
-	long long	value;
-	char		*hex;
-	char		*hashed_hex;
+	unsigned long long	value;
+	char				*hex;
+	char				*hashed_hex;
 
-	value = va_arg(format->args, long long);
+	value = va_arg(format->args, unsigned long long);
 	if (value < 0)
 	{
 		format->sign = -1;
 		value *= -1;
 	}
 	hex = convert_to_hex((int)value, format->type);
-	if (format->f_hash)
+	if (format->f_hash && hex[0] != '0')
 	{
 		if (format->type == TYPE_X)
 			hashed_hex = ft_strjoin("0x", hex);

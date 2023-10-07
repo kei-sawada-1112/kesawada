@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:45:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/06 20:40:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 13:29:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ void	init_format(t_format *format)
 	format->f_plus = 0;
 	format->f_space = 0;
 	format->f_zero = 0;
-	format->precision = 0;
-	format->prefix = 0;
+	format->f_dot = 0;
+	format->prefix = NULL;
+	format->field = NULL;
 	format->type = 0;
 	format->width = 0;
+	format->precision = 0;
 	format->sign = 1;
 }
 
@@ -63,19 +65,31 @@ int	ft_printf(const char *input, ...)
 
 // int	main(void)
 // {
+// 	ft_printf("%-2c ", "0");
+// 	//printf("\n");
+// 	//printf("%-2c", "0");
+// 	// ft_printf(" %1c %2c %3c\n", '0', 0, '1');
+// 	// ft_printf(" %-1c %-2c %-3c\n", '0', 0, '1');
+// 	// printf(" %1c %2c %3c\n", '0', 0, '1');
+// 	// printf(" %-1c %-2c %-3c\n", '0', 0, '1');
+// 	// ft_printf(" %#x %#x %#x %#x %#x %#x %#x\n", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+// 	// printf(" %#x %#x %#x %#x %#x %#x %#x\n", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+
+// 	// ft_printf(" %d %d %d %d %d %d %d\n", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
+// 	// printf(" %d %d %d %d %d %d %d", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);
 // 	// char	*c = "aiueo";
 // 	// ft_printf("str: %s, addr: %p", c, c);
-// //	unsigned int num = 123456;
+// 	// unsigned int num = 123456;
 // 	// int num = INT_MAX;
 // 	// char *str = "12345";
 // 	// ft_printf("aiueo%%sa\n");
 // 	// printf("aiueo%%sa\n");
-// //int	i;
-// 	//i = ft_printf("aiueo%ca\n", 0);
-// 	ft_printf("aiueo%saaaa\n", "");
+// 	// i = ft_printf("aiueo%ca\n", 0);
+// 	// ft_printf("p: %p\n", 0);
+// 	// printf("p: %p\n", 0);
 // 	// i = printf("aiueo%ca\n", 0);
 // 	// ft_printf("i: %d\n", i);
-// 	//printf("aiueo%ca\n", 0);
+// 	// printf("aiueo%ca\n", 0);
 
 // 	// ft_printf("aiueo%p\n", str);
 // 	// printf("aiueo%p\n", str);
