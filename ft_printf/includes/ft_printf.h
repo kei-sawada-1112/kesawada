@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 12:06:27 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:34:09 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_format
 	int				f_minus;
 	int				f_space;
 	int				f_dot;
+	int				f_num;
 	char			*prefix;
 	char			*field;
 }	t_format;

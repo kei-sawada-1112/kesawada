@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/06 23:25:38 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:34:49 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*get_int_value(t_format *format)
 {
 	int	value;
 	value = va_arg(format->args, int);
+	format->f_num = 1;
 	if (value < 0)
 	{
 		if (value != INT_MIN)
@@ -37,6 +38,7 @@ char	*get_double_value(t_format *format)
 	double	value;
 
 	value = va_arg(format->args, double);
+	format->f_num = 1;
 	if (value < 0)
 	{
 		format->sign = -1;

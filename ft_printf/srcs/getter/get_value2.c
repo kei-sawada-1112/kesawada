@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 10:46:24 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/07 14:35:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*get_uint_value(t_format *format)
 	unsigned int	value;
 
 	value = va_arg(format->args, unsigned int);
+	format->f_num = 1;
 	return (ft_uitoa(value));
 }
 
@@ -46,6 +47,7 @@ char	*get_hex_value(t_format *format)
 	char				*hashed_hex;
 
 	value = va_arg(format->args, unsigned long long);
+	format->f_num = 1;
 	if (value < 0)
 	{
 		format->sign = -1;
