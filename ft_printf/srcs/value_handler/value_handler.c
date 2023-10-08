@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 22:51:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 23:28:47 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,35 @@
 
 static long long	set_field_len(t_format *format, char *value)
 {
+	long long	field_len;
+
 	if (format->f_dot)
 	{
 		if (!format->f_num)
-			return ((format->width - ft_strlen(value))
-				* (ft_strlen(value) < format->precision)
-				+ (format->width - format->precision)
-				* (ft_strlen(value) >= format->precision));
+			field_len = ((format->width - ft_strlen(value))
+					* (ft_strlen(value) < format->precision)
+					+ (format->width - format->precision)
+					* (ft_strlen(value) >= format->precision));
 		else
-			return ((format->width - ft_strlen(value))
-				* (ft_strlen(value) > format->precision)
-				+ (format->width - format->precision)
-				* (ft_strlen(value) <= format->precision)
-				+ (value[0] == '0' && format->precision == 0));
+			field_len = ((format->width - ft_strlen(value))
+					* (ft_strlen(value) > format->precision)
+					+ (format->width - format->precision)
+					* (ft_strlen(value) <= format->precision)
+					+ (value[0] == '0' && format->precision == 0));
 	}
 	else
-		return (format->width - ft_strlen(value));
+		field_len = (format->width - ft_strlen(value));
+	if (format->f_space && format->sign == 1 && format->f_num)
+	{
+		add_to_buffer(" ", format);
+		field_len -= 1;
+	}
+	return (field_len);
 }
 
 static void	check_field(t_format *format, char *value)
 {
 	long long	field_len;
-
 
 	if (format->precision > format->width && format->f_num)
 		return ;
@@ -54,14 +61,12 @@ static void	check_field(t_format *format, char *value)
 		format->field = malloc(field_len + 1);
 		if (!format->field)
 			return ;
-		if (format->f_num && (format->f_zero && !format->f_dot))
+		if ((format->f_zero && !format->f_dot))
 			ft_memset(format->field, '0', field_len);
 		else
 			ft_memset(format->field, ' ', field_len);
 		format->field[field_len] = '\0';
 	}
-	else if (format->f_space && format->sign == 1 && format->f_num)
-		add_to_buffer(" ", format);
 }
 
 static void	check_prefix(t_format *format, char *value)
