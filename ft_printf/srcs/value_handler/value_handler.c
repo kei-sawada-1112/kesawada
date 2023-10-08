@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 23:28:47 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:51:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 static long long	set_field_len(t_format *format, char *value)
 {
 	long long	field_len;
 
 	if (format->f_dot)
 	{
-		if (!format->f_num)
+		if (!format->f_num && format->type != TYPE_P)
 			field_len = ((format->width - ft_strlen(value))
 					* (ft_strlen(value) < format->precision)
 					+ (format->width - format->precision)
@@ -54,6 +56,8 @@ static void	check_field(t_format *format, char *value)
 	if (format->precision > 0 && format->f_num)
 		format->f_zero = 0;
 	field_len = set_field_len(format, value);
+	if (format->type == TYPE_P && format->f_dot)
+		field_len -= 1;
 	if (format->sign == -1)
 		field_len -= 1;
 	if (field_len > 0)
@@ -122,7 +126,8 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	value = get_value(format);
 	if (value[0] == '\0' && format->type == TYPE_C)
 		format->width -= 1;
-	if (format->f_dot && format->precision == 0 && !format->f_num)
+	if (format->f_dot && format->precision == 0
+		&& !format->f_num && !(format->type == TYPE_P))
 	{
 		add_space_to_buffer(format);
 		free (value);

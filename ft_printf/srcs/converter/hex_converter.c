@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 12:09:26 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:34:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdlib.h>
+
+#include <stdio.h>
 
 void	hex_char(char c, char *buffer)
 {
@@ -33,7 +35,7 @@ void	hex_char(char c, char *buffer)
 	}
 }
 
-char	*convert_to_hexaddr(char *ptr)
+char	*convert_to_hexaddr(unsigned long ptr)
 {
 	char	*hex_addr;
 	char	*ret;
@@ -47,7 +49,7 @@ char	*convert_to_hexaddr(char *ptr)
 	hex_addr[sizeof(ptr) * 2] = '\0';
 	while (i >= 0)
 	{
-		hex_char((unsigned long)ptr
+		hex_char(ptr
 			>> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
 		hex_addr[2 * (sizeof(ptr) - 1 - i)] = buffer[0];
 		hex_addr[2 * (sizeof(ptr) - 1 - i) + 1] = buffer[1];

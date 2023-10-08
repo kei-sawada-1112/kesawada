@@ -6,12 +6,14 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 21:07:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:29:42 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdlib.h>
+
+#include <stdio.h>
 
 void	add_null_to_buffer(t_format *format)
 {
@@ -80,10 +82,11 @@ void	add_to_buffer(const char *str, t_format *format)
 	size_t	len_str;
 
 	len_str = ft_strlen(str);
-	if (len_str == 0 || ((format->f_num == 1 && !ft_strncmp(str, "0", 1)
+	if (len_str == 0 || ((format->f_num && !ft_strncmp(str, "0", 1)
 				&& format->f_dot && format->precision == 0)))
 		return ;
-	if (len_str > format->precision && format->f_dot && !format->f_num)
+	if (len_str > format->precision && format->f_dot
+		&& !format->f_num && format->type != TYPE_P)
 		len_str = format->precision;
 	while (format->len + len_str > format->cap)
 	{
