@@ -6,11 +6,10 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 14:34:49 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 12:38:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 #include <stdarg.h>
 #include <stdlib.h>
@@ -19,16 +18,16 @@
 char	*get_int_value(t_format *format)
 {
 	int	value;
+
 	value = va_arg(format->args, int);
 	format->f_num = 1;
 	if (value < 0)
 	{
-		if (value != INT_MIN)
-		{
-			value *= -1;
-			format->sign = -1;
-		}
+		format->sign = -1;
 		format->f_plus = 0;
+		if (value == INT_MIN)
+			return (ft_strdup("2147483648"));
+		value *= -1;
 	}
 	return (ft_itoa((int)value));
 }

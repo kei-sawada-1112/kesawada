@@ -6,18 +6,15 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/04 11:18:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 12:09:26 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-#include <stdio.h>
 
 void	hex_char(char c, char *buffer)
 {

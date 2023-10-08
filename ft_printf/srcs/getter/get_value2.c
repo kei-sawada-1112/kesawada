@@ -6,17 +6,14 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 14:35:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 11:55:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <limits.h>
-
-#include <stdio.h>
 
 char	*get_per_value(t_format *format)
 {

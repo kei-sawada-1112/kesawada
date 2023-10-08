@@ -6,16 +6,12 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 13:39:28 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 12:38:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 #include <stdlib.h>
-
-#include <stdio.h>
-#include <unistd.h>
 
 void	init_buffer(t_format *format)
 {
@@ -29,6 +25,7 @@ void	init_buffer(t_format *format)
 void	add_null_to_buffer(t_format *format)
 {
 	char	*new_buffer;
+
 	while (format->len + 1 > format->cap)
 	{
 		format->cap += BUFFER_SIZE;

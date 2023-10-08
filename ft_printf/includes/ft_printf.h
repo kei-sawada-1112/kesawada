@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 14:34:09 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 12:34:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ typedef struct s_format
 	char			*buffer;
 	size_t			cap;
 	size_t			width;
+	size_t			precision;
 	size_t			len;
 	int				sign;
-	int				precision;
 	int				f_hash;
 	int				f_zero;
 	int				f_plus;
@@ -65,15 +65,12 @@ typedef struct s_format
 }	t_format;
 
 typedef char	*(*t_getter)(t_format *);
-
 typedef void	(*t_process)(char **, t_format *);
 
+int		ft_printf(const char *input, ...);
+void	init_format(t_format *format);
 void	handle_common(t_format *format, char *(*get_value)(t_format *f));
 
-// format 初期化
-void	init_format(t_format *format);
-
-// process
 void	process_letter(char **str, t_format *format);
 void	process_flag(char **str, t_format *format);
 void	process_field(char **str, t_format *format);
@@ -81,12 +78,10 @@ void	process_prefix(char **str, t_format *format);
 void	process_type(char **str, t_format *format);
 void	process_error(char **str, t_format *format);
 
-// buffer_handler
 void	init_buffer(t_format *format);
 void	add_to_buffer(const char *str, t_format *format);
 void	add_null_to_buffer(t_format *format);
 
-// getter
 char	*get_int_value(t_format *format);
 char	*get_char_value(t_format *format);
 char	*get_double_value(t_format *format);
@@ -96,11 +91,20 @@ char	*get_per_value(t_format *format);
 char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
 
-// 変換してbufferに書き込み
 char	*convert_to_hexaddr(char *ptr);
 char	*convert_to_hex(int num, int type);
 char	*ft_uitoa(unsigned int num);
 
-int		ft_printf(const char *input, ...);
+size_t	ft_strlen(const char *str);
+void	*ft_memset(void *b, int c, size_t len);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+int		ft_isdigit(int c);
+char	*ft_strchr(const char *s, int c);
+int		ft_atoi(const char *str);
+char	*ft_itoa(int n);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_calloc(size_t count, size_t size);
 
 #endif

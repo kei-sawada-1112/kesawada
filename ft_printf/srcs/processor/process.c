@@ -6,15 +6,12 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 12:07:13 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 11:55:13 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 #include <unistd.h>
-
-#include <stdio.h>
 
 void	process_letter(char **str, t_format *format)
 {

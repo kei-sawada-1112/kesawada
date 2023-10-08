@@ -1,5 +1,5 @@
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
 
@@ -7,13 +7,13 @@ LIBFT_DIR = libft
 
 INC_DIR = includes
 SRC_DIR = srcs
-HANDLER_DIR = op_handler
+VALUE_HANDLER_DIR = value_handler
 CONVERTER_DIR = converter
 PROCESSOR_DIR = processor
 BUFFER_HANDLER_DIR = buffer_handler
 GETTER_DIR = getter
 
-HANDLERS = $(SRC_DIR)/$(HANDLER_DIR)/op_handler.c\
+VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler.c\
 
 BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
 
@@ -41,7 +41,7 @@ $(LIBFT_DIR)/ft_strlcpy.o\
 $(LIBFT_DIR)/ft_strlen.o\
 
 SRCS = ft_printf.c\
-$(HANDLERS)\
+$(VALUE_HANDLERS)\
 $(BUFFER_HANDLERS)\
 $(CONVERTERS)\
 $(PROCESSORS)\
