@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 21:18:25 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 21:55:57 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	init_format(t_format *format)
 	format->f_dot = 0;
 	format->f_num = 0;
 	format->prefix = NULL;
-	format->field = NULL;
-	format->type = 0;
-	format->width = 0;
 	format->precision = 0;
+	format->field = NULL;
+	format->width = 0;
+	format->type = 0;
 	format->sign = 1;
 }
 

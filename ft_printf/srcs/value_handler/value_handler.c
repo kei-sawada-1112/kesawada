@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 21:17:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 22:51:42 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ static void	check_field(t_format *format, char *value)
 {
 	long long	field_len;
 
+
 	if (format->precision > format->width && format->f_num)
 		return ;
+	if (format->f_minus)
+		format->f_zero = 0;
+	if (format->precision > 0 && format->f_num)
+		format->f_zero = 0;
 	field_len = set_field_len(format, value);
 	if (format->sign == -1)
 		field_len -= 1;
