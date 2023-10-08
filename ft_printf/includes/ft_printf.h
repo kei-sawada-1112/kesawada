@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 12:34:50 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 15:55:05 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ void	process_type(char **str, t_format *format);
 void	process_error(char **str, t_format *format);
 
 void	init_buffer(t_format *format);
+void	add_field_or_prefix(const char *str, t_format *format);
 void	add_to_buffer(const char *str, t_format *format);
 void	add_null_to_buffer(t_format *format);
+void	add_space_to_buffer(t_format *format);
 
 char	*get_int_value(t_format *format);
 char	*get_char_value(t_format *format);
@@ -106,5 +108,6 @@ char	*ft_itoa(int n);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(const char *s1, const char *s2);
 char	*ft_calloc(size_t count, size_t size);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

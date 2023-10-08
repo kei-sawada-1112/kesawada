@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 12:04:32 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 21:18:25 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ void	init_format(t_format *format)
 	format->width = 0;
 	format->precision = 0;
 	format->sign = 1;
+}
+
+void	init_buffer(t_format *format)
+{
+	format->buffer = (char *)malloc(BUFFER_SIZE);
+	if (!format->buffer)
+		return ;
+	format->buffer[0] = '\0';
+	format->cap = 0;
 }
 
 int	ft_printf(const char *input, ...)

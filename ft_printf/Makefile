@@ -39,6 +39,7 @@ $(LIBFT_DIR)/ft_strjoin.o\
 $(LIBFT_DIR)/ft_strlcat.o\
 $(LIBFT_DIR)/ft_strlcpy.o\
 $(LIBFT_DIR)/ft_strlen.o\
+$(LIBFT_DIR)/ft_strncmp.o\
 
 SRCS = ft_printf.c\
 $(VALUE_HANDLERS)\
