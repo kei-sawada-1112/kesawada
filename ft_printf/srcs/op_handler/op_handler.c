@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 14:51:53 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/08 10:10:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	check_field(t_format *format, char *value)
 {
 	long long	field_len;
 
-	if (format->f_zero && format->sign == -1 && !format->f_dot)
-		add_to_buffer("-", format);
 	if (format->precision < ft_strlen(value) && format->f_dot)
 		field_len = format->width - format->precision;
 	else
@@ -43,8 +41,6 @@ static void	check_field(t_format *format, char *value)
 	}
 	else if (format->f_space && format->sign == 1)
 		add_to_buffer(" ", format);
-	if (!format->f_zero && format->sign == -1)
-		add_to_buffer("-", format);
 }
 
 void	handle_common(t_format *format, char *(*get_value)(t_format *))
@@ -60,11 +56,15 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 		check_field(format, value);
 	if (value)
 	{
+		if (format->f_zero && format->sign == -1 && !format->f_dot)
+			add_to_buffer("-", format);
 		if (!format->f_minus && format->field)
 		{
 			add_to_buffer(format->field, format);
 			free(format->field);
 		}
+		if (!format->f_zero && format->sign == -1)
+			add_to_buffer("-", format);
 		if (value[0] == '\0' && format->type == TYPE_C)
 			add_null_to_buffer(format);
 		add_to_buffer(value, format);
