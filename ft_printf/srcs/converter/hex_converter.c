@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 00:34:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:08:30 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-void	hex_char(char c, char *buffer)
+void	hex_char(unsigned char c, unsigned char *buffer)
 {
 	size_t	i;
 
@@ -35,30 +35,30 @@ void	hex_char(char c, char *buffer)
 	}
 }
 
-char	*convert_to_hexaddr(unsigned long ptr)
+char	*convert_to_hexaddr(void *ptr, size_t precision)
 {
-	char	*hex_addr;
-	char	*ret;
-	char	buffer[2];
-	int		i;
+	char			*ret;
+	unsigned char	*hex_addr;
+	unsigned char	buffer[2];
+	int				i;
 
 	i = sizeof(ptr) - 1;
 	hex_addr = malloc(sizeof(ptr) * 2 + 1);
 	if (!hex_addr)
-		return (ft_calloc(1, 1));
+		return (NULL);
 	hex_addr[sizeof(ptr) * 2] = '\0';
 	while (i >= 0)
 	{
-		hex_char(ptr
-			>> ((sizeof(ptr) + i) * 8) & 0xFF, buffer);
+		hex_char((uintptr_t)ptr
+			>> (i * 8) & 0xFF, buffer);
 		hex_addr[2 * (sizeof(ptr) - 1 - i)] = buffer[0];
 		hex_addr[2 * (sizeof(ptr) - 1 - i) + 1] = buffer[1];
 		i--;
 	}
 	i = 0;
-	while (hex_addr[i] == '0')
+	while (hex_addr[i] == '0' && ft_strlen((char *)hex_addr) - (size_t)i > precision)
 		i++;
-	ret = ft_strjoin("0x", hex_addr + i);
+	ret = ft_strjoin("0x", (char *)(hex_addr + i));
 	free(hex_addr);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 00:51:50 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:52:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ char	*get_str_value(t_format *format)
 
 char	*get_hexaddr_value(t_format *format)
 {
-	unsigned long	value;
+	void	*value;
 
-	value = va_arg(format->args, unsigned long);
-	if (value == 0)
+	value = va_arg(format->args, void *);
+	if (value == NULL)
 	{
 		if (format->f_dot)
 			return (ft_strdup("0x"));
@@ -86,5 +86,5 @@ char	*get_hexaddr_value(t_format *format)
 	}
 	if (!value)
 		return (ft_strdup("0x0"));
-	return (convert_to_hexaddr(value));
+	return (convert_to_hexaddr(value, format->precision));
 }

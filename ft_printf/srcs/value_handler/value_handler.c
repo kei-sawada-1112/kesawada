@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 00:51:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:50:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ static long long	set_field_len(t_format *format, char *value)
 			field_len = ((format->width - ft_strlen(value))
 					* (ft_strlen(value) > format->precision)
 					+ (format->width - format->precision)
-					* (ft_strlen(value) <= format->precision)
-					+ (value[0] == '0' && format->precision == 0));
+					* (ft_strlen(value) <= format->precision));
+					// + (format->precision == 0));
+					// + (value[0] == '0' && format->precision == 0));
 	}
 	else
 		field_len = (format->width - ft_strlen(value));
@@ -56,8 +57,8 @@ static void	check_field(t_format *format, char *value)
 	if (format->precision > 0 && format->f_num)
 		format->f_zero = 0;
 	field_len = set_field_len(format, value);
-	if (format->type == TYPE_P && format->f_dot)
-		field_len -= 1;
+	// if (format->type == TYPE_P && format->f_dot)
+	// 	field_len -= 1;
 	if (format->sign == -1)
 		field_len -= 1;
 	if (field_len > 0)
