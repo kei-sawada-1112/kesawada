@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 10:34:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 11:49:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 19:41:21 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stddef.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <unistd.h>
 
 typedef struct s_list
 {

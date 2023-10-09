@@ -46,8 +46,9 @@ ft_lstclear.c\
 ft_lstiter.c\
 ft_lstmap.c
 BOBJS = $(BONUS:.c=.o)
-ifdef WITH_BONUS
-OBJS += $(BOBJS)
+
+ifeq ($(MAKECMDGOALS), bonus)
+	OBJS += $(BOBJS)
 endif
 
 all: $(NAME)
@@ -59,8 +60,7 @@ $(NAME): $(OBJS)
 	ar rc $@ $^
 	ranlib $@
 
-bonus: $(NAME)
-	@make WITH_BONUS=1
+bonus: all
 
 clean:
 	rm -f $(OBJS) $(BOBJS)
@@ -70,4 +70,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

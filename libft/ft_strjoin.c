@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 20:32:47 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/30 12:28:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/09 19:41:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-
-#include <stdio.h>
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
