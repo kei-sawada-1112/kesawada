@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 13:01:47 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:26:39 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,19 @@
 
 void	process_letter(char **str, t_format *format)
 {
-	char	tmp[BUFFER_SIZE];
 	size_t	i;
 
 	i = 0;
-	while (**str && **str != '%')
-	{
-		tmp[i] = *(*str)++;
-		if (tmp[BUFFER_SIZE - 1])
-		{
-			add_to_buffer(tmp, format);
-			ft_memset(tmp, '\0', BUFFER_SIZE);
-			i = 0;
-		}
+	while ((*str)[i] && (*str)[i] != '%')
 		i++;
-	}
-	if (i > 0)
-	{
-		tmp[i] = '\0';
-		add_to_buffer(tmp, format);
-	}
+	write(1, *str, i);
+	format->len += i;
 	if (**str == '%')
 	{
 		format->state = FLAG;
-		(*str)++;
+		i++;
 	}
+	(*str) += i;
 }
 
 static int	check_type(char c, t_format *format)
@@ -76,7 +64,7 @@ int	set_format_state(char **str, t_format *format)
 	if (**str == '%')
 	{
 		format->state = LETTER;
-		add_to_buffer("%", format);
+		putstr_and_add_len("%", format);
 	}
 	else if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
 	{

@@ -6,14 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 21:55:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 15:00:48 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
 
 void	state_based_process(char **str, t_format *format)
 {
@@ -28,7 +25,6 @@ void	state_based_process(char **str, t_format *format)
 void	init_format(t_format *format)
 {
 	format->state = LETTER;
-	format->cap = BUFFER_SIZE;
 	format->len = 0;
 	format->f_hash = 0;
 	format->f_minus = 0;
@@ -45,26 +41,14 @@ void	init_format(t_format *format)
 	format->sign = 1;
 }
 
-void	init_buffer(t_format *format)
-{
-	format->buffer = (char *)malloc(BUFFER_SIZE);
-	if (!format->buffer)
-		return ;
-	format->buffer[0] = '\0';
-	format->cap = 0;
-}
-
 int	ft_printf(const char *input, ...)
 {
 	t_format	format;
 
 	va_start(format.args, input);
-	init_buffer(&format);
 	init_format(&format);
 	while (*input)
 		state_based_process((char **)(&input), &format);
-	write(1, format.buffer, format.len);
 	va_end(format.args);
-	free(format.buffer);
 	return (format.len);
 }

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 13:29:34 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:47:55 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 
-# define BUFFER_SIZE 1024
+# include <stdio.h>
 
 enum e_type
 {
@@ -48,8 +48,6 @@ typedef struct s_format
 	enum e_state	state;
 	enum e_type		type;
 	va_list			args;
-	char			*buffer;
-	size_t			cap;
 	size_t			width;
 	size_t			precision;
 	size_t			len;
@@ -84,6 +82,9 @@ void	add_field_or_prefix(const char *str, t_format *format);
 void	add_to_buffer(const char *str, t_format *format);
 void	add_null_to_buffer(t_format *format);
 void	add_space_to_buffer(t_format *format);
+
+void	putstr_and_add_len(const char *str, t_format *format);
+void	apply_padding(const char *str, t_format *format);
 
 char	*get_int_value(t_format *format);
 char	*get_char_value(t_format *format);
