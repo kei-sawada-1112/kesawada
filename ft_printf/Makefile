@@ -47,7 +47,7 @@ $(NAME): $(OBJS)
 bonus: all
 
 clean:
-	rm -f $(OBJS) $(BOBJS)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
