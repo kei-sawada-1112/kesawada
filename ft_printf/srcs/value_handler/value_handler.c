@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 17:00:38 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:03:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,13 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	value = get_value(format);
 	if (value[0] == '\0' && format->type == TYPE_C)
 		format->width -= 1;
-	if (format->f_dot && format->precision == 0 && !format->width)
+	if (format->f_dot && format->precision == 0)
 	{
 		if ((format->f_num && value[0] == '0')
 			|| (!(format->type == TYPE_P) && !format->f_num))
 		{
 			free(value);
-			return ;
+			value = ft_strdup("\0");
 		}
 	}
 	check_field(format, value);

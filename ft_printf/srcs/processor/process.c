@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 15:26:39 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:15:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ void	set_format_flags(char c, t_format *format)
 		format->f_minus = 1;
 }
 
-int	set_format_state(char **str, t_format *format)
+void	set_format_state(char **str, t_format *format)
 {
-	if (**str == '%')
+	if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
+	{
+		format->state = FIELD;
+		return ;
+	}
+	else if (**str == '%')
 	{
 		format->state = LETTER;
 		putstr_and_add_len("%", format);
-	}
-	else if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
-	{
-		format->state = FIELD;
-		return (0);
 	}
 	else if (**str == '.')
 	{
@@ -78,7 +78,7 @@ int	set_format_state(char **str, t_format *format)
 	}
 	else
 		format->type = TYPE_INVALID;
-	return (1);
+	(*str)++;
 }
 
 void	process_flag(char **str, t_format *format)
@@ -86,6 +86,5 @@ void	process_flag(char **str, t_format *format)
 	if (check_type(**str, format))
 		return ;
 	set_format_flags(**str, format);
-	if (set_format_state(str, format))
-		(*str)++;
+	set_format_state(str, format);
 }

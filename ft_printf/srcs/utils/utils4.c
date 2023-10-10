@@ -1,16 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uitoa.c                                         :+:      :+:    :+:   */
+/*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 10:43:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/07 10:45:20 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/10 17:22:41 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/10 17:33:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "ft_printf.h"
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*us1;
+	unsigned char	*us2;
+
+	us1 = (unsigned char *)s1;
+	us2 = (unsigned char *)s2;
+	while (n--)
+	{
+		if (!*us1 || !*us2 || *us1 != *us2)
+			return ((int)(*us1 - *us2));
+		us1++;
+		us2++;
+	}
+	return (0);
+}
 
 static int	count_digit(unsigned int n)
 {
