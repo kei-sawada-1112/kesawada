@@ -16,9 +16,6 @@ PROCESSOR_DIR = processor
 PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
 $(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
 
-BUFFER_HANDLER_DIR = buffer_handler
-BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
-
 GETTER_DIR = getter
 GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c\
 $(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
