@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 18:35:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/28 09:49:46 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/25 20:34:03 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/30 12:43:59 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include <stddef.h>
 
-void	print_recursively(long long num, int fd)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	c;
+	unsigned char	*us1;
+	unsigned char	*us2;
 
-	if (num == 0)
-		return ;
-	print_recursively(num / 10, fd);
-	c = num % 10 + '0';
-	write(fd, &c, 1);
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	long long	ln;
-
-	ln = (long long)n;
-	if (ln == 0)
+	us1 = (unsigned char *)s1;
+	us2 = (unsigned char *)s2;
+	while (n--)
 	{
-		write(fd, "0", 1);
-		return ;
+		if (!*us1 || !*us2 || *us1 != *us2)
+			return ((int)(*us1 - *us2));
+		us1++;
+		us2++;
 	}
-	if (ln < 0)
-	{
-		write(fd, "-", 1);
-		ln *= -1;
-	}
-	print_recursively(ln, fd);
+	return (0);
 }

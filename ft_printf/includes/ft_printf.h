@@ -6,15 +6,18 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 11:53:13 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:29:34 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-
 # include <stdarg.h>
-# include <stddef.h>
+# include <unistd.h>
+# include <stdint.h>
+# include <stdlib.h>
+
+# define BUFFER_SIZE 1024
 
 enum e_type
 {
@@ -39,8 +42,6 @@ enum e_state
 	TYPE,
 	ERROR
 };
-
-# define BUFFER_SIZE 1024
 
 typedef struct s_format
 {
@@ -93,8 +94,8 @@ char	*get_per_value(t_format *format);
 char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
 
-char	*convert_to_hexaddr(void *ptr, size_t precision);
-char	*convert_to_hex(int num, int type);
+char	*convert_to_hexaddr(void *ptr, int type);
+char	*convert_to_hex(int num, int dot_flag);
 char	*ft_uitoa(unsigned int num);
 
 size_t	ft_strlen(const char *str);

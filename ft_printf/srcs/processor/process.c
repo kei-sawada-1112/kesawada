@@ -6,12 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 11:55:13 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:01:47 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
 void	process_letter(char **str, t_format *format)
 {
@@ -79,7 +78,7 @@ int	set_format_state(char **str, t_format *format)
 		format->state = LETTER;
 		add_to_buffer("%", format);
 	}
-	else if (ft_isdigit(**str) && **str != '0')
+	else if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
 	{
 		format->state = FIELD;
 		return (0);

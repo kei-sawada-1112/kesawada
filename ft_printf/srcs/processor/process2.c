@@ -6,12 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/08 21:18:30 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:24:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <unistd.h>
 
 static int	count_digit(int num)
 {
@@ -60,7 +59,9 @@ void	process_type(char **str, t_format *format)
 	format->f_plus = 0;
 	format->f_space = 0;
 	format->f_zero = 0;
+	free(format->field);
 	format->field = NULL;
+	free(format->prefix);
 	format->prefix = NULL;
 	(*str)++;
 }

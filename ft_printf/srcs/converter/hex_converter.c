@@ -6,17 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 12:08:30 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:21:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdint.h>
-#include <stdlib.h>
-
-#include <stdio.h>
 
 void	hex_char(unsigned char c, unsigned char *buffer)
 {
@@ -35,32 +29,33 @@ void	hex_char(unsigned char c, unsigned char *buffer)
 	}
 }
 
-char	*convert_to_hexaddr(void *ptr, size_t precision)
+char	*convert_to_hexaddr(void *ptr, int dot_flag)
 {
 	char			*ret;
 	unsigned char	*hex_addr;
 	unsigned char	buffer[2];
 	int				i;
 
-	i = sizeof(ptr) - 1;
+	i = sizeof(ptr);
 	hex_addr = malloc(sizeof(ptr) * 2 + 1);
 	if (!hex_addr)
 		return (NULL);
 	hex_addr[sizeof(ptr) * 2] = '\0';
-	while (i >= 0)
+	while (--i >= 0)
 	{
-		hex_char((uintptr_t)ptr
-			>> (i * 8) & 0xFF, buffer);
+		hex_char((uintptr_t)ptr >> (i * 8) & 0xFF, buffer);
 		hex_addr[2 * (sizeof(ptr) - 1 - i)] = buffer[0];
 		hex_addr[2 * (sizeof(ptr) - 1 - i) + 1] = buffer[1];
-		i--;
 	}
 	i = 0;
-	while (hex_addr[i] == '0' && ft_strlen((char *)hex_addr) - (size_t)i > precision)
+	while (hex_addr[i] == '0')
 		i++;
-	ret = ft_strjoin("0x", (char *)(hex_addr + i));
+	if (*(hex_addr + i) == '\0' && !dot_flag)
+		ret = ft_strdup("0");
+	else
+		ret = ft_strdup((char *)(hex_addr + i));
 	free(hex_addr);
-	return (ret);
+	return ((char *)(ret));
 }
 
 char	*recursive_convert(char *hex, unsigned int num, int *i, int type)
