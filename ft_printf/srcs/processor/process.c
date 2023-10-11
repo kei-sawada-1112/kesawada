@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 17:15:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:47:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	check_type(char c, t_format *format)
 	return (0);
 }
 
-void	set_format_flags(char c, t_format *format)
+static void	set_format_flags(char c, t_format *format)
 {
 	if (c == '0')
 		format->f_zero = 1;
@@ -59,7 +59,7 @@ void	set_format_flags(char c, t_format *format)
 		format->f_minus = 1;
 }
 
-void	set_format_state(char **str, t_format *format)
+static void	set_format_state(char **str, t_format *format)
 {
 	if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
 	{
@@ -77,7 +77,10 @@ void	set_format_state(char **str, t_format *format)
 		format->f_dot = 1;
 	}
 	else
-		format->type = TYPE_INVALID;
+	{
+		//format->state = LETTER;
+		//return ;
+	}
 	(*str)++;
 }
 

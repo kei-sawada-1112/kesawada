@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 13:24:32 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:44:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,3 @@ void	process_type(char **str, t_format *format)
 	(*str)++;
 }
 
-void	process_error(char **str, t_format *format)
-{
-	(void) str;
-	(void) format;
-	write(1, "Invalid format\n", 15);
-	format->state = LETTER;
-}

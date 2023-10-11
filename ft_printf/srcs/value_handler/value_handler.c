@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 17:03:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:56:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static void	check_field(t_format *format, char *value)
 		field_len -= 2;
 	if (format->sign == -1 || format->f_plus)
 		field_len -= 1;
-	// printf("width:     %zu\n", format->width);
-	// printf("field_len: %lld\n", field_len);
 	if (field_len > 0)
 	{
 		format->field = malloc(field_len + 1);
@@ -68,7 +66,6 @@ static void	check_field(t_format *format, char *value)
 		else
 			ft_memset(format->field, ' ', field_len);
 		format->field[field_len] = '\0';
-		// printf("field: %s\n", format->field);
 	}
 }
 

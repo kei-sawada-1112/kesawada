@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 15:00:48 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:44:39 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	state_based_process(char **str, t_format *format)
 {
 	static t_process	f[] = {
 		process_letter, process_flag, process_field,
-		process_prefix, process_type, process_error
+		process_prefix, process_type
 	};
 
 	f[format->state](str, format);

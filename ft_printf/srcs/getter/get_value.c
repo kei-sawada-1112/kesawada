@@ -6,16 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 13:03:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:52:26 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdarg.h>
-#include <stdlib.h>
-#include <limits.h>
-
-#include <stdio.h>
 
 char	*get_int_value(t_format *format)
 {
