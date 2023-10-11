@@ -26,13 +26,17 @@ $(SRC_DIR)/$(UTILS_DIR)/utils2.c\
 $(SRC_DIR)/$(UTILS_DIR)/utils3.c\
 $(SRC_DIR)/$(UTILS_DIR)/utils4.c
 
+WRITER_DIR = writer
+WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding.c
+
 SRCS = ft_printf.c\
 $(VALUE_HANDLERS)\
 $(BUFFER_HANDLERS)\
 $(CONVERTERS)\
 $(PROCESSORS)\
 $(GETTERS)\
-$(UTILS)
+$(UTILS)\
+$(WRITER)
 
 OBJS = $(SRCS:.c=.o) $(COBJS)
 
