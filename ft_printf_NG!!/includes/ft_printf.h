@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:45:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:29:34 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <stdlib.h>
-# include <limits.h>
 
-# include <stdio.h>
+# define BUFFER_SIZE 1024
 
 enum e_type
 {
@@ -31,6 +30,7 @@ enum e_type
 	TYPE_X,
 	TYPE_LX,
 	TYPE_PER,
+	TYPE_INVALID,
 };
 
 enum e_state
@@ -40,6 +40,7 @@ enum e_state
 	FIELD,
 	PREFIX,
 	TYPE,
+	ERROR
 };
 
 typedef struct s_format
@@ -47,6 +48,8 @@ typedef struct s_format
 	enum e_state	state;
 	enum e_type		type;
 	va_list			args;
+	char			*buffer;
+	size_t			cap;
 	size_t			width;
 	size_t			precision;
 	size_t			len;
@@ -74,9 +77,13 @@ void	process_flag(char **str, t_format *format);
 void	process_field(char **str, t_format *format);
 void	process_prefix(char **str, t_format *format);
 void	process_type(char **str, t_format *format);
+void	process_error(char **str, t_format *format);
 
-void	putstr_and_add_len(const char *str, t_format *format);
-void	apply_padding(const char *str, t_format *format);
+void	init_buffer(t_format *format);
+void	add_field_or_prefix(const char *str, t_format *format);
+void	add_to_buffer(const char *str, t_format *format);
+void	add_null_to_buffer(t_format *format);
+void	add_space_to_buffer(t_format *format);
 
 char	*get_int_value(t_format *format);
 char	*get_char_value(t_format *format);
@@ -86,10 +93,11 @@ char	*get_hexaddr_value(t_format *format);
 char	*get_per_value(t_format *format);
 char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
+
 char	*convert_to_hexaddr(void *ptr, int type);
 char	*convert_to_hex(int num, int dot_flag);
-
 char	*ft_uitoa(unsigned int num);
+
 size_t	ft_strlen(const char *str);
 void	*ft_memset(void *b, int c, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
@@ -100,7 +108,7 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(const char *s1, const char *s2);
-void	*ft_calloc(size_t count, size_t size);
+char	*ft_calloc(size_t count, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

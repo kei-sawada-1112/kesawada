@@ -6,14 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 00:29:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:02:08 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdlib.h>
-
-#include <stdio.h>
 
 void	add_null_to_buffer(t_format *format)
 {

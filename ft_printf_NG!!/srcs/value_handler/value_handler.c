@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 13:03:49 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:23:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static long long	set_field_len(t_format *format, char *value)
 	if (format->f_space && format->sign == 1
 		&& !format->f_plus && format->f_num)
 	{
-		putstr_and_add_len(" ", format);
+		add_to_buffer(" ", format);
 		field_len -= 1;
 	}
 	return (field_len);
@@ -61,14 +61,12 @@ static void	check_field(t_format *format, char *value)
 		format->field = malloc(field_len + 1);
 		if (!format->field)
 			return ;
-		// if ((format->f_zero && !format->f_dot))
-		if (format->f_zero)
+		if ((format->f_zero && !format->f_dot))
 			ft_memset(format->field, '0', field_len);
 		else
 			ft_memset(format->field, ' ', field_len);
 		format->field[field_len] = '\0';
 	}
-	// printf("field: %s\n", format->field);
 }
 
 static void	check_prefix(t_format *format, char *value)
@@ -88,31 +86,28 @@ static void	check_prefix(t_format *format, char *value)
 	}
 }
 
-static void	write_value(t_format *format, char *value)
+static void	add_buffer_and_free(t_format *format, char *value)
 {
 	if (!format->f_dot && (format->f_zero && !format->f_dot)
 		&& format->sign == -1)
-		putstr_and_add_len("-", format);
+		add_to_buffer("-", format);
 	if (!format->f_minus && format->field)
-		apply_padding(format->field, format);
+		add_field_or_prefix(format->field, format);
 	if (!(!format->f_dot && (format->f_zero && !format->f_dot))
 		&& format->sign == -1)
-		putstr_and_add_len("-", format);
+		add_to_buffer("-", format);
 	if (format->f_plus)
-		putstr_and_add_len("+", format);
+		add_to_buffer("+", format);
 	if (format->prefix)
-		putstr_and_add_len(format->prefix, format);
+		add_field_or_prefix(format->prefix, format);
 	if (value[0] == '\0' && format->type == TYPE_C)
-	{
-		write(1, "\0", 1);
-		format->len += 1;
-	}
+		add_null_to_buffer(format);
 	if (format->type == TYPE_P)
-		putstr_and_add_len("0x", format);
-	putstr_and_add_len(value, format);
+		add_to_buffer("0x", format);
+	add_to_buffer(value, format);
 	if (format->f_minus && format->field)
-		apply_padding(format->field, format);
-	free (value);
+		add_field_or_prefix(format->field, format);
+	free(value);
 }
 
 void	handle_common(t_format *format, char *(*get_value)(t_format *))
@@ -120,21 +115,18 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	char	*value;
 
 	value = get_value(format);
-	// printf("value: %s\n", value);
 	if (value[0] == '\0' && format->type == TYPE_C)
 		format->width -= 1;
-	if (format->f_dot && format->precision == 0)
+	if (format->f_dot && format->precision == 0
+		&& !format->f_num && !(format->type == TYPE_P))
 	{
-		if ((format->f_num && value[0] == '0')
-			|| (!(format->type == TYPE_P) && !format->f_num))
-		{
-			free(value);
-			value = ft_strdup("\0");
-		}
+		add_space_to_buffer(format);
+		free (value);
+		return ;
 	}
 	check_field(format, value);
 	if (format->f_dot && (format->f_num || format->type == TYPE_P))
 		check_prefix(format, value);
 	if (value)
-		write_value(format, value);
+		add_buffer_and_free(format, value);
 }

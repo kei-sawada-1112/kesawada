@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 18:34:45 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/30 12:12:48 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/27 10:33:20 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/28 09:24:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stddef.h>
 
-void	ft_putchar_fd(char c, int fd)
+size_t	ft_strlen(const char *str)
 {
-	write(fd, &c, 1);
+	size_t	len;
+
+	len = 0;
+	while (*str)
+	{
+		str++;
+		len++;
+	}
+	return (len);
 }

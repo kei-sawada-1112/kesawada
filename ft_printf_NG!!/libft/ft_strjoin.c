@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 18:35:42 by kesawada          #+#    #+#             */
-/*   Updated: 2023/09/30 12:14:41 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/25 20:32:47 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/30 12:28:57 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <unistd.h>
+#include <stdlib.h>
 
-void	ft_putstr_fd(char *s, int fd)
+#include <stdio.h>
+
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	char	*ret;
+	size_t	len1;
+	size_t	len2;
+
+	if (!s1)
+		return (NULL);
+	else if (!s2)
+		return (ft_strdup(s1));
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	ret = (char *)malloc(len1 + len2 + 1);
+	if (!ret)
+		return (NULL);
+	ft_strlcpy(ret, s1, len1 + 1);
+	ft_strlcat(ret, s2, len1 + len2 + 1);
+	return (ret);
 }

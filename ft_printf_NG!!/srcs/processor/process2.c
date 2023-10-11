@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 12:47:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:24:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ void	process_field(char **str, t_format *format)
 void	process_prefix(char **str, t_format *format)
 {
 	format->precision = ft_atoi(*str);
-	while (**str >= '0' && **str <= '9')
-		(*str)++;
-	// if (**str == '0')
-	// 	*str += count_digit(format->precision);
-	// else
-	// 	*str += count_digit(format->precision);
+	*str += count_digit(format->precision);
 	format->state = FLAG;
 }
 
@@ -71,3 +66,10 @@ void	process_type(char **str, t_format *format)
 	(*str)++;
 }
 
+void	process_error(char **str, t_format *format)
+{
+	(void) str;
+	(void) format;
+	write(1, "Invalid format\n", 15);
+	format->state = LETTER;
+}

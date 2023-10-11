@@ -3,31 +3,43 @@ CFLAGS = -Wall -Wextra -Werror
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
 
+LIBFT_DIR = libft
+
 INC_DIR = includes
 SRC_DIR = srcs
-
 VALUE_HANDLER_DIR = value_handler
+CONVERTER_DIR = converter
+PROCESSOR_DIR = processor
+BUFFER_HANDLER_DIR = buffer_handler
+GETTER_DIR = getter
+
 VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler.c\
 
-CONVERTER_DIR = converter
-CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+BUFFER_HANDLERS = $(SRC_DIR)/$(BUFFER_HANDLER_DIR)/buffer_handler.c\
 
-PROCESSOR_DIR = processor
+CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+$(SRC_DIR)/$(CONVERTER_DIR)/ft_uitoa.c\
+
 PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
 $(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
 
-GETTER_DIR = getter
 GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c\
 $(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
 
-UTILS_DIR = utils
-UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils2.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils3.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils4.c
-
-WRITER_DIR = writer
-WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding.c
+COBJS = $(LIBFT_DIR)/ft_atoi.o\
+$(LIBFT_DIR)/ft_bzero.o\
+$(LIBFT_DIR)/ft_calloc.o\
+$(LIBFT_DIR)/ft_isdigit.o\
+$(LIBFT_DIR)/ft_itoa.o\
+$(LIBFT_DIR)/ft_memcpy.o\
+$(LIBFT_DIR)/ft_memset.o\
+$(LIBFT_DIR)/ft_strchr.o\
+$(LIBFT_DIR)/ft_strdup.o\
+$(LIBFT_DIR)/ft_strjoin.o\
+$(LIBFT_DIR)/ft_strlcat.o\
+$(LIBFT_DIR)/ft_strlcpy.o\
+$(LIBFT_DIR)/ft_strlen.o\
+$(LIBFT_DIR)/ft_strncmp.o\
 
 SRCS = ft_printf.c\
 $(VALUE_HANDLERS)\
@@ -35,8 +47,6 @@ $(BUFFER_HANDLERS)\
 $(CONVERTERS)\
 $(PROCESSORS)\
 $(GETTERS)\
-$(UTILS)\
-$(WRITER)
 
 OBJS = $(SRCS:.c=.o) $(COBJS)
 
@@ -47,15 +57,16 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $@ $^
+	ranlib $@
 
 bonus: all
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
