@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_value2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 13:02:13 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:06:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*get_per_value(t_format *format)
 	char	*value;
 
 	value = malloc(2);
+	
 	(void)format;
 	if (!value)
 		return (NULL);
@@ -60,3 +61,15 @@ char	*get_hex_value(t_format *format)
 	else
 		return (hex);
 }
+
+// char *get_invalid_value(char **str, t_format *format)
+// {
+// 	char	*value;
+
+// 	value = (char *)malloc(2);
+// 	if (!value)
+// 		return (NULL);
+// 	value[0] = **str;
+// 	value[1] = '\0';
+// 	return (value);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 12:55:31 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:17:39 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ static void	set_format_state(char **str, t_format *format)
 	}
 	else
 	{
-		format->state = LETTER;
+		format->type = TYPE_INVALID;
+		format->invalid_char = **str;
+		format->state = TYPE;
 		return ;
 	}
 	(*str)++;

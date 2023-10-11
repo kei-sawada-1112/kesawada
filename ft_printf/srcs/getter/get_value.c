@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_value.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:52:26 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:19:05 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,12 @@ char	*get_char_value(t_format *format)
 	value = (char *)malloc(2);
 	if (!value)
 		return (NULL);
-	value[0] = va_arg(format->args, int);
+	if (format->type == TYPE_INVALID)
+		value[0] = format->invalid_char;
+	else
+		value[0] = va_arg(format->args, int);
 	value[1] = '\0';
+	// printf("value: %s\n", value);
 	format->f_dot = 0;
 	return (value);
 }

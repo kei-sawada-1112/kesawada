@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:45:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:13:57 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum e_type
 	TYPE_X,
 	TYPE_LX,
 	TYPE_PER,
+	TYPE_INVALID
 };
 
 enum e_state
@@ -60,6 +61,7 @@ typedef struct s_format
 	int				f_num;
 	char			*prefix;
 	char			*field;
+	char			invalid_char;
 }	t_format;
 
 typedef char	*(*t_getter)(t_format *);
@@ -86,6 +88,7 @@ char	*get_hexaddr_value(t_format *format);
 char	*get_per_value(t_format *format);
 char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
+//char	*get_invalid_value(char **str, t_format *format);
 char	*convert_to_hexaddr(void *ptr, int type);
 char	*convert_to_hex(int num, int dot_flag);
 
