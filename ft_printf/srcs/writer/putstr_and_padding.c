@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buffer_handler.c                                   :+:      :+:    :+:   */
+/*   putstr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 16:11:04 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 17:13:06 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/11 11:32:35 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/11 11:36:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	apply_padding(const char *str, t_format *format)
 {
-	size_t	len_str;
+	size_t	str_len;
 
-	len_str = ft_strlen(str);
-	write(1, str, len_str);
-	format->len += len_str;
+	str_len = ft_strlen(str);
+	write(1, str, str_len);
+	format->len += str_len;
 }
 
 void	putstr_and_add_len(const char *str, t_format *format)
 {
-	size_t	len_str;
+	size_t	str_len;
 
-	len_str = ft_strlen(str);
-	if (len_str > format->precision && format->type == TYPE_S && format->f_dot)
-		len_str = format->precision;
-	write(1, str, len_str);
-	format->len += len_str;
+	str_len = ft_strlen(str);
+	if (str_len < format->precision && !format->f_num && format->type != TYPE_P)
+		str_len = format->precision;
+	write(1, str, str_len);
+	format->len += str_len;
 }
