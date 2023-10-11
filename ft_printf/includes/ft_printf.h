@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/10 17:26:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:45:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ enum e_type
 	TYPE_X,
 	TYPE_LX,
 	TYPE_PER,
-	TYPE_INVALID,
 };
 
 enum e_state
@@ -41,7 +40,6 @@ enum e_state
 	FIELD,
 	PREFIX,
 	TYPE,
-	ERROR
 };
 
 typedef struct s_format
@@ -76,7 +74,6 @@ void	process_flag(char **str, t_format *format);
 void	process_field(char **str, t_format *format);
 void	process_prefix(char **str, t_format *format);
 void	process_type(char **str, t_format *format);
-void	process_error(char **str, t_format *format);
 
 void	putstr_and_add_len(const char *str, t_format *format);
 void	apply_padding(const char *str, t_format *format);
@@ -91,8 +88,8 @@ char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
 char	*convert_to_hexaddr(void *ptr, int type);
 char	*convert_to_hex(int num, int dot_flag);
-char	*ft_uitoa(unsigned int num);
 
+char	*ft_uitoa(unsigned int num);
 size_t	ft_strlen(const char *str);
 void	*ft_memset(void *b, int c, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:56:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:03:49 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ static void	check_field(t_format *format, char *value)
 		format->field = malloc(field_len + 1);
 		if (!format->field)
 			return ;
-		if ((format->f_zero && !format->f_dot))
+		// if ((format->f_zero && !format->f_dot))
+		if (format->f_zero)
 			ft_memset(format->field, '0', field_len);
 		else
 			ft_memset(format->field, ' ', field_len);
 		format->field[field_len] = '\0';
 	}
+	// printf("field: %s\n", format->field);
 }
 
 static void	check_prefix(t_format *format, char *value)
@@ -118,6 +120,7 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	char	*value;
 
 	value = get_value(format);
+	// printf("value: %s\n", value);
 	if (value[0] == '\0' && format->type == TYPE_C)
 		format->width -= 1;
 	if (format->f_dot && format->precision == 0)

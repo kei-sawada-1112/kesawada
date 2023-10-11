@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:47:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 12:55:31 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,22 @@ static int	check_type(char c, t_format *format)
 	return (0);
 }
 
-static void	set_format_flags(char c, t_format *format)
+static int	set_format_flags(char **str, t_format *format)
 {
-	if (c == '0')
+	if (**str == '0')
 		format->f_zero = 1;
-	else if (c == '#')
+	else if (**str == '#')
 		format->f_hash = 1;
-	else if (c == '+')
+	else if (**str == '+')
 		format->f_plus = 1;
-	else if (c == ' ')
+	else if (**str == ' ')
 		format->f_space = 1;
-	else if (c == '-')
+	else if (**str == '-')
 		format->f_minus = 1;
+	else
+		return (0);
+	(*str)++;
+	return (1);
 }
 
 static void	set_format_state(char **str, t_format *format)
@@ -66,11 +70,12 @@ static void	set_format_state(char **str, t_format *format)
 		format->state = FIELD;
 		return ;
 	}
-	else if (**str == '%')
-	{
-		format->state = LETTER;
-		putstr_and_add_len("%", format);
-	}
+	// else if (**str == '%')
+	// {
+	// 	format->state = TYPE;
+	// 	format->type = TYPE_PER;
+	// 	return ;
+	// }
 	else if (**str == '.')
 	{
 		format->state = PREFIX;
@@ -78,8 +83,8 @@ static void	set_format_state(char **str, t_format *format)
 	}
 	else
 	{
-		//format->state = LETTER;
-		//return ;
+		format->state = LETTER;
+		return ;
 	}
 	(*str)++;
 }
@@ -88,6 +93,7 @@ void	process_flag(char **str, t_format *format)
 {
 	if (check_type(**str, format))
 		return ;
-	set_format_flags(**str, format);
+	if (set_format_flags(str, format))
+		return ;
 	set_format_state(str, format);
 }
