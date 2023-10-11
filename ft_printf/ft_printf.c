@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 13:57:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 21:35:52 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ void	init_format(t_format *format)
 {
 	format->state = LETTER;
 	format->len = 0;
-	format->f_hash = 0;
+	format->f_sharp = 0;
 	format->f_minus = 0;
 	format->f_plus = 0;
 	format->f_space = 0;
 	format->f_zero = 0;
 	format->f_dot = 0;
 	format->f_num = 0;
+	format->f_asta = 0;
 	format->prefix = NULL;
 	format->precision = 0;
 	format->field = NULL;

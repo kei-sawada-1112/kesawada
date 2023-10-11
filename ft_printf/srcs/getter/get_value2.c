@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_value2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 14:06:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 22:56:20 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_per_value(t_format *format)
 	char	*value;
 
 	value = malloc(2);
-	
+
 	(void)format;
 	if (!value)
 		return (NULL);
@@ -49,7 +49,7 @@ char	*get_hex_value(t_format *format)
 	}
 	format->f_num = 1;
 	hex = convert_to_hex((int)value, format->type);
-	if (format->f_hash && hex[0] != '0')
+	if (format->f_sharp && hex[0] != '0')
 	{
 		if (format->type == TYPE_X)
 			hashed_hex = ft_strjoin("0x", hex);

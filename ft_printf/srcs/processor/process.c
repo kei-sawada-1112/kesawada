@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 14:17:39 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 23:00:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,40 @@ static int	check_type(char c, t_format *format)
 
 static int	set_format_flags(char **str, t_format *format)
 {
+	int	asta_num;
+
 	if (**str == '0')
 		format->f_zero = 1;
 	else if (**str == '#')
-		format->f_hash = 1;
+		format->f_sharp = 1;
 	else if (**str == '+')
 		format->f_plus = 1;
 	else if (**str == ' ')
 		format->f_space = 1;
 	else if (**str == '-')
 		format->f_minus = 1;
+	else if (**str == '*')
+	{
+		asta_num = va_arg(format->args, int);
+		if (format->f_dot && asta_num > 0)
+			format->precision = asta_num;
+		else if (format->f_dot && asta_num < 0)
+			format->precision = asta_num * -1;
+		else if (!format->f_dot)
+		{
+			if (asta_num < 0)
+			{
+				format->f_minus = 1;
+				format->width = asta_num * -1;
+			}
+			else
+				format->width = asta_num;
+		}
+		// printf("pre: %zu\n", format->precision);
+		// printf("wid: %zu\n", format->width);
+		format->f_asta = 1;
+		format->state = FLAG;
+	}
 	else
 		return (0);
 	(*str)++;
@@ -70,12 +94,6 @@ static void	set_format_state(char **str, t_format *format)
 		format->state = FIELD;
 		return ;
 	}
-	// else if (**str == '%')
-	// {
-	// 	format->state = TYPE;
-	// 	format->type = TYPE_PER;
-	// 	return ;
-	// }
 	else if (**str == '.')
 	{
 		format->state = PREFIX;

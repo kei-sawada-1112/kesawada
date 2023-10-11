@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   value_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 13:48:43 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 23:00:29 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static void	check_prefix(t_format *format, char *value)
 
 	if (ft_strlen(value) == 0 || format->precision < ft_strlen(value))
 		return ;
+	// if (format->f_asta && format->type != TYPE_S)
+	// 	format->precision = 0;
 	prefix_len = format->precision - ft_strlen(value);
 	if (prefix_len > 0)
 	{

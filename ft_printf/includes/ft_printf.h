@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 14:13:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 22:54:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ typedef struct s_format
 	size_t			precision;
 	size_t			len;
 	int				sign;
-	int				f_hash;
+	int				f_sharp;
 	int				f_zero;
 	int				f_plus;
 	int				f_minus;
 	int				f_space;
 	int				f_dot;
 	int				f_num;
+	int				f_asta;
 	char			*prefix;
 	char			*field;
 	char			invalid_char;

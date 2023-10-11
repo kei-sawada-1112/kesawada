@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 14:15:15 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/11 22:56:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	process_type(char **str, t_format *format)
 	format->width = 0;
 	format->f_num = 0;
 	format->f_dot = 0;
-	format->f_hash = 0;
+	format->f_sharp = 0;
 	format->f_minus = 0;
 	format->f_plus = 0;
 	format->f_space = 0;
 	format->f_zero = 0;
+	format->f_asta = 0;
 	free(format->field);
 	format->field = NULL;
 	free(format->prefix);
