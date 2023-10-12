@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 23:00:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:41:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	set_format_flags(char **str, t_format *format)
 		if (format->f_dot && asta_num > 0)
 			format->precision = asta_num;
 		else if (format->f_dot && asta_num < 0)
-			format->precision = asta_num * -1;
+			format->f_dot = 0;
 		else if (!format->f_dot)
 		{
 			if (asta_num < 0)

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 23:00:29 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:20:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static long long	set_field_len(t_format *format, char *value)
 
 	if (format->f_dot)
 	{
-		if (!format->f_num && format->type != TYPE_P)
+		if (!format->f_num && format->type != TYPE_P && format->precision != 0)
 			field_len = ((format->width - ft_strlen(value))
 					* (ft_strlen(value) < format->precision)
 					+ (format->width - format->precision)
@@ -61,14 +61,12 @@ static void	check_field(t_format *format, char *value)
 		format->field = malloc(field_len + 1);
 		if (!format->field)
 			return ;
-		// if ((format->f_zero && !format->f_dot))
 		if (format->f_zero)
 			ft_memset(format->field, '0', field_len);
 		else
 			ft_memset(format->field, ' ', field_len);
 		format->field[field_len] = '\0';
 	}
-	// printf("field: %s\n", format->field);
 }
 
 static void	check_prefix(t_format *format, char *value)
@@ -77,8 +75,6 @@ static void	check_prefix(t_format *format, char *value)
 
 	if (ft_strlen(value) == 0 || format->precision < ft_strlen(value))
 		return ;
-	// if (format->f_asta && format->type != TYPE_S)
-	// 	format->precision = 0;
 	prefix_len = format->precision - ft_strlen(value);
 	if (prefix_len > 0)
 	{
@@ -128,7 +124,7 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	if (format->f_dot && format->precision == 0)
 	{
 		if ((format->f_num && value[0] == '0')
-			|| (!(format->type == TYPE_P) && !format->f_num))
+			|| ((format->type != TYPE_P) && !format->f_num && (format->type != TYPE_PER)))
 		{
 			free(value);
 			value = ft_strdup("\0");
