@@ -1,7 +1,13 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+DEBUGFLAGS = -g -fsanitize=address
+ifeq ($(MAKECMDGOALS), debug)
+	CFLAGS += $(DEBUGFLAGS)
+endif
+
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
+#NAME = a.out
 
 INC_DIR = includes
 SRC_DIR = srcs
@@ -36,7 +42,7 @@ $(CONVERTERS)\
 $(PROCESSORS)\
 $(GETTERS)\
 $(UTILS)\
-$(WRITER)
+$(WRITER)\
 
 OBJS = $(SRCS:.c=.o) $(COBJS)
 
@@ -48,7 +54,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
+#$(NAME): $(OBJS)
+#	$(CC) $(CFLAGS) $(IFLAGS) $^ -o $@
+
 bonus: all
+
+debug: all
 
 clean:
 	rm -f $(OBJS)
@@ -58,4 +69,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus debug

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 00:59:16 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 22:56:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:38:31 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_char_value(t_format *format)
 	else
 		value[0] = va_arg(format->args, int);
 	value[1] = '\0';
-	// printf("value: %s\n", value);
 	format->f_dot = 0;
 	return (value);
 }

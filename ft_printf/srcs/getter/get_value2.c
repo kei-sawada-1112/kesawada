@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 22:56:20 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:38:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*get_per_value(t_format *format)
 	char	*value;
 
 	value = malloc(2);
-
 	(void)format;
 	if (!value)
 		return (NULL);
@@ -61,15 +60,3 @@ char	*get_hex_value(t_format *format)
 	else
 		return (hex);
 }
-
-// char *get_invalid_value(char **str, t_format *format)
-// {
-// 	char	*value;
-
-// 	value = (char *)malloc(2);
-// 	if (!value)
-// 		return (NULL);
-// 	value[0] = **str;
-// 	value[1] = '\0';
-// 	return (value);
-// }

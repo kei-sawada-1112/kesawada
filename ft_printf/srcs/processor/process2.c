@@ -6,11 +6,28 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 22:56:32 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:37:21 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	process_letter(char **str, t_format *format)
+{
+	size_t	i;
+
+	i = 0;
+	while ((*str)[i] && (*str)[i] != '%')
+		i++;
+	write(1, *str, i);
+	format->len += i;
+	if (**str == '%')
+	{
+		format->state = FLAG;
+		i++;
+	}
+	(*str) += i;
+}
 
 void	process_field(char **str, t_format *format)
 {

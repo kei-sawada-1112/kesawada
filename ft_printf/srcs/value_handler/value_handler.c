@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/12 13:20:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:38:25 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,12 @@ void	handle_common(t_format *format, char *(*get_value)(t_format *))
 	char	*value;
 
 	value = get_value(format);
-	// printf("value: %s\n", value);
 	if (value[0] == '\0' && format->type == TYPE_C)
 		format->width -= 1;
 	if (format->f_dot && format->precision == 0)
 	{
-		if ((format->f_num && value[0] == '0')
-			|| ((format->type != TYPE_P) && !format->f_num && (format->type != TYPE_PER)))
+		if ((format->f_num && value[0] == '0') || ((format->type != TYPE_P)
+				&& !format->f_num && (format->type != TYPE_PER)))
 		{
 			free(value);
 			value = ft_strdup("\0");

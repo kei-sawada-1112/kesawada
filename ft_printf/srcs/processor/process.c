@@ -6,28 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/12 12:41:24 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:37:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	process_letter(char **str, t_format *format)
-{
-	size_t	i;
-
-	i = 0;
-	while ((*str)[i] && (*str)[i] != '%')
-		i++;
-	write(1, *str, i);
-	format->len += i;
-	if (**str == '%')
-	{
-		format->state = FLAG;
-		i++;
-	}
-	(*str) += i;
-}
 
 static int	check_type(char c, t_format *format)
 {
@@ -45,10 +28,31 @@ static int	check_type(char c, t_format *format)
 	return (0);
 }
 
-static int	set_format_flags(char **str, t_format *format)
+static void	set_asta_value(t_format *format)
 {
 	int	asta_num;
 
+	asta_num = va_arg(format->args, int);
+	if (format->f_dot && asta_num > 0)
+		format->precision = asta_num;
+	else if (format->f_dot && asta_num < 0)
+		format->f_dot = 0;
+	else if (!format->f_dot)
+	{
+		if (asta_num < 0)
+		{
+			format->f_minus = 1;
+			format->width = asta_num * -1;
+		}
+		else
+			format->width = asta_num;
+	}
+	format->f_asta = 1;
+	format->state = FLAG;
+}
+
+static int	set_format_flags(char **str, t_format *format)
+{
 	if (**str == '0')
 		format->f_zero = 1;
 	else if (**str == '#')
@@ -60,27 +64,7 @@ static int	set_format_flags(char **str, t_format *format)
 	else if (**str == '-')
 		format->f_minus = 1;
 	else if (**str == '*')
-	{
-		asta_num = va_arg(format->args, int);
-		if (format->f_dot && asta_num > 0)
-			format->precision = asta_num;
-		else if (format->f_dot && asta_num < 0)
-			format->f_dot = 0;
-		else if (!format->f_dot)
-		{
-			if (asta_num < 0)
-			{
-				format->f_minus = 1;
-				format->width = asta_num * -1;
-			}
-			else
-				format->width = asta_num;
-		}
-		// printf("pre: %zu\n", format->precision);
-		// printf("wid: %zu\n", format->width);
-		format->f_asta = 1;
-		format->state = FLAG;
-	}
+		set_asta_value(format);
 	else
 		return (0);
 	(*str)++;
