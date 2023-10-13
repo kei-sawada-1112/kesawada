@@ -7,44 +7,49 @@ endif
 
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
-#NAME = a.out
-
 INC_DIR = includes
 SRC_DIR = srcs
 
 VALUE_HANDLER_DIR = value_handler
-VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler.c\
+BONUS_VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler_bonus.c\
 
 CONVERTER_DIR = converter
-CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
+BONUS_CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter_bonus.c\
 
 PROCESSOR_DIR = processor
-PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
-$(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
+BONUS_PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process_bonus.c\
+$(SRC_DIR)/$(PROCESSOR_DIR)/process2_bonus.c\
 
 GETTER_DIR = getter
-GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c\
-$(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
+BONUS_GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value_bonus.c\
+$(SRC_DIR)/$(GETTER_DIR)/get_value2_bonus.c\
 
 UTILS_DIR = utils
-UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils2.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils3.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils4.c
+BONUS_UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils_bonus.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils2_bonus.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils3_bonus.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils4_bonus.c
 
 WRITER_DIR = writer
-WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding.c
+BONUS_WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding_bonus.c
 
 SRCS = ft_printf.c\
-$(VALUE_HANDLERS)\
-$(BUFFER_HANDLERS)\
-$(CONVERTERS)\
-$(PROCESSORS)\
-$(GETTERS)\
-$(UTILS)\
-$(WRITER)\
+ft_putfunc.c\
+ft_putfunc2.c
 
-OBJS = $(SRCS:.c=.o) $(COBJS)
+BONUS_SRCS = ft_printf_bonus.c\
+$(BONUS_VALUE_HANDLERS)\
+$(BONUS_CONVERTERS)\
+$(BONUS_PROCESSORS)\
+$(BONUS_GETTERS)\
+$(BONUS_UTILS)\
+$(BONUSWRITER)\
+
+OBJS = $(SRCS:.c=.o)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
+ifeq ($(MAKECMDGOALS), bonus)
+	OBJS += $(BONUS_OBJS)
+endif
 
 all: $(NAME)
 
@@ -59,10 +64,10 @@ $(NAME): $(OBJS)
 
 bonus: all
 
-debug: all
+debug: fclean bonus
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
 	rm -f $(NAME)
