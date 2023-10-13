@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/12 22:13:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:35:29 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_putchar(const char c);
 size_t	ft_putnbr(int num);
 size_t	ft_putunbr(unsigned int num);
 size_t	ft_putaddress(void *ptr);
-size_t	ft_putnbr_base(unsigned num, char *base);
+size_t	ft_putnbr_base(unsigned int num, char *base);
 size_t	ft_strlen(const char *str);
 
 #endif

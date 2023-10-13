@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/12 22:28:21 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/13 09:38:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	ft_printf(const char *input, ...)
 		}
 		input++;
 	}
-	while (*input && *input != '%')
 	va_end(args);
 	return (count);
 }
