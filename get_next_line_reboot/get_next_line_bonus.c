@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 12:04:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/15 17:22:26 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/15 17:18:32 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/15 17:19:27 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	has_next_line(t_list *list)
 {
@@ -119,28 +119,28 @@ char	*get_next_line(int fd)
 	return (next_line);
 }
 
-int	main(int argc, char *argv[])
-{
-	int	fd1;
-	// int	fd2;
-	int	i;
-	char	*ret1;
-	// char	*ret2;
+// int	main(int argc, char *argv[])
+// {
+// 	int	fd1;
+// 	// int	fd2;
+// 	int	i;
+// 	char	*ret1;
+// 	// char	*ret2;
 
-	(void)argc;
-	i = 0;
-	fd1 = open(argv[1], O_RDONLY);
-	// fd2 = open(argv[2], O_RDONLY);
-	while (i < 6)
-	{
-		ret1 = get_next_line(fd1);
-		printf("ret1:%s", ret1);
-		free(ret1);
-		// ret2 = get_next_line(fd2);
-		// printf("%s\n", ret2);
-		i++;
-	}
-	close (fd1);
-	system("leaks a.out");
-	// free(ret2);
-}
+// 	(void)argc;
+// 	i = 0;
+// 	fd1 = open(argv[1], O_RDONLY);
+// 	// fd2 = open(argv[2], O_RDONLY);
+// 	while (i < 6)
+// 	{
+// 		ret1 = get_next_line(fd1);
+// 		printf("ret1:%s", ret1);
+// 		free(ret1);
+// 		// ret2 = get_next_line(fd2);
+// 		// printf("%s\n", ret2);
+// 		i++;
+// 	}
+// 	close (fd1);
+// 	system("leaks a.out");
+// 	// free(ret2);
+// }
