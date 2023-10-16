@@ -5,15 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 19:08:31 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 19:37:04 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/16 17:29:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stddef.h>
+# include <unistd.h>
+# include <limits.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -31,13 +33,14 @@ typedef struct s_machine_state
 {
 	int				fd;
 	enum e_state	state;
-	char			buffer[BUFFER_SIZE];
+	char			*buffer;
 	char			*tmp_buffer;
 	size_t			tmp_len;
 	size_t			count;
 	size_t			copied_len;
 	size_t			start_pos;
 	int				bytes_read;
+	int				used;
 }	t_ms;
 
 void	read_letter(t_ms *ms);

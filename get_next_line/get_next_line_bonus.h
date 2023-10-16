@@ -6,14 +6,16 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 19:24:13 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:08:55 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <stddef.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -31,7 +33,7 @@ typedef struct s_machine_state
 {
 	int				fd;
 	enum e_state	state;
-	char			buffer[BUFFER_SIZE];
+	char			*buffer;
 	char			*tmp_buffer;
 	size_t			tmp_len;
 	size_t			count;

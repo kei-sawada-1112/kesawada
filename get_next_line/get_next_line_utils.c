@@ -6,13 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 15:46:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:56:09 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdlib.h>
 
 void	read_letter(t_ms *ms)
 {
@@ -108,6 +106,7 @@ void	re_read(t_ms *ms)
 	ms->bytes_read = read(ms->fd, ms->buffer, BUFFER_SIZE);
 	if (ms->bytes_read < 0)
 		return ;
+	ms->buffer[ms->bytes_read] = '\0';
 	ms->state = LETTER;
 	ms->start_pos = 0;
 	ms->copied_len = 0;

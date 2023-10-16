@@ -6,34 +6,27 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/05 19:37:43 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:05:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <unistd.h>
-#include <stdlib.h>
 
-t_ms	*get_current_ms(t_ms *ms, int fd)
+int	init_ms(t_ms *ms, int fd)
 {
-	int	i;
-
-	i = 0;
-	while (ms[i].used == 1)
+	ms->buffer = malloc(BUFFER_SIZE + 1);
+	if (!ms->buffer)
+		return (0);
+	ms->bytes_read = read(fd, ms->buffer, BUFFER_SIZE);
+	if (ms->bytes_read < 0)
 	{
-		if (ms[i].fd == fd)
-			return (&ms[i]);
-		i++;
+		free(ms->buffer);
+		return (0);
 	}
-	if (!*ms[i].buffer)
-	{
-		ms[i].bytes_read = read(fd, ms[i].buffer, BUFFER_SIZE);
-		if (ms[i].bytes_read < 0)
-			return (NULL);
-		ms[i].fd = fd;
-		ms[i].used = 1;
-	}
-	return (&ms[i]);
+	ms->buffer[ms->bytes_read] = '\0';
+	ms->used = 1;
+	ms->fd = fd;
+	return (1);
 }
 
 int	endline_function(t_ms *ms, char **next_line)
@@ -41,7 +34,15 @@ int	endline_function(t_ms *ms, char **next_line)
 	if (!ms->count && !ms->tmp_len)
 	{
 		if (ms->tmp_buffer)
+		{
 			free(ms->tmp_buffer);
+			ms->tmp_buffer = NULL;
+		}
+		if (ms->buffer)
+		{
+			free(ms->buffer);
+			ms->buffer = NULL;
+		}
 		return (-1);
 	}
 	set_next_line(ms, next_line);
@@ -50,25 +51,46 @@ int	endline_function(t_ms *ms, char **next_line)
 
 char	*get_next_line(int fd)
 {
-	static t_ms	ms[100];
+	static t_ms	ms[OPEN_MAX];
 	char		*next_line;
-	t_ms		*current_ms;
 
-	current_ms = get_current_ms(ms, fd);
-	if (!current_ms || BUFFER_SIZE == 0 || fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
+	if (!ms[fd].used)
+	{
+		if (!init_ms(&ms[fd], fd))
+			return (NULL);
+	}
 	while (1)
 	{
-		if (current_ms->state == LETTER)
-			read_letter(current_ms);
-		else if (current_ms->state == NEED_READ)
-			re_read(current_ms);
-		else if (current_ms->state == NEWLINE || current_ms->state == GNL_EOF)
+		if (ms[fd].state == LETTER)
+			read_letter(&ms[fd]);
+		else if (ms[fd].state == NEED_READ)
+			re_read(&ms[fd]);
+		else if (ms[fd].state == NEWLINE || ms[fd].state == GNL_EOF)
 		{
-			if (endline_function(current_ms, &next_line) == -1)
+			if (endline_function(&ms[fd], &next_line) == -1)
 				return (NULL);
 			break ;
 		}
 	}
 	return (next_line);
 }
+
+// #include <fcntl.h>
+// #include <stdio.h>
+
+// int	main(void)
+// {
+// 	int fd;
+// int i = 0;
+// char	*str;
+// 	fd = open("gnlTester/files/empty", O_RDONLY);
+// 	while (i < 2)
+// 	{
+// 		str = get_next_line(fd);
+// 		printf("%s", str);
+// 		//free (str);
+// 		i++;
+// 	}
+// }
