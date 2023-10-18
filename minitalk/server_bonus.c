@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 12:14:08 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:34:55 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,20 @@ void	bin_to_char(unsigned char *str, int *i, int *byte_idx, int pid)
 
 void	server_handler(int signum, siginfo_t *info, void *context)
 {
-	static t_client	client;
-	static int				pid;
-	static int				i;
-	static int				byte_idx;
-	static unsigned char	str[5];
-	static int				current_pid;
+	static t_client	*client;
+	t_client		*current;
 
+	if (!client)
+		client = create_client(client, info->si_pid);
+	current = find_client(client, info->si_pid);
+	if (!current)
+		current = create_client(client, info->si_pid);
 	(void)context;
-	if (!pid)
-		pid = info->si_pid;
-	current_pid = info->si_pid;
-	if (pid != current_pid)
-	{
-		pid = current_pid;
-		ft_memset(str, '\0', 5);
-		i = 0;
-	}
-	str[byte_idx] <<= 1;
+	current->str[current->byte_idx] <<= 1;
 	if (signum == SIGUSR2)
-		str[byte_idx] |= 1;
-	bin_to_char(str, &i, &byte_idx, pid);
+		current->str[current->byte_idx] |= 1;
+	bin_to_char(current->str, &current->bit_idx, &current->byte_idx, current->pid);
+	free (current);
 }
 
 int	main(void)
@@ -106,4 +99,5 @@ int	main(void)
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 		pause();
+	system("leaks server");
 }

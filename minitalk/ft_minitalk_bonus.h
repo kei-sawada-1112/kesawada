@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 12:13:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:26:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@
 # include <unistd.h>
 
 typedef struct s_client {
-    pid_t			pid;
-    unsigned char	*data;
+    int				pid;
     int				bit_idx;
+	int				byte_idx;
+	unsigned char	str[5];
     struct s_client	*next;
 }	t_client;
+
+t_client	*create_client(t_client *client, int pid);
+t_client	*find_client(t_client *client, int pid);
 
 #endif
