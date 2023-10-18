@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 12:26:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:36:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_client {
     struct s_client	*next;
 }	t_client;
 
-t_client	*create_client(t_client *client, int pid);
+t_client	initialize_client(t_client client, int pid);
 t_client	*find_client(t_client *client, int pid);
 
 #endif

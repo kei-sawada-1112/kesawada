@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 11:45:15 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:57:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	char_to_bin(unsigned char c, int pid)
 		i = 0;
 		while (g_receiver == 0)
 		{
-			if (i++ == 50)
-			{
-				ft_printf("no response from server. exit.\n");
-				exit(1);
-			}
+			// if (g_receiver == 1)
+			// 	break ;
+			// if (i++ == 5000)
+			// {
+			// 	ft_printf("no response from server. exit.\n");
+			// 	exit(1);
+			// }
 			usleep(100);
 		}
 		g_receiver = 0;
@@ -52,7 +54,7 @@ void	client_handler(int signum)
 	if (signum == SIGUSR2)
 		++i;
 	else if (signum == SIGUSR1)
-		ft_printf("%d bytes context sent.\n", ++i);
+		ft_printf("%d bit(s) context sent.\n", ++i);
 }
 
 int	main(int argc, char **argv)
@@ -71,6 +73,7 @@ int	main(int argc, char **argv)
 	signal(SIGUSR1, client_handler);
 	signal(SIGUSR2, client_handler);
 	i = 0;
+	
 	while (argv[2][i])
 	{
 		char_to_bin(argv[2][i], server_pid);

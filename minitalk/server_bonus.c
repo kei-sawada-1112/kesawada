@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 12:34:55 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:37:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,65 +24,63 @@ int	check_first_byte(unsigned char *str)
 		return (1);
 }
 
-void	print_invalid_bytes(unsigned char **str, int *bytes,
+void	print_invalid_bytes(unsigned char *str, int *bytes,
 							int *byte_idx, int pid)
 {
 	unsigned char	*tmp;
 
-	tmp = *str;
-	(*str)[0] = tmp[*byte_idx];
+	tmp = str;
+	str[0] = tmp[*byte_idx];
 	tmp[*byte_idx] = '\0';
 	ft_printf("%s", tmp);
-	ft_memset((*str) + 1, '\0', 4);
-	*bytes = check_first_byte(*str);
+	ft_memset((str) + 1, '\0', 4);
+	*bytes = check_first_byte(str);
 	*byte_idx = 0;
 }
 
-void	bin_to_char(unsigned char *str, int *i, int *byte_idx, int pid)
+void	bin_to_char(t_client *client)
 {
 	static int	bytes;
 
-	(*i)++;
-	if (*i == 8)
+	(client->bit_idx)++;
+	if (client->bit_idx == 8)
 	{
-		if (*byte_idx == 0)
-			bytes = check_first_byte(str);
-		else if (bytes >= 2 && (str[*byte_idx] & 0b11000000) != 0b10000000)
-			print_invalid_bytes(&str, &bytes, byte_idx, pid);
-		if (++(*byte_idx) == bytes)
+		if (client->byte_idx == 0)
+			bytes = check_first_byte(client->str);
+		else if (bytes >= 2 && (client->str[client->byte_idx] & 0b11000000) != 0b10000000)
+			print_invalid_bytes(client->str, &bytes, &client->byte_idx, client->pid);
+		if (++(client->byte_idx) == bytes)
 		{
-			ft_printf("%s", str);
+			ft_printf("%s", client->str);
 			bytes = 1;
-			*byte_idx = 0;
-			if (str[0] == '\0' || *byte_idx == 4)
+			client->byte_idx = 0;
+			if (client->str[0] == '\0')
 			{
-				kill(pid, SIGUSR1);
+				kill(client->pid, SIGUSR1);
+				client->pid = 0;
 				return ;
 			}
-			ft_memset(str, '\0', 5);
+			ft_memset(client->str, '\0', 5);
 		}
-		*i = 0;
+		client->bit_idx = 0;
 	}
 	usleep(100);
-	kill(pid, SIGUSR2);
+	kill(client->pid, SIGUSR2);
 }
 
 void	server_handler(int signum, siginfo_t *info, void *context)
 {
-	static t_client	*client;
-	t_client		*current;
+	static t_client	client;
 
-	if (!client)
-		client = create_client(client, info->si_pid);
-	current = find_client(client, info->si_pid);
-	if (!current)
-		current = create_client(client, info->si_pid);
+	if (!client.pid)
+		client = initialize_client(client, info->si_pid);
+	if (client.pid != info->si_pid)
+		return ;
 	(void)context;
-	current->str[current->byte_idx] <<= 1;
+	client.str[client.byte_idx] <<= 1;
 	if (signum == SIGUSR2)
-		current->str[current->byte_idx] |= 1;
-	bin_to_char(current->str, &current->bit_idx, &current->byte_idx, current->pid);
-	free (current);
+		client.str[client.byte_idx] |= 1;
+	bin_to_char(&client);
 }
 
 int	main(void)
@@ -99,5 +97,4 @@ int	main(void)
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 		pause();
-	system("leaks server");
 }
