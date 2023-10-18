@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 16:37:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:50:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ void	bin_to_char(t_client *client)
 			print_invalid_bytes(client->str, &bytes, &client->byte_idx, client->pid);
 		if (++(client->byte_idx) == bytes)
 		{
-			ft_printf("%s", client->str);
+			if (client->str[0] == ENQ)
+				kill(client->pid, SIGUSR2);
+			else
+				ft_printf("%s", client->str);
 			bytes = 1;
 			client->byte_idx = 0;
 			if (client->str[0] == '\0')
@@ -72,7 +75,8 @@ void	server_handler(int signum, siginfo_t *info, void *context)
 {
 	static t_client	client;
 
-	if (!client.pid)
+	ft_printf("si_pid = %d\n", info->si_pid);
+	if (client.pid == 0)
 		client = initialize_client(client, info->si_pid);
 	if (client.pid != info->si_pid)
 		return ;

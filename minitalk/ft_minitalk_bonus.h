@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 16:36:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:10:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
+
+# define SOH 1
+# define ENQ 5
+# define ACK 6
 
 typedef struct s_client {
     int				pid;
