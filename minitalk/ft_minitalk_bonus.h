@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 01:51:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:13:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,12 @@
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
+
+typedef struct s_client {
+    pid_t			pid;
+    unsigned char	*data;
+    int				bit_idx;
+    struct s_client	*next;
+}	t_client;
 
 #endif

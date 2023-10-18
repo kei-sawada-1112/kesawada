@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 01:49:28 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 12:14:08 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minitalk.h"
+#include "ft_minitalk_bonus.h"
 
-int	check_bytes(unsigned char *str)
+int	check_first_byte(unsigned char *str)
 {
 	if ((*str & 0b11111000) == 0b11110000)
 		return (4);
@@ -24,18 +24,32 @@ int	check_bytes(unsigned char *str)
 		return (1);
 }
 
+void	print_invalid_bytes(unsigned char **str, int *bytes,
+							int *byte_idx, int pid)
+{
+	unsigned char	*tmp;
+
+	tmp = *str;
+	(*str)[0] = tmp[*byte_idx];
+	tmp[*byte_idx] = '\0';
+	ft_printf("%s", tmp);
+	ft_memset((*str) + 1, '\0', 4);
+	*bytes = check_first_byte(*str);
+	*byte_idx = 0;
+}
+
 void	bin_to_char(unsigned char *str, int *i, int *byte_idx, int pid)
 {
 	static int	bytes;
 
 	(*i)++;
-	if (*byte_idx == 0 && *i == 8)
-		bytes = check_bytes(str);
 	if (*i == 8)
 	{
-		(*byte_idx)++;
-		*i = 0;
-		if (*byte_idx == bytes)
+		if (*byte_idx == 0)
+			bytes = check_first_byte(str);
+		else if (bytes >= 2 && (str[*byte_idx] & 0b11000000) != 0b10000000)
+			print_invalid_bytes(&str, &bytes, byte_idx, pid);
+		if (++(*byte_idx) == bytes)
 		{
 			ft_printf("%s", str);
 			bytes = 1;
@@ -46,14 +60,16 @@ void	bin_to_char(unsigned char *str, int *i, int *byte_idx, int pid)
 				return ;
 			}
 			ft_memset(str, '\0', 5);
-			*i = 0;
 		}
+		*i = 0;
 	}
+	usleep(100);
 	kill(pid, SIGUSR2);
 }
 
 void	server_handler(int signum, siginfo_t *info, void *context)
 {
+	static t_client	client;
 	static int				pid;
 	static int				i;
 	static int				byte_idx;
@@ -89,5 +105,5 @@ int	main(void)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
-		sleep(1);
+		pause();
 }

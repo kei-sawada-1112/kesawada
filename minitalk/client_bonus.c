@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clienct.c                                          :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/17 23:08:03 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 11:45:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	char_to_bin(unsigned char c, int pid)
 	int	i;
 
 	bit_idx = 0;
-	while (bit_idx < 8)
+	while (bit_idx++ < 8)
 	{
 		if (c & 128)
 			kill(pid, SIGUSR2);
@@ -29,18 +29,16 @@ void	char_to_bin(unsigned char c, int pid)
 		i = 0;
 		while (g_receiver == 0)
 		{
-			if (i == 50)
+			if (i++ == 50)
 			{
 				ft_printf("no response from server. exit.\n");
 				exit(1);
 			}
-			i++;
 			usleep(100);
 		}
 		g_receiver = 0;
 		usleep(100);
 		c <<= 1;
-		bit_idx++;
 	}
 	return ;
 }

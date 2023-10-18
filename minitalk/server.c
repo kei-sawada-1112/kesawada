@@ -6,13 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 00:12:55 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/18 11:43:39 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
-
-volatile sig_atomic_t g_received = 0;
 
 void	bin_to_char(int signum, char *c, int *i, int pid)
 {
