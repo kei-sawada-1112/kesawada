@@ -6,13 +6,46 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/18 21:00:51 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:54:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_bonus.h"
 
-volatile sig_atomic_t	g_receiver;
+volatile int	g_receiver;
+
+volatile int	g_connected;
+
+void	handshake(unsigned char c, int pid)
+{
+		int	bit_idx;
+	int	i;
+
+	bit_idx = 0;
+	while (bit_idx++ < 8)
+	{
+		if (c & 128)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		i = 0;
+		while (g_receiver == 0)
+		{
+			if (g_receiver == 1)
+				break ;
+			if (i++ == 5000)
+			{
+				ft_printf("cannot reach to server. try again...\n");
+				return ;
+			}
+			usleep(100);
+		}
+		g_receiver = 0;
+		usleep(100);
+		c <<= 1;
+	}
+	return ;
+}
 
 void	char_to_bin(unsigned char c, int pid)
 {
@@ -31,7 +64,7 @@ void	char_to_bin(unsigned char c, int pid)
 		{
 			if (g_receiver == 1)
 				break ;
-			if (i++ == 5000)
+			if (i++ == 50)
 			{
 				ft_printf("no response from server. exit.\n");
 				exit(1);
@@ -51,17 +84,21 @@ void	client_handler(int signum)
 	(void)signum;
 
 	g_receiver = 1;
-	if (signum == SIGUSR2)
-		++i;
-	else if (signum == SIGUSR1)
-		ft_printf("%d bit(s) context sent.\n", ++i - 8);
+	if (signum == SIGUSR1)
+	{
+		// ft_printf("%d bit(s) context sent.\n", ++i - 8);
+		if (g_connected == 0)
+			ft_printf("Hand shake succeeded!\n");
+		g_connected = 1;
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	int					client_pid;
-	int					server_pid;
-	int					i;
+	static int	connected;
+	int			client_pid;
+	int			server_pid;
+	int			i;
 
 	if (argc != 3)
 	{
@@ -72,28 +109,17 @@ int	main(int argc, char **argv)
 	server_pid = ft_atoi(argv[1]);
 	signal(SIGUSR1, client_handler);
 	signal(SIGUSR2, client_handler);
-	while (g_receiver == 0)
+	ft_printf("client_pid: %d\n", client_pid);
+	while (g_connected == 0)
 	{
 		// char_to_bin(ENQ, server_pid);
-		ft_printf("client_pid: %d\n", client_pid);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR2);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		kill(server_pid, SIGUSR1);
-		usleep(10000);
-		ft_printf("wait for sending...\n");
+		ft_printf("wait for handshaking to server...\n");
+		handshake(ENQ, server_pid);
+		if (g_connected == 1)
+			break ;
+		sleep(5);
 	}
+	ft_printf("Connect to server: %d succeeded. Start to send message...\n", server_pid);
 	g_receiver = 0;
 	i = 0;
 	while (argv[2][i])
