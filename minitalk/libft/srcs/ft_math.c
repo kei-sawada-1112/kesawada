@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minitalk.h                                      :+:      :+:    :+:   */
+/*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: kei <kei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 18:06:32 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/14 21:25:07 by kei               #+#    #+#             */
+/*   Updated: 2023/09/14 21:25:23 by kei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINITALK_H
-# define FT_MINITALK_H
+#include <stdlib.h>
+#include "libft.h"
 
-# include "ft_printf/includes/ft_printf.h"
-# include <signal.h>
-# include <stdio.h>
-# include <unistd.h>
-
-#endif
+int	ft_pow(int x, int y)
+{
+	if (y == 0)
+		return (1);
+	return (x * ft_pow(x, y - 1));
+}

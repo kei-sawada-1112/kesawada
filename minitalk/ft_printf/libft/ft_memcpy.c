@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minitalk.h                                      :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 18:06:32 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/20 17:27:01 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/21 20:50:59 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINITALK_H
-# define FT_MINITALK_H
+#include <stdlib.h>
+#include <errno.h>
 
-# include "ft_printf/includes/ft_printf.h"
-# include <signal.h>
-# include <stdio.h>
-# include <unistd.h>
+void	*ft_memcpy(void *dst, const void *src, size_t count)
+{
+	unsigned char	*d;
+	unsigned char	*s;
 
-#endif
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	while (count--)
+		*d++ = *s++;
+	return (dst);
+}

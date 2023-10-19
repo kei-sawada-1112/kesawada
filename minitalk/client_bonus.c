@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 13:13:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/19 20:46:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ volatile int	g_receiver;
 
 int	handshake(unsigned char c, int pid)
 {
-		int	bit_idx;
+	int	bit_idx;
 	int	i;
 
 	bit_idx = 0;
@@ -54,7 +54,12 @@ void	char_to_bin(unsigned char c, int pid)
 	while (bit_idx++ < 8)
 	{
 		if (c & 128)
-			kill(pid, SIGUSR2);
+			if (kill(pid, SIGUSR2))
+			{
+				// error message
+				ft_putstr_fd("error message", 2);
+				exit(1);
+			};
 		else
 			kill(pid, SIGUSR1);
 		i = 0;
@@ -71,8 +76,6 @@ void	char_to_bin(unsigned char c, int pid)
 			}
 			usleep(100);
 		}
-		if (g_receiver == 2)
-			return ;
 		usleep(100);
 		c <<= 1;
 		g_receiver = 0;
@@ -88,12 +91,6 @@ void	client_handler(int signum)
 	//g_receiver = 1;
 	if (signum == SIGUSR2)
 	{
-		// if (g_connected == 0)
-		// {
-		// 	ft_printf("Hand shake succeeded!\n");
-		// 	g_connected = 1;
-		// }
-		// else
 		g_receiver = 2;
 	}
 	if (signum == SIGUSR1)

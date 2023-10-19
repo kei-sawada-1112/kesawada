@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minitalk.h                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 18:06:32 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/13 09:35:29 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINITALK_H
-# define FT_MINITALK_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "ft_printf/includes/ft_printf.h"
-# include <signal.h>
-# include <stdio.h>
+# include <stdarg.h>
 # include <unistd.h>
+# include <stdint.h>
+# include <stdlib.h>
+# include <limits.h>
+
+int		ft_printf(const char *input, ...);
+
+size_t	ft_putstr(const char *str);
+size_t	ft_putchar(const char c);
+size_t	ft_putnbr(int num);
+size_t	ft_putunbr(unsigned int num);
+size_t	ft_putaddress(void *ptr);
+size_t	ft_putnbr_base(unsigned int num, char *base);
+size_t	ft_strlen(const char *str);
 
 #endif

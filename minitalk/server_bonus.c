@@ -6,11 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 13:11:58 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/19 20:49:04 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_bonus.h"
+
+volatile int	g_clientpid;
 
 int	check_first_byte(unsigned char *str)
 {
@@ -48,19 +50,29 @@ void	bin_to_char(t_client *client)
 		if (client->byte_idx == 0)
 			bytes = check_first_byte(client->str);
 		else if (bytes >= 2 && (client->str[client->byte_idx] & 0b11000000) != 0b10000000)
-			print_invalid_bytes(client->str, &bytes, &client->byte_idx, client->pid);
+			print_invalid_bytes(client->str, &bytes, &client->byte_idx, g_clientpid);
 		if (++(client->byte_idx) == bytes)
 		{
 			if (client->str[0] == ENQ)
-				kill(client->pid, SIGUSR2);
+			{
+				if (kill(g_clientpid, SIGUSR2) == -1)
+				{
+					ft_printf("client: %d disappeared!\n", g_clientpid);
+					initialize_client(*client, 0);
+				}
+			}
 			else
 				ft_printf("%s", client->str);
 			bytes = 1;
 			client->byte_idx = 0;
 			if (client->str[0] == '\0')
 			{
-				kill(client->pid, SIGUSR1);
-				client->pid = 0;
+				if (kill(g_clientpid, SIGUSR1) == -1)
+				{
+					ft_printf("client: %d disappeared!\n", g_clientpid);
+					initialize_client(*client, 0);
+				}
+				g_clientpid = 0;
 				return ;
 			}
 			ft_memset(client->str, '\0', 5);
@@ -68,18 +80,24 @@ void	bin_to_char(t_client *client)
 		client->bit_idx = 0;
 	}
 	usleep(100);
-	kill(client->pid, SIGUSR1);
+	if (kill(g_clientpid, SIGUSR1) == -1)
+	{
+		ft_printf("client: %d disappeared!\n", g_clientpid);
+		initialize_client(*client, 0);
+	}
 }
 
 void	server_handler(int signum, siginfo_t *info, void *context)
 {
 	static t_client	client;
 
-	// ft_printf("si_pid = %d\n", client.pid);
-	if (client.pid == 0)
+	if (g_clientpid == 0)
+	{
 		client = initialize_client(client, info->si_pid);
-	if (client.pid != info->si_pid)
-			return ;
+		g_clientpid = info->si_pid;
+	}
+	if (g_clientpid != info->si_pid)
+		return ;
 	(void)context;
 	client.str[client.byte_idx] <<= 1;
 	if (signum == SIGUSR2)
@@ -100,5 +118,12 @@ int	main(void)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
-		pause();
+	{
+		if (kill(g_clientpid, 0) == -1)
+		{
+			ft_printf("client: %d disappeared!\n", g_clientpid);
+			g_clientpid = 0;
+		}
+		sleep(3);
+	}
 }

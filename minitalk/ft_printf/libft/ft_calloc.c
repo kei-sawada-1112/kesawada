@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minitalk.h                                      :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 18:06:32 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/25 18:30:19 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/30 12:01:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINITALK_H
-# define FT_MINITALK_H
+#include <stdlib.h>
+#include <limits.h>
+#include "libft.h"
 
-# include "ft_printf/includes/ft_printf.h"
-# include <signal.h>
-# include <stdio.h>
-# include <unistd.h>
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ret;
+	size_t	num;
 
-#endif
+	num = 1;
+	if (!size || !count)
+		return (ft_calloc(1, 1));
+	if (size > SIZE_MAX / count)
+		return (NULL);
+	num = size * count;
+	if (num == SIZE_MAX)
+		return (NULL);
+	ret = (char *)malloc(num);
+	if (!ret)
+		return (NULL);
+	ft_bzero(ret, num);
+	return (ret);
+}

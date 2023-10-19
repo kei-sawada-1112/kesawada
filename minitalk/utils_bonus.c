@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minitalk.h                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 18:06:32 by kesawada         ###   ########.fr       */
+/*   Created: 2023/10/18 12:11:32 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/19 14:32:40 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINITALK_H
-# define FT_MINITALK_H
+#include "ft_minitalk_bonus.h"
 
-# include "ft_printf/includes/ft_printf.h"
-# include <signal.h>
-# include <stdio.h>
-# include <unistd.h>
-
-#endif
+t_client	initialize_client(t_client client, int pid)
+{
+	if (pid == 0)
+		ft_printf("-----------------------pid error-------------------------\n");
+	client.pid = pid;
+	ft_memset(client.str, '\0', 5);
+	client.bit_idx = 0;
+	client.byte_idx = 0;
+	return (client);
+}
