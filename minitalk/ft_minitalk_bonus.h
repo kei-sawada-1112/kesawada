@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 19:08:54 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:09:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define SOH 1
+# define ENT 4
 # define ENQ 5
 # define ACK 6
 
 typedef struct s_client {
-    int				pid;
     int				bit_idx;
 	int				byte_idx;
 	unsigned char	str[5];
-    struct s_client	*next;
 }	t_client;
 
-t_client	initialize_client(t_client client, int pid);
-t_client	*find_client(t_client *client, int pid);
+void	initialize_client(t_client *client);
+int		check_first_byte(unsigned char *str);
+void	print_invalid_bytes(unsigned char *str, int *bytes, int *byte_idx);
 
 #endif

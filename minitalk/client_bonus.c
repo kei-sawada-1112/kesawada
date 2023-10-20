@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 20:46:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:28:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handshake(unsigned char c, int pid)
 		{
 			if (i++ == 500)
 			{
-				ft_printf("no response from server. try again...\n");
+				ft_printf("No response from the server. Retrying...\n");
 				return (0);
 			}
 			usleep(100);
@@ -54,12 +54,13 @@ void	char_to_bin(unsigned char c, int pid)
 	while (bit_idx++ < 8)
 	{
 		if (c & 128)
-			if (kill(pid, SIGUSR2))
-			{
-				// error message
-				ft_putstr_fd("error message", 2);
-				exit(1);
-			};
+			kill(pid, SIGUSR2);
+			// if (kill(pid, SIGUSR2))
+			// {
+				// // error message
+				// ft_putstr_fd("error message", 2);
+				// exit(1);
+			// }
 		else
 			kill(pid, SIGUSR1);
 		i = 0;
@@ -67,8 +68,7 @@ void	char_to_bin(unsigned char c, int pid)
 		{
 			if (i++ == 500)
 			{
-				// ft_printf("no response from server. exit.\n");
-				ft_printf("no response from server. send bit again.\n");
+				ft_printf("No response from the server. Sending bit again.\n");
 				if (c & 128)
 					kill(pid, SIGUSR2);
 				else
@@ -85,16 +85,14 @@ void	char_to_bin(unsigned char c, int pid)
 
 void	client_handler(int signum)
 {
-	static int	i;
 	(void)signum;
 
-	//g_receiver = 1;
 	if (signum == SIGUSR2)
 	{
 		g_receiver = 2;
 	}
 	if (signum == SIGUSR1)
-		g_receiver = 1;// ft_printf("%d byte(s) context sent.\n", (++i - 16) / 8);
+		g_receiver = 1;
 }
 
 int	main(int argc, char **argv)
@@ -119,10 +117,10 @@ int	main(int argc, char **argv)
 	{
 		if (handshake(ENQ, server_pid))
 			break ;
-		ft_printf("wait for handshaking to server...\n");
+		ft_printf("Awaiting handshake with the server...\n");
 		sleep(3);
 	}
-	ft_printf("connect to server: %d succeeded!\nstart to send context...\n", server_pid);
+	ft_printf("Connected to server: %d successfully!\nStarting to send context...", server_pid);
 	usleep(100);
 	g_receiver = 0;
 	i = 0;
@@ -131,5 +129,5 @@ int	main(int argc, char **argv)
 		char_to_bin(argv[2][i], server_pid);
 		i++;
 	}
-	char_to_bin('\0', server_pid);
+	char_to_bin(ENT, server_pid);
 }
