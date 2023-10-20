@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 12:16:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 13:35:58 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void	kill_and_catch_error(int pid, int signum, t_client *client)
 {
 	if (kill(pid, signum) == -1)
 	{
-		ft_printf("\nConnection lost with Client: %d.\nAwaiting next client connection.\n", pid);
+		ft_printf("\n%sConnection lost with Client: %d.\n%s", RED, pid, RESET);
+		ft_printf("%sAwaiting next client connection.\n%s", GREEN, RESET);
 		initialize_client(client);
 		g_client_pid = 0;
 	}
@@ -26,16 +27,15 @@ static void	kill_and_catch_error(int pid, int signum, t_client *client)
 
 static void	bin_to_char(t_client *client)
 {
-	static int	bytes;
-
-	(client->bit_idx)++;
-	if (client->bit_idx == 8)
+	if (++client->bit_idx == 8)
 	{
+		client->bit_idx = 0;
 		if (client->byte_idx == 0)
-			bytes = check_first_byte(client->str);
-		else if (bytes >= 2 && (client->str[client->byte_idx] & 0b11000000) != 0b10000000)
-			print_invalid_bytes(client->str, &bytes, &client->byte_idx);
-		if (++(client->byte_idx) == bytes)
+			client->bytes = check_first_byte(client->str);
+		else if (client->bytes >= 2
+			&& (client->str[client->byte_idx] & 0b11000000) != 0b10000000)
+			print_invalid_bytes(client->str, &client->bytes, &client->byte_idx);
+		if (++(client->byte_idx) == client->bytes)
 		{
 			if (client->str[0] == ENQ)
 				kill_and_catch_error(g_client_pid, SIGUSR2, client);
@@ -49,13 +49,12 @@ static void	bin_to_char(t_client *client)
 				ft_printf("%s", client->str);
 			initialize_client(client);
 		}
-		client->bit_idx = 0;
 	}
 	usleep(100);
 	kill_and_catch_error(g_client_pid, SIGUSR1, client);
 }
 
-void	server_handler(int signum, siginfo_t *info, void *context)
+static void	server_handler(int signum, siginfo_t *info, void *context)
 {
 	static t_client	client;
 
@@ -81,15 +80,17 @@ int	main(void)
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sa.sa_flags = SA_SIGINFO;
-	ft_printf("/*-Server started-*/\nServer pid: %d\n", getpid());
 	sa.sa_sigaction = server_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
+	show_minitalk_display(getpid());
 	while (1)
 	{
 		if (kill(g_client_pid, 0) == -1)
 		{
-			ft_printf("\nConnection lost with Client: %d.\nAwaiting next client connection.\n", g_client_pid);
+			ft_printf("%s\nConnection lost with Client: %d.\n%s",
+				RED, g_client_pid, RESET);
+			ft_printf("%sAwaiting next client connection.\n%s", CYAN, RESET);
 			g_client_pid = 0;
 		}
 		sleep(3);

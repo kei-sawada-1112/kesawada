@@ -11,45 +11,37 @@ INC_DIR = includes
 SRC_DIR = srcs
 
 VALUE_HANDLER_DIR = value_handler
-BONUS_VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler_bonus.c\
+VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler.c\
 
 CONVERTER_DIR = converter
-BONUS_CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter_bonus.c\
+CONVERTERS = $(SRC_DIR)/$(CONVERTER_DIR)/hex_converter.c\
 
 PROCESSOR_DIR = processor
-BONUS_PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process_bonus.c\
-$(SRC_DIR)/$(PROCESSOR_DIR)/process2_bonus.c\
+PROCESSORS = $(SRC_DIR)/$(PROCESSOR_DIR)/process.c\
+$(SRC_DIR)/$(PROCESSOR_DIR)/process2.c\
 
 GETTER_DIR = getter
-BONUS_GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value_bonus.c\
-$(SRC_DIR)/$(GETTER_DIR)/get_value2_bonus.c\
+GETTERS = $(SRC_DIR)/$(GETTER_DIR)/get_value.c\
+$(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
 
 UTILS_DIR = utils
-BONUS_UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils_bonus.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils2_bonus.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils3_bonus.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils4_bonus.c
+UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils2.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils3.c\
+$(SRC_DIR)/$(UTILS_DIR)/utils4.c
 
 WRITER_DIR = writer
-BONUS_WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding_bonus.c
+WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding.c
 
 SRCS = ft_printf.c\
-ft_putfunc.c\
-ft_putfunc2.c
-
-BONUS_SRCS = ft_printf_bonus.c\
-$(BONUS_VALUE_HANDLERS)\
-$(BONUS_CONVERTERS)\
-$(BONUS_PROCESSORS)\
-$(BONUS_GETTERS)\
-$(BONUS_UTILS)\
-$(BONUSWRITER)\
+$(VALUE_HANDLERS)\
+$(CONVERTERS)\
+$(PROCESSORS)\
+$(GETTERS)\
+$(UTILS)\
+$(WRITER)\
 
 OBJS = $(SRCS:.c=.o)
-BONUS_OBJS = $(BONUS_SRCS:.c=.o)
-ifeq ($(MAKECMDGOALS), bonus)
-	OBJS += $(BONUS_OBJS)
-endif
 
 all: $(NAME)
 
@@ -58,11 +50,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $@ $^
-
-#$(NAME): $(OBJS)
-#	$(CC) $(CFLAGS) $(IFLAGS) $^ -o $@
-
-bonus: all
 
 debug: fclean bonus
 
@@ -74,4 +61,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus debug
+.PHONY: all clean fclean re debug
