@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstr_and_padding.c                               :+:      :+:    :+:   */
+/*   putstr_and_padding_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 11:32:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/11 11:55:30 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 07:49:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 void	apply_padding(const char *str, t_format *format)
 {

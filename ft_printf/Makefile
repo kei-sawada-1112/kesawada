@@ -7,47 +7,59 @@ endif
 
 IFLAGS = -I$(INC_DIR)
 NAME = libftprintf.a
-INC_DIR = src
-SRC_DIR = src
-OBJ_DIR = obj
+INC_DIR = srcs
+SRC_DIR = srcs
+OBJ_DIR = objs
 
 LIBFT_DIR = libft
 LIBFT = ${LIBFT_DIR}/libft.a
 
 VALUE_HANDLER_DIR = $(SRC_DIR)/value_handler
-VALUE_HANDLERS = $(VALUE_HANDLER_DIR)/value_handler.c\
+VALUE_HANDLERS = $(VALUE_HANDLER_DIR)/value_handler.c
+BVALUE_HANDLERS = $(VALUE_HANDLER_DIR)/value_handler_bonus.c\
 
 CONVERTER_DIR = $(SRC_DIR)/converter
-CONVERTERS = $(CONVERTER_DIR)/hex_converter.c\
+CONVERTERS = $(CONVERTER_DIR)/hex_converter.c
+BCONVERTERS = $(CONVERTER_DIR)/hex_converter_bonus.c\
 
 PROCESSOR_DIR = $(SRC_DIR)/processor
 PROCESSORS = $(PROCESSOR_DIR)/process.c\
-$(PROCESSOR_DIR)/process2.c\
+$(PROCESSOR_DIR)/process2.c
+BPROCESSORS = $(PROCESSOR_DIR)/process_bonus.c\
+$(PROCESSOR_DIR)/process2_bonus.c\
 
 GETTER_DIR = $(SRC_DIR)/getter
 GETTERS = $(GETTER_DIR)/get_value.c\
-$(GETTER_DIR)/get_value2.c\
+$(GETTER_DIR)/get_value2.c
+BGETTERS = $(GETTER_DIR)/get_value_bonus.c\
+$(GETTER_DIR)/get_value2_bonus.c\
 
 UTILS_DIR = $(SRC_DIR)/utils
-UTILS = $(UTILS_DIR)/utils.c\
+UTILS = $(UTILS_DIR)/utils.c
+BUTILS = $(UTILS_DIR)/utils_bonus.c\
 
 WRITER_DIR = $(SRC_DIR)/writer
 WRITER = $(WRITER_DIR)/putstr_and_padding.c
+BWRITER = $(WRITER_DIR)/putstr_and_padding_bonus.c
 
-COMMON_SRCS = $(VALUE_HANDLERS)\
+SRCS = ft_printf.c\
+$(VALUE_HANDLERS)\
 $(CONVERTERS)\
 $(PROCESSORS)\
 $(GETTERS)\
 $(UTILS)\
 $(WRITER)\
 
-SRCS = $(COMMON_SRCS) \
-ft_printf.c
-
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
+TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 
-BSRCS = $(COMMON_SRCS) \
-ft_printf_bonus.c
+BSRCS = ft_printf_bonus.c\
+$(BVALUE_HANDLERS)\
+$(BCONVERTERS)\
+$(BPROCESSORS)\
+$(BGETTERS)\
+$(BUTILS)\
+$(BWRITER)\
 
 BOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSRCS:.c=.o)))
 
@@ -66,8 +78,11 @@ $(UTILS_DIR)
 
 all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+$(OBJ_DIR):
+	@makdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
 	@if [ ! -e $(NAME) ]; then \
@@ -75,24 +90,21 @@ $(NAME): $(OBJS)
 	fi
 	@if [ "$(MAKECMDGOALS)" = "" ]; then \
 		if ar t $(NAME) | grep -q ft_printf_bonus.o; then \
-			ar d $(NAME) ft_printf_bonus.o; \
-			rm $(OBJ_DIR)/ft_printf_bonus.o; \
+			ar d $(NAME) $(notdir $(BOBJS)); \
+			rm $(BOBJS); \
 		fi; \
 	elif [ "$(MAKECMDGOALS)" = "bonus" ]; then \
 		if ar t $(NAME) | grep -q ft_printf.o; then \
-			ar d $(NAME) ft_printf.o; \
-			rm $(OBJ_DIR)/ft_printf.o; \
+			ar d $(NAME) $(notdir $(TMP_OBJS)); \
+			rm $(TMP_OBJS); \
 		fi; \
 	fi
 	ar rcs $@ $(OBJS)
 
+$(OBJ_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+
 bonus: all
-
-$(OBJ_DIR):
-	@makdir -p $(OBJ_DIR)
-
-$(LIBFT):
-	@make -C $(LIBFT_DIR)
 
 debug: fclean bonus
 
