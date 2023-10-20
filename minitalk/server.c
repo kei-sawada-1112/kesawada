@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 17:49:29 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:03:13 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 
-volatile int	g_client_pid;
+volatile sig_atomic_t	g_client_pid;
 
 static void	kill_and_catch_error(int pid, int signum, t_client *client)
 {

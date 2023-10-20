@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 18:06:05 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:03:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 
-volatile int	g_receiver;
+volatile sig_atomic_t	g_receiver;
 
 static int	handshake(unsigned char c, int pid)
 {
