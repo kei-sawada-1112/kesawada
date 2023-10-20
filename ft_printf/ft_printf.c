@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:04:29 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 16:21:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:32:28 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	state_based_process(char **str, t_format *format)
+void	state_based_process(const char **str, t_format *format)
 {
 	static t_process	f[] = {
 		process_letter, process_flag, process_field,
@@ -25,6 +25,7 @@ void	state_based_process(char **str, t_format *format)
 void	init_format(t_format *format)
 {
 	format->state = LETTER;
+	format->type = TYPE_C;
 	format->len = 0;
 	format->f_sharp = 0;
 	format->f_minus = 0;
@@ -34,12 +35,13 @@ void	init_format(t_format *format)
 	format->f_dot = 0;
 	format->f_num = 0;
 	format->f_asta = 0;
-	format->prefix = NULL;
-	format->precision = 0;
 	format->field = NULL;
 	format->width = 0;
+	format->prefix = NULL;
+	format->precision = 0;
 	format->type = 0;
 	format->sign = 1;
+	format->invalid_char = 0;
 }
 
 int	ft_printf(const char *input, ...)
@@ -49,7 +51,7 @@ int	ft_printf(const char *input, ...)
 	va_start(format.args, input);
 	init_format(&format);
 	while (*input)
-		state_based_process((char **)(&input), &format);
+		state_based_process(&input, &format);
 	va_end(format.args);
 	return (format.len);
 }

@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:16:14 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 16:21:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:19:17 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	check_type(char c, t_format *format)
+static int	check_type(const char c, t_format *format)
 {
 	char	*op_list;
 	char	*type;
@@ -51,7 +51,7 @@ static void	set_asta_value(t_format *format)
 	format->state = FLAG;
 }
 
-static int	set_format_flags(char **str, t_format *format)
+static int	set_format_flags(const char **str, t_format *format)
 {
 	if (**str == '0')
 		format->f_zero = 1;
@@ -71,7 +71,7 @@ static int	set_format_flags(char **str, t_format *format)
 	return (1);
 }
 
-static void	set_format_state(char **str, t_format *format)
+static void	set_format_state(const char **str, t_format *format)
 {
 	if (ft_isdigit(**str) && **str != '0' && !format->f_dot)
 	{
@@ -93,7 +93,7 @@ static void	set_format_state(char **str, t_format *format)
 	(*str)++;
 }
 
-void	process_flag(char **str, t_format *format)
+void	process_flag(const char **str, t_format *format)
 {
 	if (check_type(**str, format))
 		return ;

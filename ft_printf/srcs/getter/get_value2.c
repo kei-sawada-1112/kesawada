@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:46:33 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 23:17:30 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:23:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ char	*get_uint_value(t_format *format)
 
 char	*get_hex_value(t_format *format)
 {
-	unsigned long long	value;
-	char				*hex;
-	char				*hashed_hex;
+	unsigned long	value;
+	char			*hex;
+	char			*hashed_hex;
 
-	value = va_arg(format->args, unsigned long long);
+	value = va_arg(format->args, unsigned long);
 	if (value < 0)
 	{
 		format->sign = -1;

@@ -6,15 +6,15 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/19 23:17:18 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:41:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long long	set_field_len(t_format *format, char *value)
+static long	set_field_len(t_format *format, char *value)
 {
-	long long	field_len;
+	long	field_len;
 
 	if (format->f_dot)
 	{
@@ -43,7 +43,7 @@ static long long	set_field_len(t_format *format, char *value)
 
 static void	check_field(t_format *format, char *value)
 {
-	long long	field_len;
+	long	field_len;
 
 	if (format->precision > format->width && format->f_num)
 		return ;
@@ -61,7 +61,7 @@ static void	check_field(t_format *format, char *value)
 		format->field = malloc(field_len + 1);
 		if (!format->field)
 			return ;
-		if (format->f_zero)
+		if (format->f_zero && !(format->f_dot && format->precision == 0))
 			ft_memset(format->field, '0', field_len);
 		else
 			ft_memset(format->field, ' ', field_len);
@@ -71,7 +71,7 @@ static void	check_field(t_format *format, char *value)
 
 static void	check_prefix(t_format *format, char *value)
 {
-	long long	prefix_len;
+	long	prefix_len;
 
 	if (ft_strlen(value) == 0 || format->precision < ft_strlen(value))
 		return ;

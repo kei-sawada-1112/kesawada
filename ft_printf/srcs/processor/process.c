@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:52:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 16:21:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:18:57 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	process_letter(char **str, t_format *format)
+void	process_letter(const char **str, t_format *format)
 {
 	size_t	i;
 
@@ -29,7 +29,7 @@ void	process_letter(char **str, t_format *format)
 	(*str) += i;
 }
 
-void	process_field(char **str, t_format *format)
+void	process_field(const char **str, t_format *format)
 {
 	format->width = ft_atoi(*str);
 	while (**str >= '0' && **str <= '9')
@@ -37,7 +37,7 @@ void	process_field(char **str, t_format *format)
 	format->state = FLAG;
 }
 
-void	process_prefix(char **str, t_format *format)
+void	process_prefix(const char **str, t_format *format)
 {
 	format->precision = ft_atoi(*str);
 	while (**str >= '0' && **str <= '9')
@@ -45,7 +45,7 @@ void	process_prefix(char **str, t_format *format)
 	format->state = FLAG;
 }
 
-void	process_type(char **str, t_format *format)
+void	process_type(const char **str, t_format *format)
 {
 	static t_getter	f[] = {
 		get_char_value, get_str_value, get_hexaddr_value,

@@ -10,6 +10,9 @@ NAME = libftprintf.a
 INC_DIR = includes
 SRC_DIR = srcs
 
+LIBFT_DIR = libft
+LIBFT = ${LIBFT_DIR}/libft.a
+
 VALUE_HANDLER_DIR = value_handler
 VALUE_HANDLERS = $(SRC_DIR)/$(VALUE_HANDLER_DIR)/value_handler.c\
 
@@ -26,9 +29,6 @@ $(SRC_DIR)/$(GETTER_DIR)/get_value2.c\
 
 UTILS_DIR = utils
 UTILS = $(SRC_DIR)/$(UTILS_DIR)/utils.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils2.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils3.c\
-$(SRC_DIR)/$(UTILS_DIR)/utils4.c
 
 WRITER_DIR = writer
 WRITER = $(SRC_DIR)/$(WRITER_DIR)/putstr_and_padding.c
@@ -38,28 +38,34 @@ $(VALUE_HANDLERS)\
 $(CONVERTERS)\
 $(PROCESSORS)\
 $(GETTERS)\
-$(UTILS)\
 $(WRITER)\
+$(UTILS)\
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c
+%.o: %.c $(INC_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	ar rcs $@ $^
+	@make -C $(LIBFT_DIR)
+	@if [ ! -e $(NAME) ]; then \
+        cp $(LIBFT) $(NAME); \
+	fi
+	ar rcs $@ $(OBJS)
 
 bonus: all
 
 debug: fclean bonus
 
 clean:
-	rm -f $(OBJS) $(BONUS_OBJS)
+	@make -C $(LIBFT_DIR) clean
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
 
 re: fclean all
 

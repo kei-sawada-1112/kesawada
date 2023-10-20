@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 18:30:19 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/09 19:40:16 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/25 20:34:43 by kesawada          #+#    #+#             */
+/*   Updated: 2023/10/09 19:42:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	void	*ret;
-	size_t	num;
+	char	*ret;
+	char	*start;
+	char	*last;
+	int		len;
 
-	num = 1;
-	if (!size || !count)
-		return (ft_calloc(1, 1));
-	if (size > SIZE_MAX / count)
+	if (!s1)
 		return (NULL);
-	num = size * count;
-	if (num == SIZE_MAX)
-		return (NULL);
-	ret = (char *)malloc(num);
+	if (!*set)
+		return (ft_strdup(s1));
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	start = (char *)s1;
+	last = (char *)s1 + ft_strlen(s1) - 1;
+	while (last >= start && ft_strchr(set, *last))
+		last--;
+	len = last - start + 1;
+	ret = (char *)malloc(sizeof(char) * len + 1);
 	if (!ret)
 		return (NULL);
-	ft_bzero(ret, num);
+	ft_strlcpy(ret, start, len + 1);
 	return (ret);
 }

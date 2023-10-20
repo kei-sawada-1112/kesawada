@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 16:21:40 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:21:35 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ typedef struct s_format
 }	t_format;
 
 typedef char	*(*t_getter)(t_format *);
-typedef void	(*t_process)(char **, t_format *);
+typedef void	(*t_process)(const char **, t_format *);
 
 int		ft_printf(const char *input, ...);
 void	init_format(t_format *format);
 void	handle_common(t_format *format, char *(*get_value)(t_format *f));
 
-void	process_letter(char **str, t_format *format);
-void	process_flag(char **str, t_format *format);
-void	process_field(char **str, t_format *format);
-void	process_prefix(char **str, t_format *format);
-void	process_type(char **str, t_format *format);
+void	process_letter(const char **str, t_format *format);
+void	process_flag(const char **str, t_format *format);
+void	process_field(const char **str, t_format *format);
+void	process_prefix(const char **str, t_format *format);
+void	process_type(const char **str, t_format *format);
 
 void	putstr_and_add_len(const char *str, t_format *format);
 void	apply_padding(const char *str, t_format *format);
