@@ -6,12 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 19:21:35 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 08:48:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# include "../libft/libft.h"
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdint.h>
@@ -90,18 +91,6 @@ char	*get_hex_value(t_format *format);
 char	*convert_to_hexaddr(void *ptr, int type);
 char	*convert_to_hex(int num, int dot_flag);
 
-char	*ft_uitoa(unsigned int num);
-size_t	ft_strlen(const char *str);
-void	*ft_memset(void *b, int c, size_t len);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-int		ft_isdigit(int c);
-char	*ft_strchr(const char *s, int c);
-int		ft_atoi(const char *str);
-char	*ft_itoa(int n);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(const char *s1, const char *s2);
-void	*ft_calloc(size_t count, size_t size);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+ char	*ft_uitoa(unsigned int num);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 07:47:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 08:36:40 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ char	*recursive_convert(char *hex, unsigned int num, int *i, int type)
 	c = num % 16;
 	if (c < 10)
 		c += '0';
-	else
-		c += (type == TYPE_X) * 'a' + (type == TYPE_LX) * 'A' - 10;
+	else if (type == TYPE_X)
+		c += 'a' - 10;
+	else if (type == TYPE_LX)
+		c += 'A' - 10;
 	recursive_convert(hex, num / 16, i, type);
 	hex[*i] = c;
 	(*i)++;
@@ -82,13 +84,7 @@ char	*convert_to_hex(int num, int type)
 
 	i = 0;
 	if (num == 0)
-	{
-		hex = ft_calloc(2, 1);
-		if (!hex)
-			return (NULL);
-		hex[0] = '0';
-		return (hex);
-	}
+		return (ft_strdup("0"));
 	hex = malloc(9);
 	if (!hex)
 		return (NULL);
