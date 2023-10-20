@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 11:16:01 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:16:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	kill_and_catch_error(int pid, int signum, t_client *client)
 {
 	if (kill(pid, signum) == -1)
 	{
-		ft_printf("client: %d disappeared!\n", pid);
+		ft_printf("\nConnection lost with Client: %d.\nAwaiting next client connection.\n", pid);
 		initialize_client(client);
 		g_client_pid = 0;
 	}
@@ -49,6 +49,7 @@ static void	bin_to_char(t_client *client)
 				ft_printf("%s", client->str);
 			initialize_client(client);
 		}
+		client->bit_idx = 0;
 	}
 	usleep(100);
 	kill_and_catch_error(g_client_pid, SIGUSR1, client);
@@ -80,7 +81,7 @@ int	main(void)
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sa.sa_flags = SA_SIGINFO;
-	ft_printf("/*-server started-*/\nserver pid: %d\n", getpid());
+	ft_printf("/*-Server started-*/\nServer pid: %d\n", getpid());
 	sa.sa_sigaction = server_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
@@ -88,7 +89,7 @@ int	main(void)
 	{
 		if (kill(g_client_pid, 0) == -1)
 		{
-			ft_printf("\nclient: %d disconnected. ready for next client.\n", g_client_pid);
+			ft_printf("\nConnection lost with Client: %d.\nAwaiting next client connection.\n", g_client_pid);
 			g_client_pid = 0;
 		}
 		sleep(3);

@@ -6,13 +6,30 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 11:28:54 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:18:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_bonus.h"
 
 volatile int	g_receiver;
+
+static void	kill_and_catch_error(unsigned int c, int pid)
+{
+	if (c & 128)
+	{
+		if (kill(pid, SIGUSR2) == -1)
+		{
+			ft_printf("Server connection lost! Aborting...");
+			exit(1);
+		}
+	}
+	else if (kill(pid, SIGUSR1) == -1)
+	{
+		ft_printf("Server connection lost! Aborting...");
+		exit(1);
+	}
+}
 
 int	handshake(unsigned char c, int pid)
 {
@@ -53,26 +70,14 @@ void	char_to_bin(unsigned char c, int pid)
 	bit_idx = 0;
 	while (bit_idx++ < 8)
 	{
-		if (c & 128)
-			kill(pid, SIGUSR2);
-			// if (kill(pid, SIGUSR2))
-			// {
-				// // error message
-				// ft_putstr_fd("error message", 2);
-				// exit(1);
-			// }
-		else
-			kill(pid, SIGUSR1);
+		kill_and_catch_error(c, pid);
 		i = 0;
 		while (g_receiver == 0)
 		{
 			if (i++ == 500)
 			{
 				ft_printf("No response from the server. Sending bit again.\n");
-				if (c & 128)
-					kill(pid, SIGUSR2);
-				else
-					kill(pid, SIGUSR1);
+				kill_and_catch_error(c, pid);
 			}
 			usleep(100);
 		}
