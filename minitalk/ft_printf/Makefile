@@ -82,7 +82,7 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(OBJ_DIR):
-	@makdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
 	@if [ ! -e $(NAME) ]; then \
