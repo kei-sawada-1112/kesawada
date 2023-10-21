@@ -86,7 +86,7 @@ $(OBJ_DIR):
 
 $(NAME): $(OBJS)
 	@if [ ! -e $(NAME) ]; then \
-        cp $(LIBFT) $(NAME); \
+		cp $(LIBFT) $(NAME); \
 	fi
 	@if [ "$(MAKECMDGOALS)" = "" ]; then \
 		if ar t $(NAME) | grep -q ft_printf_bonus.o; then \
@@ -118,4 +118,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus debug
+.PHONY: all clean fclean re bonus debug $(LIBFT)
