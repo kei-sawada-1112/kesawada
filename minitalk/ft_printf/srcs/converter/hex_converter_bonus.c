@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hex_converter.c                                    :+:      :+:    :+:   */
+/*   hex_converter_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 08:35:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 08:50:03 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
 void	hex_char(unsigned char c, unsigned char *buffer)
 {
