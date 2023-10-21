@@ -57,8 +57,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	ar rc $@ $^
-	ranlib $@
+	ar rcs $@ $^
 
 bonus: all
 
