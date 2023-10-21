@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 08:48:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 09:12:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char	*get_uint_value(t_format *format);
 char	*get_hex_value(t_format *format);
 char	*convert_to_hexaddr(void *ptr, int type);
 char	*convert_to_hex(int num, int dot_flag);
-
- char	*ft_uitoa(unsigned int num);
+char	*ft_uitoa(unsigned int num);
 
 #endif
