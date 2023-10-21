@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 13:35:58 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:38:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_bonus.h"
 
-volatile int	g_client_pid;
+volatile sig_atomic_t	g_client_pid;
 
 static void	kill_and_catch_error(int pid, int signum, t_client *client)
 {
@@ -50,7 +50,7 @@ static void	bin_to_char(t_client *client)
 			initialize_client(client);
 		}
 	}
-	usleep(100);
+	usleep(1000);
 	kill_and_catch_error(g_client_pid, SIGUSR1, client);
 }
 

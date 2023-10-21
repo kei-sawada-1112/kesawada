@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 17:04:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 08:50:03 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/21 09:54:05 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*convert_to_hexaddr(void *ptr, int dot_flag)
 	hex_addr[sizeof(ptr) * 2] = '\0';
 	while (--i >= 0)
 	{
-		hex_char((uintptr_t)ptr >> (i * 8) & 0xFF, buffer);
+		hex_char((unsigned char)((uintptr_t)ptr >> (i * 8)), buffer);
 		hex_addr[2 * (sizeof(ptr) - 1 - i)] = buffer[0];
 		hex_addr[2 * (sizeof(ptr) - 1 - i) + 1] = buffer[1];
 	}
