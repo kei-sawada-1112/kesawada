@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 12:45:59 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:26:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	push_swap(t_info *a, t_info *b, int argc, char **argv)
 	// ft_stackrot_rev(a, b);
 	// swap_top(a, b);
 	rotate(a, b);
-	rotate_rev(a, b);
-	push(a, b);
+	// rotate_rev(a, b);
+	// push(a, b);
 	// swap_top(a, b);
 	// swap_top(a, b);
 }
@@ -47,10 +47,16 @@ int main(int argc, char **argv)
 	if (argc == 1)
 		return (0);
 	init_stack(&(a->stack), argv);
-	init_stack(&(b->stack), NULL);
+	// init_stack(&(b->stack), NULL);
 	push_swap(a, b, argc, argv);
-	ft_printf("%d\n", a->stack->value);
-	ft_printf("%d\n", a->stack->prev->value);
-	ft_printf("%d\n", a->stack->next->value);
-	// ft_printf("%d\n", b->stack->value);
+	a->stack = a->stack->next;
+	while (a->stack->next && !a->stack->is_separator)
+	{
+		ft_printf("value: %d\n", a->stack->value);
+		ft_printf("next : %d\n", a->stack->next->value);
+		ft_printf("prev : %d\n", a->stack->prev->value);
+		// ft_printf("value : %d\n", b->stack->next->value);
+		a->stack = a->stack->next;
+	}
+	// ft_printf("%d\n", b->stack->prev->value);
 }

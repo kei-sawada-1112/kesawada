@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:04:49 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 12:49:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:47:30 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,21 @@ t_stack	*ft_stacklast(t_stack *stack)
 	return (stack);
 }
 
-void	ft_addstack_front(t_stack **stack, t_stack *new)
+void	ft_addstack_front(t_stack **stack, t_stack **new)
 {
-	t_stack *last;
-
 	if (!stack || !new)
 		return ;
 	if (!*stack)
 	{
-		*stack = new;
-		new->prev = new;
-		new->next = new;
+		*stack = *new;
+		(*new)->prev = (*new);
+		(*new)->next = (*new);
 		return ;
 	}
-	last = ft_stacklast(*stack);
-	new->prev = last;
-	new->next = *stack;
-	(*stack)->prev = new;
-	last->next = new;
+	(*stack)->next = (*new);
+	(*new)->prev = *stack;
+	(*new)->next = (*stack)->next;
+	(*stack)->next->prev = (*new);
 }
 
 void	ft_addstack_back(t_stack **stack, t_stack *new)
@@ -76,12 +73,14 @@ void	ft_addstack_back(t_stack **stack, t_stack *new)
 	(*stack)->prev = new;
 }
 
-void	ft_stackmove(t_stack **to, t_stack **from)
+void	ft_stackmove(t_stack *to, t_stack *from)
 {
 	if (!from || !to)
 		return ;
-	ft_addstack_front(to, *from);
-	(*from)->next->prev = (*from)->prev;
-	(*from)->prev->next = (*from)->next;
-	(*from) = (*from)->next;
+	ft_addstack_front(&to, &from);
+	from->next->prev = from->prev;
+	from->prev->next = from->next;
+	from->prev = to;
+	from->next = to->next;
+	// to = to->next;
 }

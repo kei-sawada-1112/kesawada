@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 11:58:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:37:09 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	init_stack(t_stack **stack, char **argv)
 		add_to_hashtable(table, num, i);
 		append_stack(stack, num);
 	}
-	*stack = (*stack)->next;
+	// *stack = (*stack)->next;
 }
