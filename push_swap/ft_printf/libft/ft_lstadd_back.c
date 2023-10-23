@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 10:49:29 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/25 18:31:25 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/28 10:19:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	push_swap(t_stack **a, int argc, char **argv)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	(void)argv;
-	ft_printf("median: %d\n", get_median(*a, argc - 1));
-}
+	t_list	*last_node;
 
-int main(int argc, char **argv)
-{
-	t_stack	*a;
-	// t_stack	*b;
-
-	if (argc == 1)
-		return (0);
-	init_stack(&a, argv);
-	push_swap(&a, argc, argv);
-	ft_printf("%d\n", a->prev->value);
+	if (!lst || !new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last_node = ft_lstlast(*lst);
+	last_node->next = new;
 }

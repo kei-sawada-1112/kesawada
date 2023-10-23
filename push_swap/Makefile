@@ -5,61 +5,33 @@ ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUGFLAGS)
 endif
 
-IFLAGS = -I$(INC_DIR)
-NAME = libftprintf.a
-INC_DIR = srcs
+IFLAGS  = -I$(INC_DIR)
+NAME 	= push_swap
+INC_DIR = includes
 SRC_DIR = srcs
 OBJ_DIR = objs
 
-LIBFT_DIR = libft
-LIBFT = ${LIBFT_DIR}/libft.a
-
-VALUE_HANDLER_DIR = $(SRC_DIR)/value_handler
-VALUE_HANDLERS = $(VALUE_HANDLER_DIR)/value_handler.c
-BVALUE_HANDLERS = $(VALUE_HANDLER_DIR)/value_handler_bonus.c\
-
-CONVERTER_DIR = $(SRC_DIR)/converter
-CONVERTERS = $(CONVERTER_DIR)/hex_converter.c
-BCONVERTERS = $(CONVERTER_DIR)/hex_converter_bonus.c\
-
-PROCESSOR_DIR = $(SRC_DIR)/processor
-PROCESSORS = $(PROCESSOR_DIR)/process.c\
-$(PROCESSOR_DIR)/process2.c
-BPROCESSORS = $(PROCESSOR_DIR)/process_bonus.c\
-$(PROCESSOR_DIR)/process2_bonus.c\
-
-GETTER_DIR = $(SRC_DIR)/getter
-GETTERS = $(GETTER_DIR)/get_value.c\
-$(GETTER_DIR)/get_value2.c
-BGETTERS = $(GETTER_DIR)/get_value_bonus.c\
-$(GETTER_DIR)/get_value2_bonus.c\
+PRINTF_DIR = ft_printf
+PRINTF = ${PRINTF_DIR}/libftprintf.a
+LIB = -L $(PRINTF_DIR) -lftprintf
 
 UTILS_DIR = $(SRC_DIR)/utils
-UTILS = $(UTILS_DIR)/utils.c
-BUTILS = $(UTILS_DIR)/utils_bonus.c\
+UTILS = $(UTILS_DIR)/utils.c\
+$(UTILS_DIR)/stack_utils.c\
+$(UTILS_DIR)/stack_utils2.c\
+$(UTILS_DIR)/hash_utils.c\
+$(UTILS_DIR)/median_utils.c
 
-WRITER_DIR = $(SRC_DIR)/writer
-WRITER = $(WRITER_DIR)/putstr_and_padding.c
-BWRITER = $(WRITER_DIR)/putstr_and_padding_bonus.c
+BUTILS = $(UTILS_DIR)/utils_bonus.c
 
-SRCS = ft_printf.c\
-$(VALUE_HANDLERS)\
-$(CONVERTERS)\
-$(PROCESSORS)\
-$(GETTERS)\
+SRCS = $(SRC_DIR)/push_swap.c\
 $(UTILS)\
-$(WRITER)\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 
-BSRCS = ft_printf_bonus.c\
-$(BVALUE_HANDLERS)\
-$(BCONVERTERS)\
-$(BPROCESSORS)\
-$(BGETTERS)\
+BSRCS = $(SRC_DIR)/push_swap_bonus.c\
 $(BUTILS)\
-$(BWRITER)\
 
 BOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSRCS:.c=.o)))
 
@@ -69,53 +41,47 @@ endif
 
 vpath %.c \
 $(SRC_DIR) \
-$(VALUE_HANDLER_DIR) \
-$(CONVERTER_DIR) \
-$(PROCESSOR_DIR) \
-$(GETTER_DIR) \
-$(WRITER_DIR) \
-$(UTILS_DIR)
+$(UTILS_DIR) \
 
-all: $(LIBFT) $(OBJ_DIR) $(NAME)
+all: $(PRINTF) $(OBJ_DIR) $(NAME)
 
-$(LIBFT):
-	@make -C $(LIBFT_DIR)
+$(PRINTF):
+	@if [ "$(MAKECMDGOALS)" = "debug" ]; then \
+		make debug -C $(PRINTF_DIR); \
+	else \
+		make -C $(PRINTF_DIR); \
+	fi
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
-	@if [ ! -e $(NAME) ]; then \
-        cp $(LIBFT) $(NAME); \
-	fi
 	@if [ "$(MAKECMDGOALS)" = "" ]; then \
-		if ar t $(NAME) | grep -q ft_printf_bonus.o; then \
-			ar d $(NAME) $(notdir $(BOBJS)); \
+		if find $(OBJ_DIR) utils_bonus.o > /dev/null 2>&1; then \
 			rm $(BOBJS); \
 		fi; \
 	elif [ "$(MAKECMDGOALS)" = "bonus" ]; then \
-		if ar t $(NAME) | grep -q ft_printf.o; then \
-			ar d $(NAME) $(notdir $(TMP_OBJS)); \
+		if find $(OBJ_DIR) utils.o > /dev/null 2>&1; then \
 			rm $(TMP_OBJS); \
 		fi; \
 	fi
-	ar rcs $@ $(OBJS)
+	$(CC) $(CFLAGS) $(LIB) $^ -o $@
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c $(INC_DIR)/push_swap.h
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 bonus: all
 
-debug: fclean bonus
+debug: all
 
 clean:
-	@make -C $(LIBFT_DIR) clean
+	@make -C $(PRINTF_DIR) clean
 	@rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@make -C $(PRINTF_DIR) fclean
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus debug $(LIBFT)
+.PHONY: all clean fclean re bonus debug $(PRINTF)

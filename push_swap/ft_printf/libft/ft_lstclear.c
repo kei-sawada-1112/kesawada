@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 10:49:29 by kesawada         ###   ########.fr       */
+/*   Created: 2023/09/27 10:59:37 by kesawada          #+#    #+#             */
+/*   Updated: 2023/09/30 12:03:25 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	push_swap(t_stack **a, int argc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	(void)argv;
-	ft_printf("median: %d\n", get_median(*a, argc - 1));
-}
+	t_list	*current_lst;
 
-int main(int argc, char **argv)
-{
-	t_stack	*a;
-	// t_stack	*b;
-
-	if (argc == 1)
-		return (0);
-	init_stack(&a, argv);
-	push_swap(&a, argc, argv);
-	ft_printf("%d\n", a->prev->value);
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		current_lst = *lst;
+		*lst = (*lst)->next;
+		ft_lstdelone(current_lst, del);
+	}
 }
