@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 16:22:06 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 07:49:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:07:51 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	write_value(t_format *format, char *value)
 	if (!(!format->f_dot && (format->f_zero && !format->f_dot))
 		&& format->sign == -1)
 		putstr_and_add_len("-", format);
-	if (format->f_plus)
+	if (format->f_plus && format->type != TYPE_X && format->type != TYPE_LX)
 		putstr_and_add_len("+", format);
 	if (format->prefix)
 		putstr_and_add_len(format->prefix, format);
