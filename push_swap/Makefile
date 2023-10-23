@@ -19,6 +19,7 @@ UTILS_DIR = $(SRC_DIR)/utils
 UTILS = $(UTILS_DIR)/utils.c\
 $(UTILS_DIR)/stack_utils.c\
 $(UTILS_DIR)/stack_utils2.c\
+$(UTILS_DIR)/stack_utils3.c\
 $(UTILS_DIR)/hash_utils.c\
 $(UTILS_DIR)/median_utils.c
 

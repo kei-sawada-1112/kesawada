@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 03:24:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 09:51:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:50:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	calc_median(int *array, int size)
 	return (median);
 }
 
-int get_median(t_stack *a, int size)
+int get_median(t_stack *stack, int size)
 {
 	int	i;
 	int *array;
@@ -72,8 +72,8 @@ int get_median(t_stack *a, int size)
 	i = 0;
 	while (i < size)
 	{
-		array[i] = a->value;
-		a = a->next;
+		array[i] = stack->value;
+		stack = stack->next;
 		i++;
 	}
 	median = calc_median(array, size);

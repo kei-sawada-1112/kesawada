@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 10:49:20 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:58:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,19 @@ void	append_stack(t_stack **stack, int num)
 		ft_addstack_back(stack, new_stack);
 }
 
-void	init_stack(t_stack **a, char **argv)
+void	init_stack(t_stack **stack, char **argv)
 {
 	int			i;
 	long		num;
 	t_hashtable	*table;
 
 	table = init_hashtable();
-	append_stack(a, 0);
-	(*a)->is_separator = 1;
+	append_stack(stack, 0);
+	(*stack)->is_separator = 1;
+	if (!argv)
+	{
+		return ;
+	}
 	i = 0;
 	while (argv[++i])
 	{
@@ -47,7 +51,7 @@ void	init_stack(t_stack **a, char **argv)
 			exit(1);
 		}
 		add_to_hashtable(table, num, i);
-		append_stack(a, num);
+		append_stack(stack, num);
 	}
-	*a = (*a)->next;
+	*stack = (*stack)->next;
 }

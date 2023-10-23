@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 10:56:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:45:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,44 @@ int push(t_info *a, t_info *b)
 {
 	if (!a->stack)
 		return (0);
-
 	a->push_count += 1;
 	b->push_count -= 1;
-	ft_stackmove(a->stack, b->stack);
+	ft_stackmove(b->stack, a->stack);
+	return (1);
+}
+
+int	rotate_rev(t_info *a, t_info *b)
+{
+	t_stack	*last;
+
+	(void)b;
+	if (!a->stack)
+		return (0);
+	last = ft_stacklast(a->stack);
+	last->prev->next = last->next;
+	last->prev = last->next;
+	last->next = a->stack;
+	a->stack->prev = last;
+	a->stack = last;
+	a->rotate_count -= 1;
+	return (1);
+}
+
+int	rotate(t_info *a, t_info *b)
+{
+	t_stack	*last;
+	t_stack	*second;
+
+	(void)b;
+	if (!a->stack)
+		return (0);
+	second = a->stack->next;
+	second->prev = a->stack->prev;
+	last = ft_stacklast(a->stack);
+	last->next = a->stack;
+	a->stack->next = a->stack->prev;
+	a->stack->prev = last;
+	a->stack = second;
+	a->rotate_count += 1;
 	return (1);
 }

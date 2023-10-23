@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:04:49 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 10:53:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:49:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ void	ft_addstack_back(t_stack **stack, t_stack *new)
 	(*stack)->prev = new;
 }
 
-void	ft_stackmove(t_stack *a, t_stack *b)
+void	ft_stackmove(t_stack **to, t_stack **from)
 {
-	if (!a)
+	if (!from || !to)
 		return ;
-	a->next->prev = a->prev;
-	a->prev->next = a->next;
-	ft_addstack_front(&b, a);
+	ft_addstack_front(to, *from);
+	(*from)->next->prev = (*from)->prev;
+	(*from)->prev->next = (*from)->next;
+	(*from) = (*from)->next;
 }
