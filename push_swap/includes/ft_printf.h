@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:08:25 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/22 12:46:01 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:44:47 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ typedef struct s_format
 	char			*field;
 	char			invalid_char;
 }	t_format;
-
-typedef char	*(*t_getter)(t_format *);
-typedef void	(*t_process)(const char **, t_format *);
 
 int		ft_printf(const char *input, ...);
 void	init_format(t_format *format);

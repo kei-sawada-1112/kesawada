@@ -6,36 +6,42 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 17:37:09 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:35:17 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	append_stack(t_stack **stack, int num)
+int	is_numstr(char *str)
+{
+	if (!str || *str == '\0')
+		return (0);
+	while (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		str++;
+	if (*str == '\0')
+		return (1);
+	return (0);
+}
+
+void	append_stack(t_stack **stack, int num, int pos)
 {
 	t_stack	*new_stack;
 
-	new_stack = ft_stacknew(num);
-	if (!(*stack))
+	new_stack = ft_stacknew(num, pos);
+	if (!(*stack)->prev)
 		*stack = new_stack;
 	else
-		ft_addstack_back(stack, new_stack);
+		ft_addstack_back(stack, &new_stack);
 }
 
-void	init_stack(t_stack **stack, char **argv)
+void	init_stack(t_stack **a, int argc, char **argv)
 {
-	int			i;
-	long		num;
-	t_hashtable	*table;
+	int		i;
+	long	num;
+	int		array[argc];
 
-	table = init_hashtable();
-	append_stack(stack, 0);
-	(*stack)->is_separator = 1;
-	if (!argv)
-	{
-		return ;
-	}
 	i = 0;
 	while (argv[++i])
 	{
@@ -50,8 +56,17 @@ void	init_stack(t_stack **stack, char **argv)
 			ft_printf("Error\n");
 			exit(1);
 		}
-		add_to_hashtable(table, num, i);
-		append_stack(stack, num);
+		array[i] = num;
+		append_stack(a, num, i - 1);
 	}
-	// *stack = (*stack)->next;
+	set_index_to_value(*a, array, argc);
+}
+
+void	init(t_stack **a, t_stack **b, int argc, char **argv)
+{
+	*a = ft_stacknew(0, 0);
+	*b = ft_stacknew(0, 0);
+	(*a)->is_separator = 1;
+	(*b)->is_separator = 1;
+	init_stack(a, argc, argv);
 }

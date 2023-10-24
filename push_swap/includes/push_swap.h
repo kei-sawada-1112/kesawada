@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 12:43:12 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:58:53 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,81 @@
 
 # include "ft_printf.h"
 
-#define TABLE_SIZE 421
+enum e_state_ps
+{
+	UNDER_SIX,
+	A_TO_B,
+	QUICK_SORT_B,
+	SORTED_TO_BOTTOM,
+	QUICK_SORT_A,
+	END
+};
 
-typedef struct s_node {
-	int				value;
-	int				index;
-	struct s_node	*next;
-}	t_node;
-
-typedef struct {
-	t_node	*entries[TABLE_SIZE];
-}	t_hashtable;
+enum e_operation
+{
+	SA,
+	SB,
+	SS,
+	PA,
+	PB,
+	RA,
+	RB,
+	RR,
+	RRA,
+	RRB,
+	RRR,
+	INIT
+};
 
 typedef struct	s_stack
 {
 	int				value;
 	int				is_separator;
-	int				current_stack;
+	int				index;
+	int				pos;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
 
-typedef struct	s_info
+typedef struct	s_ms
 {
-	t_stack		*stack;
-	t_hashtable	*table;
-	int			rotate_count;
-	int			push_count;
-}	t_info;
+	enum e_state_ps		state;
+	enum e_operation	op;
+	int					limit_count;
+	int					count;
+}	t_ms;
 
-void		init_stack(t_stack **stack, char **argv);
-t_stack		*ft_stacknew(int value);
+typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *, int);
+typedef int	(*t_operation)(t_stack**, t_stack**, t_ms*);
+
+void		init_stack(t_stack **a, int argc, char **argv);
+t_stack		*ft_stacknew(int value, int pos);
 t_stack		*ft_stacklast(t_stack *stack);
-void		ft_addstack_front(t_stack **stack, t_stack *new);
-void		ft_addstack_back(t_stack **stack, t_stack *new);
-void		ft_stackmove(t_stack *to, t_stack *from);
-int			ft_stackrot(t_info *a, t_info *b);
-int			ft_stackrot_rev(t_info *a, t_info *b);
-
-t_hashtable	*init_hashtable(void);
-void		add_to_hashtable(t_hashtable *table, int value, int i);
+void		ft_addstack_front(t_stack **stack, t_stack **new);
+void		ft_addstack_back(t_stack **stack, t_stack **new);
 
 int 		get_median(t_stack *stack, int size);
+void		set_index_to_value(t_stack *stack, int *array, int argc);
 
-int			swap_top(t_info *a, t_info *b);
-int 		push(t_info *to, t_info *from);
-int			rotate(t_info *a, t_info *b);
-int			rotate_rev(t_info *a, t_info *b);
+int		swap_a(t_stack **a, t_stack **b, t_ms *ms);
+int		swap_b(t_stack **a, t_stack **b, t_ms *ms);
+int 	swap_ab(t_stack **a, t_stack **b, t_ms *ms);
+int 	push_a(t_stack **a, t_stack **b, t_ms *ms);
+int 	push_b(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_a(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_b(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_ab(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_rev_a(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_rev_b(t_stack **a, t_stack **b, t_ms *ms);
+int		rotate_rev_ab(t_stack **a, t_stack **b, t_ms *ms);
+
+void		append_stack(t_stack **stack, int num, int pos);
+
+void		init(t_stack **a, t_stack **b, int argc, char **argv);
+
+void		send_a_to_b(t_stack **a, t_stack **b, t_ms *ms, int size);
+void		sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
+
 
 int			is_numstr(char *str);
 

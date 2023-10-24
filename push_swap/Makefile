@@ -15,18 +15,24 @@ PRINTF_DIR = ft_printf
 PRINTF = ${PRINTF_DIR}/libftprintf.a
 LIB = -L $(PRINTF_DIR) -lftprintf
 
+PROCESS_DIR = $(SRC_DIR)/processes
+PROCESSES = $(PROCESS_DIR)/a_to_b.c\
+$(PROCESS_DIR)/quick_sort_b.c\
+
 UTILS_DIR = $(SRC_DIR)/utils
-UTILS = $(UTILS_DIR)/utils.c\
-$(UTILS_DIR)/stack_utils.c\
+UTILS = $(UTILS_DIR)/stack_utils.c\
 $(UTILS_DIR)/stack_utils2.c\
 $(UTILS_DIR)/stack_utils3.c\
-$(UTILS_DIR)/hash_utils.c\
-$(UTILS_DIR)/median_utils.c
+$(UTILS_DIR)/median_utils2.c\
+$(UTILS_DIR)/move_utils.c\
+$(UTILS_DIR)/move_utils2.c\
+$(UTILS_DIR)/move_utils3.c\
 
 BUTILS = $(UTILS_DIR)/utils_bonus.c
 
 SRCS = $(SRC_DIR)/push_swap.c\
 $(UTILS)\
+$(PROCESSES)\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
@@ -43,6 +49,7 @@ endif
 vpath %.c \
 $(SRC_DIR) \
 $(UTILS_DIR) \
+$(PROCESS_DIR) \
 
 all: $(PRINTF) $(OBJ_DIR) $(NAME)
 

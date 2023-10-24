@@ -6,57 +6,77 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/23 18:26:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 00:25:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	push_swap(t_info *a, t_info *b, int argc, char **argv)
+static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 {
-	(void)argv;
-	(void)b;
-	ft_printf("median: %d\n", get_median(a->stack, argc - 1));
-	// ft_stackrot_rev(a, b);
-	// ft_stackrot_rev(a, b);
+	t_ms	*ms;
+
+	static	t_push_swap_process f[] =
+	{
+		sort_under_six, send_a_to_b,
+	};
+	ms = malloc(sizeof(t_ms));
+	ms->count = 9;
+	ms->op = INIT;
+	init(a, b, size, argv);
+	// swap_a(a, b, ms);
+	// push_a(a, b, ms);
+	// swap_a(a, b, ms);
+	// push_a(a, b, ms);
+	// rotate_rev_ab(a, b, ms);
+	// push_a(a, b, ms);
+	// push_b(a, b, ms);
+	// rotate_a(a, b, ms);
+	// if (size - 1 < 7)
+	// {
+		ms->state = UNDER_SIX;
+		ms->limit_count = 9;
+		f[ms->state](a, b, ms, 0);
+		return ;
+	// }
+	// else
+	// 	ms->state = A_TO_B;
+	// while (ms->state != END)
+	// 	f[ms->state](a, b, ms, size);
+	// ft_printf("count: %d\n", ms->count);
 	// swap_top(a, b);
-	rotate(a, b);
+	// rotate(a, b);
 	// rotate_rev(a, b);
 	// push(a, b);
-	// swap_top(a, b);
-	// swap_top(a, b);
-}
-
-void	init_info(t_info *a)
-{
-	a->push_count = 0;
-	a->rotate_count = 0;
-	a->stack = NULL;
-	a->table = NULL;
+	// push(b, a);
+	// push(b, a);
 }
 
 int main(int argc, char **argv)
 {
-	t_info	*a;
-	t_info	*b;
+	t_stack	*a;
+	t_stack	*b;
 
-	a = malloc(sizeof(t_info));
-	b = malloc(sizeof(t_info));
-	init_info(a);
-	init_info(b);
 	if (argc == 1)
 		return (0);
-	init_stack(&(a->stack), argv);
-	// init_stack(&(b->stack), NULL);
-	push_swap(a, b, argc, argv);
-	a->stack = a->stack->next;
-	while (a->stack->next && !a->stack->is_separator)
+	a = NULL;
+	b = NULL;
+	push_swap(&a, &b, argc, argv);
+
+	// a = a->next;
+	// b = b->next;
+	// while (a->next && !a->is_separator)
+	// {
+		// ft_printf("value: %d\n", a->value);
+		// ft_printf("value: %d\n", a->next->value);
+		// ft_printf("value: %d\n", a->next->next->value);
+		// a = a->next;
+	// }
+	while (b->next && !b->is_separator)
 	{
-		ft_printf("value: %d\n", a->stack->value);
-		ft_printf("next : %d\n", a->stack->next->value);
-		ft_printf("prev : %d\n", a->stack->prev->value);
-		// ft_printf("value : %d\n", b->stack->next->value);
-		a->stack = a->stack->next;
+		ft_printf("b value: %d\n", b->value);
+		b = b->next;
 	}
-	// ft_printf("%d\n", b->stack->prev->value);
+	free(a);
+	free(b);
 }
