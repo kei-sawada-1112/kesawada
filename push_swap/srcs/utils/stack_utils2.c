@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 10:13:15 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:44:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ void	append_stack(t_stack **stack, int num, int pos)
 		ft_addstack_back(stack, &new_stack);
 }
 
-void	init_stack(t_stack **a, int argc, char **argv)
+static void	init_stack(t_stack **a, int size, char **argv, int i)
 {
-	int		i;
 	long	num;
-	int		array[argc];
+	int		array[size];
 
-	i = 0;
 	while (argv[++i])
 	{
 		if (!is_numstr(argv[i]))
@@ -51,7 +49,6 @@ void	init_stack(t_stack **a, int argc, char **argv)
 			exit(1);
 		}
 		num = ft_strtol(argv[i], 10);
-		ft_printf("num: %d\n", num);
 		if (num > INT_MAX || num < INT_MIN)
 		{
 			ft_printf("Error\n");
@@ -60,14 +57,28 @@ void	init_stack(t_stack **a, int argc, char **argv)
 		array[i] = num;
 		append_stack(a, num, i - 1);
 	}
-	set_index_to_value(*a, array, argc);
+	set_index_to_value(*a, array, size);
 }
 
 void	init(t_stack **a, t_stack **b, int argc, char **argv)
 {
+	char	**arg;
+	size_t	len;
+
+	len = 0;
+	arg = NULL;
 	*a = ft_stacknew(0, 0);
 	*b = ft_stacknew(0, 0);
 	(*a)->is_separator = 1;
 	(*b)->is_separator = 1;
-	init_stack(a, argc, argv);
+	if (argc == 2)
+	{
+		arg = ft_split(argv[1], ' ');
+		while (arg[len])
+			len++;
+		init_stack(a, len, arg, -1);
+		free(arg);
+	}
+	else
+		init_stack(a, argc, argv, 0);
 }

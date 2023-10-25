@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/24 19:51:52 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:49:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms, int size)
 					count += rotate_a(a, NULL, ms);
 			}
 			current = current->next;
-			count += push_a(a, b, ms);
+			count += push_b(a, b, ms);
 		}
 		else
 			current = current->next;

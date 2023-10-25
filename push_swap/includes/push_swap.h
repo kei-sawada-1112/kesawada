@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 09:27:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:24:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct	s_ms
 typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *, int);
 typedef int		(*t_operation)(t_stack**, t_stack**, t_ms*);
 
-void		init_stack(t_stack **a, int argc, char **argv);
 t_stack		*ft_stacknew(int value, int pos);
 t_stack		*ft_stacklast(t_stack *stack);
 void		ft_addstack_front(t_stack **stack, t_stack **new);

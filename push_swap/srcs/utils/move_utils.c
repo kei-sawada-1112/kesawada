@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 07:52:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:47:49 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int swap_ab(t_stack **a, t_stack **b, t_ms *ms)
 	return (count);
 }
 
-int push_a(t_stack **a, t_stack **b, t_ms *ms)
+int push_b(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack	*a_nil;
 	t_stack *a_first;
@@ -99,7 +99,7 @@ int push_a(t_stack **a, t_stack **b, t_ms *ms)
 	return (1);
 }
 
-int push_b(t_stack **a, t_stack **b, t_ms *ms)
+int push_a(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack	*b_nil;
 	t_stack *b_first;
