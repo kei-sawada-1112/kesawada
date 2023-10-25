@@ -17,7 +17,7 @@ LIB = -L $(PRINTF_DIR) -lftprintf
 
 PROCESS_DIR = $(SRC_DIR)/processes
 PROCESSES = $(PROCESS_DIR)/a_to_b.c\
-$(PROCESS_DIR)/quick_sort_b.c\
+$(PROCESS_DIR)/sort_under_six.c\
 
 UTILS_DIR = $(SRC_DIR)/utils
 UTILS = $(UTILS_DIR)/stack_utils.c\
