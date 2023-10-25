@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/24 22:58:53 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 09:27:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,24 @@ typedef struct	s_stack
 	struct s_stack	*prev;
 }	t_stack;
 
+typedef struct s_op_list
+{
+	enum e_operation	op;
+	struct s_op_list	*next;
+}	t_op_list;
+
 typedef struct	s_ms
 {
 	enum e_state_ps		state;
 	enum e_operation	op;
+	t_op_list			*actual_op;
+	t_op_list			*op_list;
 	int					limit_count;
 	int					count;
 }	t_ms;
 
 typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *, int);
-typedef int	(*t_operation)(t_stack**, t_stack**, t_ms*);
+typedef int		(*t_operation)(t_stack**, t_stack**, t_ms*);
 
 void		init_stack(t_stack **a, int argc, char **argv);
 t_stack		*ft_stacknew(int value, int pos);
@@ -83,14 +91,18 @@ int		rotate_rev_a(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_b(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_ab(t_stack **a, t_stack **b, t_ms *ms);
 
-void		append_stack(t_stack **stack, int num, int pos);
+void	append_stack(t_stack **stack, int num, int pos);
 
-void		init(t_stack **a, t_stack **b, int argc, char **argv);
+void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
-void		send_a_to_b(t_stack **a, t_stack **b, t_ms *ms, int size);
-void		sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
+void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms, int size);
+void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
 
+void	add_operation(t_op_list **list, int op);
+void	delone_operation(t_op_list **list);
+void	clear_operation(t_op_list **list);
+void	copy_operation(t_ms *ms, t_op_list *list);
 
-int			is_numstr(char *str);
+int		is_numstr(char *str);
 
 #endif

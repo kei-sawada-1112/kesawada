@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 01:16:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:19:58 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	in_order(t_stack *a)
 {
-	if (a->value == a->next->value)
+	if (a->prev == a->next)
 		return (0);
+	a = a->next;
 	while (!a->next->is_separator)
 	{
 		if (!(a->value < a->next->value))
@@ -59,7 +60,7 @@ int	check_valid_operation(t_ms *ms, int operation)
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 {
-	int	operation;
+	int			op;
 
 	static t_operation f[] =
 	{
@@ -77,42 +78,41 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 		return ;
 	if (((*b)->next->is_separator) && in_order(*a))
 	{
-		*a = (*a)->next;
-		ft_printf("------conguraturations------\n");
-		while ((*a)->next && !(*a)->is_separator)
+		if (ms->count > count)
 		{
-			ft_printf("value: %d\n", (*a)->value);
 			(*a) = (*a)->next;
+			while ((*a)->next && !(*a)->is_separator)
+			{
+				// ft_printf("index: %d\n", a->index);
+				ft_printf("value: %d\n", (*a)->value);
+				// ft_printf("value: %d\n", a->next->value);
+				// ft_printf("value: %d\n", a->next->next->value);
+				// ft_printf("*-----------*\n");
+				(*a) = (*a)->next;
+			}
+			ms->count = count;
+			// while (ms->op_list)
+			// {
+			// 	ft_printf("------op_list: %d\n------\n", ms->op_list->op);
+			// 	ms->op_list = ms->op_list->next;
+			// }
+			clear_operation(&ms->actual_op);
+			copy_operation(ms, ms->op_list);
 		}
-		ms->count = count;
 		return ;
 	}
-	operation = -1;
-	while (++operation < 11)
+	op = -1;
+	while (++op < 11)
 	{
-		if (!check_valid_operation(ms, operation) || ms->count <= count)
+		if (!check_valid_operation(ms, op) || ms->count <= count)
 			continue ;
-		// ft_printf("pre ope: %d\n", operation);
-		// ft_printf("count: %d\n", count);
-		// ft_printf("value: %d\n", (*a)->value);
-		// if (operation == 4)
-		// {
-		// ft_printf("---------------\n");
-		// ft_printf("value: %d\n", (*a)->next->value);
-		// ft_printf("value: %d\n", (*a)->next->next->value);
-		// ft_printf("value: %d\n", (*a)->next->next->next->value);
-		// ft_printf("---------------\n");
-		// }
-		// ft_printf("value: %d\n", (*a)->next->next->next->next->value);
-		// ft_printf("b value: %d\n", (*b)->value);
-
-		// (*a) = (*a)->next;
-		// }
-		if (!f[operation](a, b, ms))
+		if (!f[op](a, b, ms))
 			continue ;
-		ms->op = operation;
+		ms->op = op;
+		add_operation(&ms->op_list, op);
 		sort_under_six(a, b, ms, count + 1);
-		f_rev[operation](a, b, ms);
+		f_rev[op](a, b, ms);
+		delone_operation(&ms->op_list);
 	}
 }
 

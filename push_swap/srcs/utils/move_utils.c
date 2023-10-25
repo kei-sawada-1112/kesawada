@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 01:03:27 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 07:52:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int push_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack *a_first;
 
 	(void)ms;
-	if ((*a)->prev == (*a)->next)
+	if ((*a)->next->is_separator)
 		return (0);
 	a_nil = *a;
 	a_first = a_nil->next;
@@ -105,7 +105,7 @@ int push_b(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack *b_first;
 	(void)ms;
 
-	if ((*b)->prev == (*b)->next)
+	if ((*b)->next->is_separator)
 		return (0);
 	b_nil = *b;
 	b_first = b_nil->next;

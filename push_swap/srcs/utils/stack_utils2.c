@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/24 16:35:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:13:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init_stack(t_stack **a, int argc, char **argv)
 			exit(1);
 		}
 		num = ft_strtol(argv[i], 10);
+		ft_printf("num: %d\n", num);
 		if (num > INT_MAX || num < INT_MIN)
 		{
 			ft_printf("Error\n");
