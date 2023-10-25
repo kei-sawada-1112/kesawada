@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 12:24:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:26:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_ms
 	t_op_list			*op_list;
 	int					limit_count;
 	int					count;
+	int					push_count;
 }	t_ms;
 
 typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *, int);

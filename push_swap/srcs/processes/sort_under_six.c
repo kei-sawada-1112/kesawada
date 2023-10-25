@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quick_sort_b.c                                     :+:      :+:    :+:   */
+/*   sort_under_six.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 10:37:31 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:58:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,5 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 		execute_rev(a, b, ms, op);
 		delone_operation(&ms->op_list);
 	}
+	ms->state = END;
 }
