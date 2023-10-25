@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 13:28:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:09:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static char	*print_op(int op)
 		return ("ra");
 	if (op == RB)
 		return ("rb");
+	if (op == RR)
+		return ("rr");
 	if (op == RRA)
 		return ("rra");
 	if (op == RRB)
@@ -51,9 +53,9 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	};
 	static t_operation func[] =
 	{
-		swap_a, swap_b, swap_ab, push_a, push_b,\
-		rotate_a, rotate_b, rotate_ab,\
-		rotate_rev_a, rotate_rev_b, rotate_rev_ab
+		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
+		push_a, swap_ab, rotate_b,\
+		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
 	ms = malloc(sizeof(t_ms));
 	ms->op = INIT;
@@ -89,6 +91,7 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 		func[ms->actual_op->op](a, b, ms);
 		ms->actual_op = ms->actual_op->next;
 	}
+	ft_printf("count : %d\n", ms->count);
 	free(ms->actual_op);
 	free(ms->op_list);
 	free(ms);

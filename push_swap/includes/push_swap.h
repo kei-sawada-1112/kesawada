@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 13:26:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:17:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ enum e_state_ps
 {
 	UNDER_SIX,
 	A_TO_B,
+	B_TO_A,
 	QUICK_SORT_B,
 	SORTED_TO_BOTTOM,
 	QUICK_SORT_A,
@@ -28,14 +29,14 @@ enum e_state_ps
 enum e_operation
 {
 	SA,
-	SB,
-	SS,
-	PA,
 	PB,
 	RA,
+	RRA,
+	SB,
+	PA,
+	SS,
 	RB,
 	RR,
-	RRA,
 	RRB,
 	RRR,
 	INIT
@@ -75,6 +76,8 @@ t_stack		*ft_stacknew(int value, int pos);
 t_stack		*ft_stacklast(t_stack *stack);
 void		ft_addstack_front(t_stack **stack, t_stack **new);
 void		ft_addstack_back(t_stack **stack, t_stack **new);
+int			ft_stacksize(t_stack *a);
+
 
 int 		get_median(t_stack *stack, int size);
 void		set_index_to_value(t_stack *stack, int *array, int argc);

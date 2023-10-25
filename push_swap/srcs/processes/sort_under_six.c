@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 12:58:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:28:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	execute(t_stack **a, t_stack **b, t_ms *ms, int op)
 {
 	static t_operation f[] =
 	{
-		swap_a, swap_b, swap_ab, push_a, push_b,\
-		rotate_a, rotate_b, rotate_ab,\
-		rotate_rev_a, rotate_rev_b, rotate_rev_ab
+		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
+		push_a, swap_ab, rotate_b,\
+		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
 
 	return (f[op](a, b, ms));
@@ -74,21 +74,36 @@ int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 {
 	static t_operation f[] =
 	{
-		swap_a, swap_b, swap_ab, push_b, push_a,\
-		rotate_rev_a, rotate_rev_b, rotate_rev_ab,\
-		rotate_a, rotate_b, rotate_ab
+		swap_a, push_a, rotate_rev_a, rotate_a, swap_b,\
+		push_b, swap_ab, rotate_rev_b,\
+		rotate_rev_ab, rotate_b, rotate_ab
 	};
 
 	return (f[op](a, b, ms));
 }
 
+int	is_qualified(t_stack *a,t_ms *ms, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < 5)
+	{
+		if (a->value > a->next->value && i + 1 + count >= ms->count)
+			return (0);
+		a = a->next;
+		i++;
+	}
+	return (1);
+}
+
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 {
-	int			op;
+	int	op;
 
 	if (count > ms->limit_count)
 		return ;
-	if (((*b)->next->is_separator) && in_order(*a) && ms->count > count)
+	if (((*b) == (*b)->next && in_order(*a)) && ms->count > count)
 	{
 		ms->count = count;
 		clear_operation(&ms->actual_op);
@@ -98,7 +113,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!check_valid_operation(ms, op) || ms->count <= count)
+		if (!is_qualified(*a, ms, count) || !check_valid_operation(ms, op) || ms->count <= count)
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;
