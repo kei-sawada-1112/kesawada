@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 21:28:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:15:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,20 @@ int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 	return (f[op](a, b, ms));
 }
 
-int	is_qualified(t_stack *a,t_ms *ms, int count)
+int	is_qualified(t_stack *a, t_ms *ms, int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < 5)
+	a = a->next;
+	while (i++ < 4)
 	{
-		if (a->value > a->next->value && i + 1 + count >= ms->count)
-			return (0);
+		if (a->index > a->next->index)
+		{
+			if (i + 1 + count >= ms->count)
+				return (0);
+		}
 		a = a->next;
-		i++;
 	}
 	return (1);
 }

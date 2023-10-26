@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 21:17:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:12:43 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 enum e_state_ps
 {
-	UNDER_SIX,
 	A_TO_B,
 	B_TO_A,
 	QUICK_SORT_B,
@@ -66,10 +65,10 @@ typedef struct	s_ms
 	t_op_list			*op_list;
 	int					limit_count;
 	int					count;
-	int					push_count;
+	int					size;
 }	t_ms;
 
-typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *, int);
+typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *);
 typedef int		(*t_operation)(t_stack**, t_stack**, t_ms*);
 
 t_stack		*ft_stacknew(int value, int pos);
@@ -80,7 +79,7 @@ int			ft_stacksize(t_stack *a);
 
 
 int 		get_median(t_stack *stack, int size);
-void		set_index_to_value(t_stack *stack, int *array, int argc);
+void		set_index_to_value(t_stack *stack);
 
 int		swap_a(t_stack **a, t_stack **b, t_ms *ms);
 int		swap_b(t_stack **a, t_stack **b, t_ms *ms);
@@ -98,7 +97,9 @@ void	append_stack(t_stack **stack, int num, int pos);
 
 void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
-void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms, int size);
+void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms);
+void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms);
+
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
 
 void	add_operation(t_op_list **list, int op);

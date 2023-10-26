@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 20:09:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:35:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ static char	*print_op(int op)
 		return (NULL);
 }
 
+static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
+{
+	static	t_push_swap_process f[] =
+	{
+		send_a_to_b, send_b_to_a,
+	};
+
+	f[ms->state](a, b, ms);
+}
+
 static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 {
 	t_ms	*ms;
@@ -47,21 +57,20 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	t_stack	*tmp;
 
 	len = 0;
-	static	t_push_swap_process f[] =
-	{
-		sort_under_six, send_a_to_b,
-	};
+
 	static t_operation func[] =
 	{
 		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
 		push_a, swap_ab, rotate_b,\
 		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
+	init(a, b, size, argv);
 	ms = malloc(sizeof(t_ms));
 	ms->op = INIT;
-	ms->push_count = 0;
 	ms->count = 0;
-	init(a, b, size, argv);
+	ms->op_list = NULL;
+	ms->actual_op = NULL;
+	ms->size = ft_stacksize(*a);
 	tmp = *a;
 	if (size == 2)
 	{
@@ -70,21 +79,20 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 			tmp = tmp->next;
 			len++;
 		}
-		size = len;
+		size = len + 1;
 	}
 	if (size <= 7)
 	{
-		ms->state = UNDER_SIX;
+		ms->state = END;
 		ms->limit_count = 12;
 		ms->count = 12;
-		size = 0;
+		sort_under_six(a, b, ms, 0);
 	}
 	else
 		ms->state = A_TO_B;
-	ms->op_list = NULL;
-	ms->actual_op = NULL;
+
 	while (ms->state != END)
-		f[ms->state](a, b, ms, size);
+		handle_process(a, b, ms);
 	while (ms->actual_op)
 	{
 		ft_printf("%s\n", print_op(ms->actual_op->op));
@@ -137,4 +145,5 @@ int main(int argc, char **argv)
 	}
 	free(a);
 	free(b);
+	// system("leaks a.out");
 }

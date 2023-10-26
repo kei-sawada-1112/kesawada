@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:53:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/24 13:27:35 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 17:33:28 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,40 +28,24 @@
 // 	}
 // }
 
-void	set_index_to_value(t_stack *stack, int *array, int argc)
+void set_index_to_value(t_stack *stack)
 {
-	int		j;
-	int		min;
-	int		index;
+	t_stack	*current;
+	t_stack	*checker;
 	int		count;
-	t_stack	*first;
 
-	index = 0;
-	count = 0;
-	min = INT_MAX;
-	first = stack;
-	while (count < argc - 1)
+	current = stack->next;
+	while (!current->is_separator)
 	{
-		j = 1;
-		while (j < argc)
+		count = 0;
+		checker = stack->next;
+		while (!checker->is_separator)
 		{
-			if (min > array[j])
-			{
-				min = array[j];
-				index = j;
-			}
-			j++;
+			if (current->value > checker->value)
+				count++;
+			checker = checker->next;
 		}
-		min = INT_MAX;
-		array[index] = INT_MAX;
-		j = 0;
-		while (j < index)
-		{
-			stack = stack->next;
-			j++;
-		}
-		stack->index = count;
-		stack = first;
-		count++;
+		current->index = count;
+		current = current->next;
 	}
 }
