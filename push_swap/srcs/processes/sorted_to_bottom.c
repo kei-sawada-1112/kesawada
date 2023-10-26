@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 20:59:59 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 00:31:53 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:11:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms)
 		print_op(PA);
 		i++;
 	}
+	set_index_to_value(*a);
 	while (--i >= 0)
 	{
 		ms->count += rotate_a(a, NULL, ms);
@@ -33,7 +34,7 @@ void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms)
 		ms->state = END;
 		return ;
 	}
-	if (ms->trans_list && !in_order(*a))
+	if (ms->trans_list)
 	{
 		while (ms->trans_list->count--)
 		{
@@ -41,7 +42,9 @@ void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms)
 			print_op(PB);
 		}
 		delone_trans_list(&ms->trans_list);
+		if (ft_stacksize(*b) > 5)
+			ms->state = B_TO_A;
 	}
-	 else
+	else
 		ms->state = A_TO_B_NEXT;
 }

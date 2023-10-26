@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 23:17:44 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:34:40 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,29 @@ int	in_order(t_stack *a)
 		a = a->next;
 	}
 	return (1);
+}
+
+int	rev_count(t_stack *b)
+{
+	int	max;
+	int	count;
+
+	max = 0;
+	count = 0;
+	while (!b->next->is_separator)
+	{
+		if (b->index - 1 == b->next->index)
+		{
+			count++;
+			if (count > max)
+				max = count;
+			b = b->next;
+			continue ;
+		}
+		b = b->next;
+		count = 0;
+	}
+	return (max);
 }
 
 int	check_valid_operation(t_ms *ms, int operation)
@@ -82,23 +105,33 @@ int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 	return (f[op](a, b, ms));
 }
 
-int	is_qualified(t_stack *a, t_ms *ms, int count)
+int	is_qualified(t_stack *b, t_ms *ms, int count)
 {
 	int	i;
 
-	i = 0;
-	a = a->next;
-	while (i++ < 4)
+	i = 1;
+	b = b->next;
+	while (!b->next->is_separator)
 	{
-		if (a->index > a->next->index)
+		if (b->value > b->next->value)
 		{
-			if (i + 1 + count >= ms->count)
+			if (i + 1 + count >= ms->min_turn)
 				return (0);
 		}
-		a = a->next;
+		b = b->next;
 	}
 	return (1);
 }
+
+// void	print_under_six(t_stack **a, t_stack **b, t_ms *ms)
+// {
+// 	while (ms->actual_op)
+// 	{
+// 		print_op(ms->actual_op->op);
+// 		execute(a, b, ms, ms->actual_op->op);
+// 		ms->actual_op = ms->actual_op->next;
+// 	}
+// }
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 {
@@ -106,9 +139,9 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 
 	if (count > ms->limit_count)
 		return ;
-	if (((*b) == (*b)->next && in_order(*a)) && ms->count > count)
+	if (((*b) == (*b)->next && in_order(*a)) && ms->min_turn > count)
 	{
-		ms->count = count;
+		ms->min_turn = count;
 		clear_operation(&ms->actual_op);
 		copy_operation(ms, ms->op_list);
 		return ;
@@ -116,7 +149,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!is_qualified(*a, ms, count) || !check_valid_operation(ms, op) || ms->count <= count)
+		if (!is_qualified(*b, ms, count) || !check_valid_operation(ms, op) || ms->min_turn <= count)
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;

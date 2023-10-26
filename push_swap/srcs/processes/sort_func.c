@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 19:35:28 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 01:45:44 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:35:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	in_rev_order(t_stack *b)
 	b = b->next;
 	while (!b->next->is_separator)
 	{
-		if (!(b->index > b->next->index))
+		if (!(b->value > b->next->value))
 			return (0);
 		b = b->next;
 	}
@@ -92,9 +92,8 @@ void	quick_sort_b(t_stack **a, t_stack **b, t_ms *ms)
 		ms->actual_op = ms->actual_op->next;
 	}
 	ms->actual_op = NULL;
-	ms->min_turn = 12;
 	ms->op_list = NULL;
+	ms->min_turn = 12;
+	ms->op = 0;
 	sorted_to_bottom(a, b, ms);
-	if (sorted_count(*a) > 10)
-		ms->state = END;
 }

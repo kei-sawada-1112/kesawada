@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 01:46:05 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:17:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	sorted_count(t_stack *a)
 	int	count;
 
 	max = 0;
-	count = 0;
+	count = 1;
 	while (!a->next->is_separator)
 	{
 		if (a->index + 1 == a->next->index)
@@ -30,7 +30,7 @@ int	sorted_count(t_stack *a)
 			continue ;
 		}
 		a = a->next;
-		count = 0;
+		count = 1;
 	}
 	return (max);
 }
@@ -40,16 +40,23 @@ void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	int		i;
 	int		size;
 
-	size = sorted_count(*a);
 	set_index_to_value(*a);
-	i = ft_stacksize(*a) - size - 1;
+	size = sorted_count(*a);
+	i = ft_stacksize(*a) - size;
+	// if (i == 1)
+	// {
+	// 	ms->count += rotate_a(a, b, ms);
+	// 	print_op(RA);
+	// 	ms->state = END;
+	// 	return ;
+	// }
 	while (i > 0)
 	{
 		ms->count += push_b(a, b, ms);
 		print_op(PB);
 		(*b)->next->pos = --i;
 	}
-	send_b_to_a(a, b, ms);
+	ms->state = B_TO_A;
 }
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -81,8 +88,8 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 					print_op(RA);
 				}
 			}
-			current = current->next;
 			ms->count += push_b(a, b, ms);
+			current = (*a)->next;
 			print_op(PB);
 			(*b)->next->pos = --i;
 		}
@@ -104,8 +111,8 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 	int		push_count;
 
 	set_index_to_value(*b);
-	half_size = ft_stacksize(*b) / 2;
-	i = half_size;
+	half_size = ft_stacksize(*b) / 2 - !(ft_stacksize(*b) % 2);
+	i = ft_stacksize(*b) / 2;
 	current = (*b)->next;
 	push_count = 0;
 	while (i > 0)
@@ -128,16 +135,17 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 					print_op(RB);
 				}
 			}
-			current = current->next;
 			push_count += push_a(a, b, ms);
+			current = (*b)->next;
 			print_op(PA);
 			(*a)->next->pos = --i;
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
 	ms->count += push_count;
 	add_trans_list(&ms->trans_list, push_count);
-	if (ft_stacksize(*b) <= 5)
+	if (ft_stacksize(*b) <= 4)
 		ms->state = QUICK_SORT_B;
 	else
 		send_b_to_a(a, b, ms);

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 23:47:26 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:34:34 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 enum e_state_ps
 {
 	A_TO_B,
+	B_TO_A,
 	QUICK_SORT_B,
 	A_TO_B_NEXT,
 	SORTED_TO_BOTTOM,

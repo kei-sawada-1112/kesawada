@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:22:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 22:58:18 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 04:52:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int ft_stacksize(t_stack *a)
 void	add_trans_list(t_trans_list **list, int count)
 {
 	t_trans_list	*new_node;
-	t_trans_list	*current;
 
 	new_node = malloc(sizeof(t_trans_list));
 	new_node->count = count;
@@ -38,10 +37,8 @@ void	add_trans_list(t_trans_list **list, int count)
 		*list = new_node;
 	else
 	{
-		current = *list;
-		while (current->next)
-			current = current->next;
-		current->next = new_node;
+		new_node->next = *list;
+		*list = new_node;
 	}
 }
 

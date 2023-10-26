@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 23:08:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 05:34:51 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 {
 	static	t_push_swap_process f[] =
 	{
-		send_a_to_b, quick_sort_b, send_big_to_b,
+		send_a_to_b, send_b_to_a, quick_sort_b, send_big_to_b,
 	};
 
 	f[ms->state](a, b, ms);
@@ -93,6 +93,11 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	{
 		ms->state = END;
 		sort_under_six(a, b, ms, 0);
+		while (ms->actual_op)
+		{
+			print_op(ms->actual_op->op);
+			ms->actual_op = ms->actual_op->next;
+		}
 	}
 	else
 		ms->state = A_TO_B;
@@ -104,7 +109,7 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	// 	func[ms->actual_op->op](a, b, ms);
 	// 	ms->actual_op = ms->actual_op->next;
 	// }
-	ft_printf("count : %d\n", ms->count);
+	// ft_printf("count : %d\n", ms->count);
 	free(ms->actual_op);
 	free(ms->op_list);
 	free(ms);
@@ -122,20 +127,20 @@ int main(int argc, char **argv)
 	push_swap(&a, &b, argc, argv);
 	a = a->next;
 	b = b->next;
-	while (a->next && !a->is_separator)
-	{
-		// ft_printf("index: %d\n", a->index);
-		ft_printf("%d\n", a->value);
-		// ft_printf("value: %d\n", a->next->value);
-		// ft_printf("value: %d\n", a->next->next->value);
-		// ft_printf("*-----------*\n");
-		a = a->next;
-	}
-	while (b->next && !b->is_separator)
-	{
-		ft_printf("b  %d\n", b->value);
-		b = b->next;
-	}
+	// while (a->next && !a->is_separator)
+	// {
+	// 	// ft_printf("index: %d\n", a->index);
+	// 	ft_printf("%d\n", a->value);
+	// 	// ft_printf("value: %d\n", a->next->value);
+	// 	// ft_printf("value: %d\n", a->next->next->value);
+	// 	// ft_printf("*-----------*\n");
+	// 	a = a->next;
+	// }
+	// while (b->next && !b->is_separator)
+	// {
+	// 	ft_printf("b  %d\n", b->value);
+	// 	b = b->next;
+	// }
 	free(a);
 	free(b);
 	// system("leaks a.out");
