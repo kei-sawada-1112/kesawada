@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 08:41:31 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 09:32:10 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 23:16:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,12 @@ void	clear_operation(t_op_list **list)
 
 void	copy_operation(t_ms *ms, t_op_list *list)
 {
+	int	op;
+
 	while (list)
 	{
-		add_operation(&ms->actual_op, list->op);
+		op = list->op;
+		add_operation(&ms->actual_op, op);
 		list = list->next;
 	}
 }

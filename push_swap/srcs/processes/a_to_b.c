@@ -6,54 +6,60 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 17:04:50 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 01:46:05 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
+int	sorted_count(t_stack *a)
 {
-	t_stack	*current;
-	int		i;
+	int	max;
+	int	count;
 
-	i = ms->size / 2;
-	current = (*a)->next;
-	while (i > 0)
+	max = 0;
+	count = 0;
+	while (!a->next->is_separator)
 	{
-		if (current->index < ms->size / 2)
+		if (a->index + 1 == a->next->index)
 		{
-			if (current->pos > ms->size / 2)
-			{
-				while (!current->prev->is_separator)
-					ms->count += rotate_rev_a(a, NULL, ms);
-			}
-			else
-			{
-				while (!current->prev->is_separator)
-					ms->count += rotate_a(a, NULL, ms);
-			}
-			current = current->next;
-			ms->size -= push_b(a, b, ms);
-			ms->count += 1;
-			(*b)->next->pos = --i;
+			count++;
+			if (count > max)
+				max = count;
+			a = a->next;
+			continue ;
 		}
-		else
-			current = current->next;
+		a = a->next;
+		count = 0;
 	}
-	ms->state = B_TO_A;
-	ft_printf("------a size: %d------\n", ms->size);
+	return (max);
 }
 
-void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
+void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms)
+{
+	int		i;
+	int		size;
+
+	size = sorted_count(*a);
+	set_index_to_value(*a);
+	i = ft_stacksize(*a) - size - 1;
+	while (i > 0)
+	{
+		ms->count += push_b(a, b, ms);
+		print_op(PB);
+		(*b)->next->pos = --i;
+	}
+	send_b_to_a(a, b, ms);
+}
+
+void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack	*current;
 	int		i;
 	int		half_size;
 
-	ft_printf("------before b size: %d------\n", ft_stacksize(*b));
-	half_size = ft_stacksize(*b) / 2;
-	i = ft_stacksize(*b) / 2;
+	half_size = ft_stacksize(*a) / 2 + ft_stacksize(*a) % 2;
+	i = half_size;
 	current = (*a)->next;
 	while (i > 0)
 	{
@@ -62,22 +68,77 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 			if (current->pos > half_size)
 			{
 				while (!current->prev->is_separator)
-					ms->count += rotate_rev_b(NULL, b, ms);
+				{
+					ms->count += rotate_rev_a(a, NULL, ms);
+					print_op(RRA);
+				}
 			}
 			else
 			{
 				while (!current->prev->is_separator)
-					ms->count += rotate_b(NULL, b, ms);
+				{
+					ms->count += rotate_a(a, NULL, ms);
+					print_op(RA);
+				}
 			}
 			current = current->next;
-			ms->size += push_a(a, b, ms);
-			ms->count += 1;
-			(*a)->next->pos = --i;
+			ms->count += push_b(a, b, ms);
+			print_op(PB);
+			(*b)->next->pos = --i;
 		}
 		else
 			current = current->next;
 	}
-	ft_printf("------after b size: %d------\n", ft_stacksize(*b));
+	// {
+	//  ms->state = END;
+	//  return ;
+	// }
+	send_b_to_a(a, b, ms);
+}
+
+void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
+{
+	t_stack	*current;
+	int		i;
+	int		half_size;
+	int		push_count;
+
+	set_index_to_value(*b);
+	half_size = ft_stacksize(*b) / 2;
+	i = half_size;
+	current = (*b)->next;
+	push_count = 0;
+	while (i > 0)
+	{
+		if (current->index > half_size)
+		{
+			if (current->pos < half_size)
+			{
+				while (!current->prev->is_separator)
+				{
+					ms->count += rotate_rev_b(NULL, b, ms);
+					print_op(RRB);
+				}
+			}
+			else
+			{
+				while (!current->prev->is_separator)
+				{
+					ms->count += rotate_b(NULL, b, ms);
+					print_op(RB);
+				}
+			}
+			current = current->next;
+			push_count += push_a(a, b, ms);
+			print_op(PA);
+			(*a)->next->pos = --i;
+		}
+		current = current->next;
+	}
+	ms->count += push_count;
+	add_trans_list(&ms->trans_list, push_count);
 	if (ft_stacksize(*b) <= 5)
-		ms->state = END;
+		ms->state = QUICK_SORT_B;
+	else
+		send_b_to_a(a, b, ms);
 }

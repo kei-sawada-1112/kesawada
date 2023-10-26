@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 17:12:43 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 23:47:26 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@
 enum e_state_ps
 {
 	A_TO_B,
-	B_TO_A,
 	QUICK_SORT_B,
+	A_TO_B_NEXT,
 	SORTED_TO_BOTTOM,
-	QUICK_SORT_A,
 	END
 };
 
@@ -57,14 +56,22 @@ typedef struct s_op_list
 	struct s_op_list	*next;
 }	t_op_list;
 
+typedef struct s_trans_list
+{
+	int					count;
+	struct s_trans_list	*next;
+}	t_trans_list;
+
 typedef struct	s_ms
 {
 	enum e_state_ps		state;
 	enum e_operation	op;
 	t_op_list			*actual_op;
 	t_op_list			*op_list;
+	t_trans_list		*trans_list;
 	int					limit_count;
 	int					count;
+	int					min_turn;
 	int					size;
 }	t_ms;
 
@@ -77,9 +84,10 @@ void		ft_addstack_front(t_stack **stack, t_stack **new);
 void		ft_addstack_back(t_stack **stack, t_stack **new);
 int			ft_stacksize(t_stack *a);
 
-
 int 		get_median(t_stack *stack, int size);
 void		set_index_to_value(t_stack *stack);
+
+void	print_op(int op);
 
 int		swap_a(t_stack **a, t_stack **b, t_ms *ms);
 int		swap_b(t_stack **a, t_stack **b, t_ms *ms);
@@ -99,6 +107,9 @@ void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms);
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms);
+void	quick_sort_b(t_stack **a, t_stack **b, t_ms *ms);
+void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms);
+void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms);
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
 
@@ -106,6 +117,12 @@ void	add_operation(t_op_list **list, int op);
 void	delone_operation(t_op_list **list);
 void	clear_operation(t_op_list **list);
 void	copy_operation(t_ms *ms, t_op_list *list);
+
+void	add_trans_list(t_trans_list **list, int count);
+void	delone_trans_list(t_trans_list **list);
+
+int		in_order(t_stack *a);
+int		sorted_count(t_stack *a);
 
 int		is_numstr(char *str);
 

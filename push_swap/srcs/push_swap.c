@@ -6,48 +6,62 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 17:35:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/26 23:08:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static char	*print_op(int op)
+void	print_op(int op)
 {
 	if (op == SA)
-		return ("sa");
+		write(1, "sa\n", 3);
 	if (op == SB)
-		return ("sb");
+		write(1, "sb\n", 3);
 	if (op == SS)
-		return ("ss");
+		write(1, "sb\n", 3);
 	if (op == PA)
-		return ("pa");
+		write(1, "pa\n", 3);
 	if (op == PB)
-		return ("pb");
+		write(1, "pb\n", 3);
 	if (op == RA)
-		return ("ra");
+		write(1, "ra\n", 3);
 	if (op == RB)
-		return ("rb");
+		write(1, "rb\n", 3);
 	if (op == RR)
-		return ("rr");
+		write(1, "rr\n", 3);
 	if (op == RRA)
-		return ("rra");
+		write(1, "rra\n", 4);
 	if (op == RRB)
-		return ("rrb");
+		write(1, "rrb\n", 4);
 	if (op == RRR)
-		return ("rrr");
-	else
-		return (NULL);
+		write(1, "rrr\n", 4);
 }
 
 static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 {
 	static	t_push_swap_process f[] =
 	{
-		send_a_to_b, send_b_to_a,
+		send_a_to_b, quick_sort_b, send_big_to_b,
 	};
 
 	f[ms->state](a, b, ms);
+}
+
+static t_ms	*init_ms(t_stack *a)
+{
+	t_ms	*ms;
+
+	ms = malloc(sizeof(t_ms));
+	ms->op = INIT;
+	ms->count = 0;
+	ms->min_turn = 12;
+	ms->limit_count = 12;
+	ms->op_list = NULL;
+	ms->actual_op = NULL;
+	ms->trans_list = NULL;
+	ms->size = ft_stacksize(a);
+	return (ms);
 }
 
 static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
@@ -57,20 +71,14 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	t_stack	*tmp;
 
 	len = 0;
-
-	static t_operation func[] =
-	{
-		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
-		push_a, swap_ab, rotate_b,\
-		rotate_ab, rotate_rev_b, rotate_rev_ab
-	};
+	// static t_operation func[] =
+	// {
+	// 	swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
+	// 	push_a, swap_ab, rotate_b,\
+	// 	rotate_ab, rotate_rev_b, rotate_rev_ab
+	// };
 	init(a, b, size, argv);
-	ms = malloc(sizeof(t_ms));
-	ms->op = INIT;
-	ms->count = 0;
-	ms->op_list = NULL;
-	ms->actual_op = NULL;
-	ms->size = ft_stacksize(*a);
+	ms = init_ms(*a);
 	tmp = *a;
 	if (size == 2)
 	{
@@ -84,37 +92,22 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	if (size <= 7)
 	{
 		ms->state = END;
-		ms->limit_count = 12;
-		ms->count = 12;
 		sort_under_six(a, b, ms, 0);
 	}
 	else
 		ms->state = A_TO_B;
-
 	while (ms->state != END)
 		handle_process(a, b, ms);
-	while (ms->actual_op)
-	{
-		ft_printf("%s\n", print_op(ms->actual_op->op));
-		func[ms->actual_op->op](a, b, ms);
-		ms->actual_op = ms->actual_op->next;
-	}
+	// while (ms->actual_op)
+	// {
+	// 	print_op(ms->actual_op->op);
+	// 	func[ms->actual_op->op](a, b, ms);
+	// 	ms->actual_op = ms->actual_op->next;
+	// }
 	ft_printf("count : %d\n", ms->count);
 	free(ms->actual_op);
 	free(ms->op_list);
 	free(ms);
-	// }
-	// else
-	// 	ms->state = A_TO_B;
-	// while (ms->state != END)
-	// 	f[ms->state](a, b, ms, size);
-	// ft_printf("count: %d\n", ms->count);
-	// swap_top(a, b);
-	// rotate(a, b);
-	// rotate_rev(a, b);
-	// push(a, b);
-	// push(b, a);
-	// push(b, a);
 }
 
 int main(int argc, char **argv)
