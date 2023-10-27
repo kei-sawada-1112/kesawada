@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 19:35:28 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 05:35:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:44:39 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	sort_under_five(t_stack **a, t_stack **b, t_ms *ms, int count)
 	{
 		ms->min_turn = count;
 		clear_operation(&ms->actual_op);
-		copy_operation(ms, ms->op_list);
+		copy_operation(ms->actual_op, ms->op_list);
 		return ;
 	}
 	op = -1;

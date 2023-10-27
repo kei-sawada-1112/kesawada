@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 13:57:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:34:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_op(int op)
 	if (op == SB)
 		write(1, "sb\n", 3);
 	if (op == SS)
-		write(1, "sb\n", 3);
+		write(1, "ss\n", 3);
 	if (op == PA)
 		write(1, "pa\n", 3);
 	if (op == PB)
@@ -42,7 +42,7 @@ static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 {
 	static	t_push_swap_process f[] =
 	{
-		send_a_to_b, send_b_to_a, quick_sort_b, send_big_to_b,
+		send_a_to_b, send_b_to_a, quick_sort_b, send_big_to_b
 	};
 
 	f[ms->state](a, b, ms);
