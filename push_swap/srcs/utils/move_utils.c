@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 21:44:31 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 12:05:08 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int swap_ab(t_stack **a, t_stack **b, t_ms *ms)
 	(void)ms;
 
 	count = 0;
-	count += swap_a(a, b, ms);
-	count += swap_b(a, b, ms);
+	count = swap_a(a, b, ms);
+	count = swap_b(a, b, ms);
 	return (count);
 }
 
