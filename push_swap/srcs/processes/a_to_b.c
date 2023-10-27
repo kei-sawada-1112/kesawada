@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 05:17:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:56:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms)
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 {
-	t_stack	*current;
 	int		i;
 	int		half_size;
+	t_stack	*current;
 
 	half_size = ft_stacksize(*a) / 2 + ft_stacksize(*a) % 2;
 	i = half_size;
@@ -72,29 +72,16 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if (current->index < half_size)
 		{
-			if (current->pos > half_size)
-			{
-				while (!current->prev->is_separator)
-				{
-					ms->count += rotate_rev_a(a, NULL, ms);
-					print_op(RRA);
-				}
-			}
-			else
-			{
-				while (!current->prev->is_separator)
-				{
-					ms->count += rotate_a(a, NULL, ms);
-					print_op(RA);
-				}
-			}
 			ms->count += push_b(a, b, ms);
-			current = (*a)->next;
 			print_op(PB);
 			(*b)->next->pos = --i;
 		}
 		else
-			current = current->next;
+		{
+			ms->count += rotate_a(a, NULL, ms);
+			print_op(RA);
+		}
+		current = (*a)->next;
 	}
 	// {
 	//  ms->state = END;
@@ -105,43 +92,30 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 {
-	t_stack	*current;
 	int		i;
 	int		half_size;
 	int		push_count;
+	t_stack	*current;
 
 	set_index_to_value(*b);
 	half_size = ft_stacksize(*b) / 2 - !(ft_stacksize(*b) % 2);
 	i = ft_stacksize(*b) / 2;
-	current = (*b)->next;
 	push_count = 0;
+	current = (*b)->next;
 	while (i > 0)
 	{
 		if (current->index > half_size)
 		{
-			if (current->pos < half_size)
-			{
-				while (!current->prev->is_separator)
-				{
-					ms->count += rotate_rev_b(NULL, b, ms);
-					print_op(RRB);
-				}
-			}
-			else
-			{
-				while (!current->prev->is_separator)
-				{
-					ms->count += rotate_b(NULL, b, ms);
-					print_op(RB);
-				}
-			}
 			push_count += push_a(a, b, ms);
-			current = (*b)->next;
 			print_op(PA);
 			(*a)->next->pos = --i;
 		}
 		else
-			current = current->next;
+		{
+			ms->count += rotate_b(NULL, b, ms);
+			print_op(RB);
+		}
+		current = (*b)->next;
 	}
 	ms->count += push_count;
 	add_trans_list(&ms->trans_list, push_count);

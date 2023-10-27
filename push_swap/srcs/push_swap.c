@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 05:34:51 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:57:33 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ int main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 	push_swap(&a, &b, argc, argv);
-	a = a->next;
-	b = b->next;
+	// a = a->next;
+	// b = b->next;
 	// while (a->next && !a->is_separator)
 	// {
 	// 	// ft_printf("index: %d\n", a->index);
