@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 15:18:53 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:16:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ int	is_qualified(t_stack *b, t_ms *ms, int count)
 	b = b->next;
 	while (!b->next->is_separator)
 	{
-		if (b->value > b->next->value)
+		if (b->index > b->next->index)
 		{
-			if (i + 1 + count >= ms->min_turn)
+			if (++i + 1 + count >= ms->min_turn)
 				return (0);
 		}
 		b = b->next;
@@ -149,7 +149,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!check_valid_operation(ms, op) || ms->min_turn <= count)
+		if (!is_qualified(*b, ms, count) || !check_valid_operation(ms, op) || ms->min_turn <= count)
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;
