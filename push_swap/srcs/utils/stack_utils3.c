@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:22:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 04:52:32 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/29 17:30:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,27 @@ void	delone_trans_list(t_trans_list **list)
 	{
 		free(current);
 		*list = NULL;
+	}
+}
+
+void set_index_to_value(t_stack *stack)
+{
+	t_stack	*current;
+	t_stack	*checker;
+	int		count;
+
+	current = stack->next;
+	while (!current->is_separator)
+	{
+		count = 0;
+		checker = stack->next;
+		while (!checker->is_separator)
+		{
+			if (current->value > checker->value)
+				count++;
+			checker = checker->next;
+		}
+		current->index = count;
+		current = current->next;
 	}
 }
