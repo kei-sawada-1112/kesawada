@@ -6,30 +6,53 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/16 17:27:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:15:32 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	init_ms(t_ms *ms, int fd)
+static t_ms	*init_ms(int fd)
 {
-	ms->buffer = malloc(BUFFER_SIZE + 1);
-	if (!ms->buffer)
-		return (0);
-	ms->bytes_read = read(fd, ms->buffer, BUFFER_SIZE);
-	if (ms->bytes_read < 0)
+	t_ms	*new;
+
+	new = malloc(sizeof(t_ms));
+	if (!new)
+		return (NULL);
+	new->buffer = malloc(BUFFER_SIZE + (size_t)1);
+	if (!new->buffer)
 	{
-		free(ms->buffer);
-		return (0);
+		free(new);
+		return (NULL);
 	}
-	ms->buffer[ms->bytes_read] = '\0';
-	ms->used = 1;
-	ms->fd = fd;
-	return (1);
+	new->bytes_read = read(fd, new->buffer, BUFFER_SIZE);
+	new->buffer[new->bytes_read] = '\0';
+	new->fd = fd;
+	new->state = LETTER;
+	new->tmp_buffer = NULL;
+	new->tmp_len = 0;
+	new->copied_len = 0;
+	new->count = 0;
+	new->start_pos = 0;
+	new->next = NULL;
+	return (new);
 }
 
-int	endline_function(t_ms *ms, char **next_line)
+static void	delete_current_ms(t_ms *dummy, t_ms *c_ms)
+{
+	t_ms	*prev;
+
+	prev = dummy;
+	while (prev->next && prev->next != c_ms)
+		prev = prev->next;
+	if (!prev->next)
+		return ;
+	prev->next = c_ms->next;
+	free(c_ms);
+	c_ms = NULL;
+}
+
+static int	endline_function(t_ms *dummy, t_ms *ms, char **next_line)
 {
 	if (!ms->count && !ms->tmp_len)
 	{
@@ -43,33 +66,52 @@ int	endline_function(t_ms *ms, char **next_line)
 			free(ms->buffer);
 			ms->buffer = NULL;
 		}
-		return (-1);
+		delete_current_ms(dummy, ms);
+		return (0);
 	}
 	set_next_line(ms, next_line);
 	return (1);
 }
 
+static t_ms	*get_current_ms(t_ms *ms, int fd)
+{
+	t_ms	*current;
+	t_ms	*prev;
+
+	current = ms;
+	while (current)
+	{
+		if (current->fd == fd)
+			return (current);
+		prev = current;
+		current = current->next;
+	}
+	current = init_ms(fd);
+	prev->next = current;
+	return (current);
+}
+
 char	*get_next_line(int fd)
 {
-	static t_ms	ms[OPEN_MAX];
+	static t_ms	dummy;
 	char		*next_line;
+	t_ms		*c_ms;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
-	if (!ms[fd].used)
-	{
-		if (!init_ms(&ms[fd], fd))
-			return (NULL);
-	}
+	dummy.fd = INT_MIN;
+	c_ms = get_current_ms(&dummy, fd);
+	if (!c_ms)
+		return (NULL);
 	while (1)
 	{
-		if (ms[fd].state == LETTER)
-			read_letter(&ms[fd]);
-		else if (ms[fd].state == NEED_READ)
-			re_read(&ms[fd]);
-		else if (ms[fd].state == NEWLINE || ms[fd].state == GNL_EOF)
+		if (c_ms->state == LETTER)
+			read_letter(c_ms);
+		else if (c_ms->state == NEED_READ)
+			re_read(c_ms);
+		else if (c_ms->state == NEWLINE || c_ms->state == GNL_EOF)
 		{
-			if (endline_function(&ms[fd], &next_line) == -1)
+			if (!endline_function(&dummy, c_ms, &next_line))
 				return (NULL);
 			break ;
 		}
