@@ -5,7 +5,7 @@ ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += $(DEBUGFLAGS)
 endif
 
-NAME = libftprintf.a
+NAME = libft.a
 INC_DIR = srcs
 SRC_DIR = srcs
 OBJ_DIR = objs
