@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/16 17:29:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/30 13:53:06 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ enum e_state
 	GNL_EOF,
 };
 
-typedef struct s_machine_state
+typedef struct s_ms
 {
 	int				fd;
 	enum e_state	state;
@@ -38,9 +38,8 @@ typedef struct s_machine_state
 	size_t			tmp_len;
 	size_t			count;
 	size_t			copied_len;
-	size_t			start_pos;
 	int				bytes_read;
-	int				used;
+	struct s_ms		*next;
 }	t_ms;
 
 void	read_letter(t_ms *ms);
