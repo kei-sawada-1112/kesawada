@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/16 16:56:09 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:27:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	read_letter(t_ms *ms)
 {
 	int	i;
 
-	i = ms->start_pos;
+	i = ms->copied_len;
 	while (i < BUFFER_SIZE)
 	{
 		if (i == ms->bytes_read && ms->bytes_read < BUFFER_SIZE)
@@ -39,7 +39,6 @@ void	read_letter(t_ms *ms)
 void	set_param(t_ms *ms)
 {
 	ms->copied_len += ms->count;
-	ms->start_pos = ms->copied_len;
 	ms->state = LETTER;
 	ms->tmp_len = 0;
 	ms->count = 0;
@@ -108,7 +107,6 @@ void	re_read(t_ms *ms)
 		return ;
 	ms->buffer[ms->bytes_read] = '\0';
 	ms->state = LETTER;
-	ms->start_pos = 0;
 	ms->copied_len = 0;
 	ms->count = 0;
 }

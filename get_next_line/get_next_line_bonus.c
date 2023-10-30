@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/30 13:17:33 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:27:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static t_ms	*init_ms(int fd)
 	new->tmp_len = 0;
 	new->copied_len = 0;
 	new->count = 0;
-	new->start_pos = 0;
 	new->next = NULL;
 	return (new);
 }
