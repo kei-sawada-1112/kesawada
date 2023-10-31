@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 16:31:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:19:42 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,21 @@ int	sorted_count(t_stack *a)
 	return (max);
 }
 
-int	top_is_min(t_stack *b)
+int	is_ascending(t_stack *b)
+{
+	t_stack	*current;
+
+	current = b->next;
+	while (!current->next->is_separator)
+	{
+		if (current->index > current->next->index)
+			return (0);
+		current = current->next;
+	}
+	return (1);
+}
+
+int	is_discending(t_stack *b)
 {
 	t_stack	*current;
 
@@ -81,7 +95,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		else
 		{
-			if (!(top_is_min(*b)))
+			if (!(is_ascending(*b)))
 			{
 				ms->count = rotate_ab(a, b, ms);
 				print_op(RR);
@@ -95,8 +109,16 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	}
 	while (++i < size / 2 + size % 2)
 	{
-		rotate_rev_a(a, NULL, ms);
-		print_op(RRA);
+		if (!is_discending(*b))
+		{
+			rotate_rev_ab(a, b, ms);
+			print_op(RRR);
+		}
+		else
+		{
+			rotate_rev_a(a, NULL, ms);
+			print_op(RRA);
+		}
 	}
 	if (ft_stacksize(*b) < 16)
 		ms->state = SIMPLE_SORT;
@@ -133,29 +155,10 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 
 void send_under_16(t_stack **a, t_stack **b, t_ms *ms, int pos)
 {
-	int	size;
-	int	direction;
-
-	size = ft_stacksize(*b);
-	if (pos < size / 2 + 1)
-		direction = 1;
-	else
-	{
-		direction = 0;
-		pos = size - pos;
-	}
 	while (pos--)
 	{
-		if (direction)
-		{
-			rotate_b(a, b, ms);
-			print_op(RB);
-		}
-		else
-		{
-			rotate_rev_b(a, b, ms);
-			print_op(RRB);
-		}
+		rotate_b(a, b, ms);
+		print_op(RB);
 	}
 	push_a(a, b, ms);
 	print_op(PA);
@@ -163,11 +166,30 @@ void send_under_16(t_stack **a, t_stack **b, t_ms *ms, int pos)
 	print_op(RA);
 }
 
+int	check_direction(t_stack *b, int index)
+{
+	t_stack	*current;
+
+	current = b->next;
+	while (current != current->next)
+	{
+		if (current->index == index + 1)
+			return (1);
+		else if (current->index == index)
+			return (0);
+		current = current->next;
+	}
+	return (0);
+}
+
 void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack *current;
-	int	index;
-	int	pos;
+	int		index;
+	int		pos;
+	int		count1;
+	// int		count2;
+	int		tmp;
 
 	index = 0;
 	pos = 0;
@@ -177,14 +199,36 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if (current->index == index)
 		{
-			send_under_16(a, b, ms, pos);
-			index++;
+			count1 = count_consecutive(*b, index, 1);
+			// count2 = count_consecutive(current, 0);
+			tmp = count1;
+			while (pos--)
+			{
+				if (current->index == count1)
+				{
+					push_a(a, b, ms);
+					print_op(PA);
+					count1--;
+				}
+				else
+				{
+					rotate_b(a, b, ms);
+					print_op(RB);
+				}
+			}
+			while (tmp + 1 > 0)
+			{
+				rotate_a(a, b, ms);
+				print_op(RA);
+				index++;
+				tmp--;
+			}
 			pos = 0;
 			current = (*b)->next;
 		}
 		else
 		{
-			current = current->next;
+			current = (*b)->next;
 			pos++;
 		}
 	}
