@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 22:59:49 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 23:29:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	int		sorted;
 	t_stack	*current;
 
-	current = *a;
 	set_index_to_value(*a);
 	sorted = sorted_count(*a);
 	size = ft_stacksize(*a) - sorted;
-	index = (ft_stacksize(*a) + sorted) / 2;
+	index = (ft_stacksize(*a) + sorted_count(*a)) / 2;
+	current = (*a)->next;
 	i = size;
 	if (i < 16)
 	{
 		while (i-- > 0)
 		{
-			if (current->next->index == sorted)
+			if ((*a)->next->index == sorted)
 			{
 				rotate_a(a, b, ms);
 				print_op(RA);
@@ -96,7 +96,6 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		ms->state = SIMPLE_SORT;
 		return ;
 	}
-	current = (*a)->next;
 	while (i-- > 0)
 	{
 		if (current->index < index)
@@ -106,7 +105,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		else
 		{
-			if (!(is_ascending(*b)))
+			if (!(is_ascending(*b)) && (*b)->next->index != sorted)
 			{
 				ms->count = rotate_ab(a, b, ms);
 				print_op(RR);
@@ -120,7 +119,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	}
 	while (++i < size / 2 + size % 2)
 	{
-		if (!is_discending(*b))
+		if (!is_discending(*b) && (*b)->next->index != sorted)
 		{
 			rotate_rev_ab(a, b, ms);
 			print_op(RRR);
@@ -281,10 +280,23 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 {
+	int	sorted;
+
+	set_index_to_value(*a);
+	sorted = sorted_count(*a);
 	while (ms->trans_list->count--)
 	{
-		ms->count += push_b(a, b, ms);
-		print_op(PB);
+		if ((*a)->next->index == sorted)
+		{
+			ms->count += rotate_a(a, b, ms);
+			print_op(RA);
+			sorted++;
+		}
+		else
+		{
+			ms->count += push_b(a, b, ms);
+			print_op(PB);
+		}
 	}
 	delone_trans_list(&ms->trans_list);
 	if (ft_stacksize(*b) < 16)
