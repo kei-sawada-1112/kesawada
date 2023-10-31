@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 21:19:42 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 22:25:15 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int	check_direction(t_stack *b, int index)
 			return (0);
 		current = current->next;
 	}
-	return (0);
+	return (1);
 }
 
 void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
@@ -187,48 +187,73 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack *current;
 	int		index;
 	int		pos;
-	int		count1;
-	// int		count2;
-	int		tmp;
+	int		count;
+	int		next_count;
+	int		prev_count;
 
 	index = 0;
-	pos = 0;
+	pos = 1;
 	set_index_to_value(*b);
+	current = (*b)->next;
+		set_index_to_value(*b);
 	current = (*b)->next;
 	while (*b != (*b)->next)
 	{
 		if (current->index == index)
 		{
-			count1 = count_consecutive(*b, index, 1);
-			// count2 = count_consecutive(current, 0);
-			tmp = count1;
-			while (pos--)
+			next_count = count_consecutive(*b, index, 1);
+			prev_count = count_consecutive(*b, index, 0);
+			if (next_count >= prev_count)
 			{
-				if (current->index == count1)
+				count = next_count;
+				while (pos--)
 				{
-					push_a(a, b, ms);
-					print_op(PA);
-					count1--;
-				}
-				else
-				{
-					rotate_b(a, b, ms);
-					print_op(RB);
+					current = (*b)->next;
+					if (current->index == index + next_count)
+					{
+						push_a(a, b, ms);
+						print_op(PA);
+						next_count--;
+					}
+					else
+					{
+						rotate_b(a, b, ms);
+						print_op(RB);
+					}
 				}
 			}
-			while (tmp + 1 > 0)
+			else
+			{
+				count = prev_count;
+				while (pos++ != ft_stacksize(*b))
+				{
+					current = (*b)->prev;
+					if (current->index == index + prev_count)
+					{
+						push_a(a, b, ms);
+						print_op(PA);
+						prev_count--;
+					}
+					else
+					{
+						rotate_rev_b(a, b, ms);
+						print_op(RB);
+					}
+				}
+			}
+			while (count + 1 > 0)
 			{
 				rotate_a(a, b, ms);
 				print_op(RA);
 				index++;
-				tmp--;
+				count--;
 			}
-			pos = 0;
+			pos = 1;
 			current = (*b)->next;
 		}
 		else
 		{
-			current = (*b)->next;
+			current = current->next;
 			pos++;
 		}
 	}

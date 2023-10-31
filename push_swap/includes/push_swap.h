@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 14:12:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:10:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,7 @@ int		in_order(t_stack *a);
 int		sorted_count(t_stack *a);
 
 int		is_numstr(char *str);
+
+int		count_consecutive(t_stack *b, int index, int check_next);
 
 #endif
