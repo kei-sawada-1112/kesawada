@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 14:05:04 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:53:01 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,52 @@ int	sorted_count(t_stack *a)
 	return (max);
 }
 
-void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms)
+void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 {
 	int		i;
+	int		index;
 	int		size;
+	t_stack	*current;
 
+	current = *a;
 	set_index_to_value(*a);
-	size = sorted_count(*a);
-	i = ft_stacksize(*a) - size;
-	// if (i == 1)
-	// {
-	// 	ms->count += rotate_a(a, b, ms);
-	// 	print_op(RA);
-	// 	ms->state = END;
-	// 	return ;
-	// }
-	while (i > 0)
+	size = ft_stacksize(*a) - sorted_count(*a);
+	index = (ft_stacksize(*a) + sorted_count(*a)) / 2;
+	i = size;
+	if (i < 16)
 	{
-		ms->count += push_b(a, b, ms);
-		print_op(PB);
-		(*b)->next->pos = --i;
+		while (i-- > 0)
+		{
+			push_b(a, b, ms);
+			print_op(PB);
+		}
+		ms->state = SIMPLE_SORT;
+		return ;
 	}
-	ms->state = END;
+	current = (*a)->next;
+	while (i-- > 0)
+	{
+		if (current->index < index)
+		{
+			ms->count += push_b(a, b, ms);
+			print_op(PB);
+		}
+		else
+		{
+			ms->count += rotate_a(a, NULL, ms);
+			print_op(RA);
+		}
+		current = (*a)->next;
+	}
+	while (++i < size / 2 + size % 2)
+	{
+		rotate_rev_a(a, NULL, ms);
+		print_op(RRA);
+	}
+	if (ft_stacksize(*b) < 16)
+		ms->state = SIMPLE_SORT;
+	else
+		ms->state = B_TO_A;
 }
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -83,19 +107,34 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		current = (*a)->next;
 	}
-	// {
-	//  ms->state = END;
-	//  return ;
-	// }
 	ms->state = B_TO_A;
 }
 
 void send_under_16(t_stack **a, t_stack **b, t_ms *ms, int pos)
 {
+	int	size;
+	int	direction;
+
+	size = ft_stacksize(*b);
+	if (pos < size / 2)
+		direction = 1;
+	else
+	{
+		direction = 0;
+		pos = size - pos;
+	}
 	while (pos--)
 	{
-		rotate_b(a, b, ms);
-		print_op(RB);
+		if (direction)
+		{
+			rotate_b(a, b, ms);
+			print_op(RB);
+		}
+		else
+		{
+			rotate_rev_b(a, b, ms);
+			print_op(RRB);
+		}
 	}
 	push_a(a, b, ms);
 	print_op(PA);
@@ -105,11 +144,14 @@ void send_under_16(t_stack **a, t_stack **b, t_ms *ms, int pos)
 
 void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 {
-	t_stack *current = (*b)->next;
-	int	index = 0;
-	int	pos = 0;
+	t_stack *current;
+	int	index;
+	int	pos;
 
+	index = 0;
+	pos = 0;
 	set_index_to_value(*b);
+	current = (*b)->next;
 	while (*b != (*b)->next)
 	{
 		if (current->index == index)
@@ -127,12 +169,13 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 	}
 	// if (sorted_count(*a) > 20)
 	// 	ms->state = END;
+	set_index_to_value(*a);
 	if (in_order(*a))
 		ms->state = END;
 	else if (ms->trans_list)
 		ms->state = BACK_TO_B;
 	else
-		ms->state = A_TO_B;
+		ms->state = A_TO_B_NEXT;
 }
 
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -143,10 +186,10 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 		print_op(PB);
 	}
 	delone_trans_list(&ms->trans_list);
-	// if (ft_stacksize(*b) > 5)
+	if (ft_stacksize(*b) < 16)
 		ms->state = SIMPLE_SORT;
-	// else
-	// 	ms->state = A_TO_B_NEXT;
+	else
+	 	ms->state = B_TO_A;
 }
 
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
@@ -156,9 +199,9 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 	int		push_count;
 	t_stack	*current;
 
-	if (ft_stacksize(*b) <= 4)
-		ms->state = QUICK_SORT_B;
-	else if (ft_stacksize(*b) <= 16)
+	// if (ft_stacksize(*b) <= 4)
+	// 	ms->state = QUICK_SORT_B;
+	if (ft_stacksize(*b) <= 16)
 		ms->state = SIMPLE_SORT;
 	else
 	{
@@ -184,5 +227,7 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		ms->count += push_count;
 		add_trans_list(&ms->trans_list, push_count);
+		if (ft_stacksize(*b) <= 16)
+			ms->state = SIMPLE_SORT;
 	}
 }
