@@ -20,6 +20,7 @@ PROCESSES = $(PROCESS_DIR)/a_to_b.c\
 $(PROCESS_DIR)/sort_under_six.c\
 $(PROCESS_DIR)/sort_func.c\
 $(PROCESS_DIR)/sorted_to_bottom.c\
+$(PROCESS_DIR)/sort_under_16.c\
 
 UTILS_DIR = $(SRC_DIR)/utils
 UTILS = $(UTILS_DIR)/stack_utils.c\
