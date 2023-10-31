@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 22:25:15 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 22:59:49 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,30 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	int		i;
 	int		index;
 	int		size;
+	int		sorted;
 	t_stack	*current;
 
 	current = *a;
 	set_index_to_value(*a);
-	size = ft_stacksize(*a) - sorted_count(*a);
-	index = (ft_stacksize(*a) + sorted_count(*a)) / 2;
+	sorted = sorted_count(*a);
+	size = ft_stacksize(*a) - sorted;
+	index = (ft_stacksize(*a) + sorted) / 2;
 	i = size;
 	if (i < 16)
 	{
 		while (i-- > 0)
 		{
-			push_b(a, b, ms);
-			print_op(PB);
+			if (current->next->index == sorted)
+			{
+				rotate_a(a, b, ms);
+				print_op(RA);
+				sorted++;
+			}
+			else
+			{
+				push_b(a, b, ms);
+				print_op(PB);
+			}
 		}
 		ms->state = SIMPLE_SORT;
 		return ;
