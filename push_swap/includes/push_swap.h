@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/27 05:34:34 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/10/31 13:37:52 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ enum e_state_ps
 	B_TO_A,
 	QUICK_SORT_B,
 	A_TO_B_NEXT,
-	SORTED_TO_BOTTOM,
+	SIMPLE_SORT,
+	BACK_TO_B,
 	END
 };
 
@@ -111,6 +112,8 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms);
 void	quick_sort_b(t_stack **a, t_stack **b, t_ms *ms);
 void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms);
 void	send_big_to_b(t_stack **a, t_stack **b, t_ms *ms);
+void	simple_sort(t_stack **a, t_stack **b, t_ms *ms);
+void	back_to_b(t_stack **a, t_stack **b, t_ms *ms);
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
 
