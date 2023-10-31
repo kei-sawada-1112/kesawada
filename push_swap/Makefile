@@ -11,9 +11,9 @@ INC_DIR = includes
 SRC_DIR = srcs
 OBJ_DIR = objs
 
-PRINTF_DIR = ft_printf
-PRINTF = ${PRINTF_DIR}/libftprintf.a
-LIB = -L $(PRINTF_DIR) -lftprintf
+LIBFT_DIR = libft
+LIBFT = ${LIBFT_DIR}/libf.a
+LIB = -L $(LIBFT_DIR) -lft
 
 PROCESS_DIR = $(SRC_DIR)/processes
 PROCESSES = $(PROCESS_DIR)/a_to_b.c\
@@ -53,13 +53,13 @@ $(SRC_DIR) \
 $(UTILS_DIR) \
 $(PROCESS_DIR) \
 
-all: $(PRINTF) $(OBJ_DIR) $(NAME)
+all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
-$(PRINTF):
+$(LIBFT):
 	@if [ "$(MAKECMDGOALS)" = "debug" ]; then \
-		make debug -C $(PRINTF_DIR); \
+		make debug -C $(LIBFT_DIR); \
 	else \
-		make -C $(PRINTF_DIR); \
+		make -C $(LIBFT_DIR); \
 	fi
 
 $(OBJ_DIR):
@@ -85,13 +85,13 @@ bonus: all
 debug: all
 
 clean:
-	@make -C $(PRINTF_DIR) clean
+	@make -C $(LIBFT_DIR) clean
 	@rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
-	@make -C $(PRINTF_DIR) fclean
+	@make -C $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus debug $(PRINTF)
+.PHONY: all clean fclean re bonus debug $(LIBFT)
