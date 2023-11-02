@@ -6,11 +6,23 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/30 15:27:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/02 19:01:51 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+// static void	init_param(t_ms *new, int fd)
+// {
+// 	new->fd = fd;
+// 	new->state = LETTER;
+// 	new->tmp_buffer = NULL;
+// 	new->cap = BUFFER_SIZE;
+// 	new->tmp_len = 0;
+// 	new->copied_len = 0;
+// 	new->count = 0;
+// 	new->next = NULL;
+// }
 
 static t_ms	*init_ms(int fd)
 {
@@ -19,40 +31,30 @@ static t_ms	*init_ms(int fd)
 	new = malloc(sizeof(t_ms));
 	if (!new)
 		return (NULL);
-	new->buffer = malloc(BUFFER_SIZE + (size_t)1);
+	*new = (t_ms){0};
+	new->fd = fd;
+	new->cap = BUFFER_SIZE;
+	new->buffer = malloc(new->cap + (size_t)1);
 	if (!new->buffer)
 	{
 		free(new);
 		return (NULL);
 	}
-	new->bytes_read = read(fd, new->buffer, BUFFER_SIZE);
+	new->bytes_read = read(fd, new->buffer, new->cap);
+	if (new->bytes_read < 0)
+	{
+		free(new->buffer);
+		free(new);
+		return (NULL);
+	}
 	new->buffer[new->bytes_read] = '\0';
-	new->fd = fd;
-	new->state = LETTER;
-	new->tmp_buffer = NULL;
-	new->tmp_len = 0;
-	new->copied_len = 0;
-	new->count = 0;
-	new->next = NULL;
 	return (new);
-}
-
-static void	delete_current_ms(t_ms *dummy, t_ms *c_ms)
-{
-	t_ms	*prev;
-
-	prev = dummy;
-	while (prev->next && prev->next != c_ms)
-		prev = prev->next;
-	if (!prev->next)
-		return ;
-	prev->next = c_ms->next;
-	free(c_ms);
-	c_ms = NULL;
 }
 
 static int	endline_function(t_ms *dummy, t_ms *ms, char **next_line)
 {
+	t_ms	*prev;
+
 	if (!ms->count && !ms->tmp_len)
 	{
 		if (ms->tmp_buffer)
@@ -65,7 +67,13 @@ static int	endline_function(t_ms *dummy, t_ms *ms, char **next_line)
 			free(ms->buffer);
 			ms->buffer = NULL;
 		}
-		delete_current_ms(dummy, ms);
+		prev = dummy;
+		while (prev->next && prev->next != ms)
+			prev = prev->next;
+		if (!prev->next)
+			return (0);
+		prev->next = ms->next;
+		free(ms);
 		return (0);
 	}
 	set_next_line(ms, next_line);
@@ -117,34 +125,3 @@ char	*get_next_line(int fd)
 	}
 	return (next_line);
 }
-
-// #include <fcntl.h>
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	int fd1;
-// 	int	fd2;
-// 	int	fd3;
-// int i = 0;
-// char	*str1;
-// char	*str2;
-// char	*str3;
-// 	fd1 = open("gnlTester/files/41_with_nl", O_RDONLY);
-// 	fd2 = open("gnlTester/files/42_with_nl", O_RDONLY);
-// 	fd3 = open("gnlTester/files/43_with_nl", O_RDONLY);
-// 	while (i < 3)
-// 	{
-// 		str1 = get_next_line(fd1);
-// 		str2 = get_next_line(fd2);
-// 		str3 = get_next_line(fd3);
-// 		printf("%s", str1);
-// 		printf("%s", str2);
-// 		printf("%s", str3);
-// 		free (str1);
-// 		free (str2);
-// 		free (str3);
-// 		i++;
-// 	}
-// 	// system("leaks a.out");
-// }
