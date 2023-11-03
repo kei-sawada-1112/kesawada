@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 21:10:50 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:56:23 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct	s_stack
 	int				value;
 	int				is_separator;
 	int				index;
-	int				pos;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
@@ -80,7 +79,7 @@ typedef struct	s_ms
 typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *);
 typedef int		(*t_operation)(t_stack**, t_stack**, t_ms*);
 
-t_stack		*ft_stacknew(int value, int pos);
+t_stack		*ft_stacknew(int value);
 t_stack		*ft_stacklast(t_stack *stack);
 void		ft_addstack_front(t_stack **stack, t_stack **new);
 void		ft_addstack_back(t_stack **stack, t_stack **new);
@@ -103,7 +102,7 @@ int		rotate_rev_a(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_b(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_ab(t_stack **a, t_stack **b, t_ms *ms);
 
-void	append_stack(t_stack **stack, int num, int pos);
+void	append_stack(t_stack **stack, int num);
 
 void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
@@ -130,6 +129,6 @@ int		sorted_count(t_stack *a);
 
 int		is_numstr(char *str);
 
-int		count_consecutive(t_stack *b, int index, int check_next);
+int		count_consecutive(t_stack *start, int index);
 
 #endif
