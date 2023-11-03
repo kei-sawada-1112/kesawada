@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 23:29:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 10:57:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,49 @@ int	sorted_count(t_stack *a)
 	return (max);
 }
 
-int	is_ascending(t_stack *b)
+static int	get_current_pos(t_stack *b, int index)
 {
 	t_stack	*current;
+	int		pos;
 
 	current = b->next;
-	while (!current->next->is_separator)
+	pos = 1;
+	while (1)
 	{
-		if (current->index > current->next->index)
-			return (0);
+		if (current->index == index)
+			return (pos);
 		current = current->next;
+		pos++;
 	}
-	return (1);
 }
 
-int	is_discending(t_stack *b)
-{
-	t_stack	*current;
+// int	is_ascending(t_stack *b)
+// {
+// 	t_stack	*current;
 
-	current = b->next;
-	while (!current->next->is_separator)
-	{
-		if (current->index < current->next->index)
-			return (0);
-		current = current->next;
-	}
-	return (1);
-}
+// 	current = b->next;
+// 	while (!current->next->is_separator)
+// 	{
+// 		if (current->index > current->next->index)
+// 			return (0);
+// 		current = current->next;
+// 	}
+// 	return (1);
+// }
+
+// int	is_discending(t_stack *b)
+// {
+// 	t_stack	*current;
+
+// 	current = b->next;
+// 	while (!current->next->is_separator)
+// 	{
+// 		if (current->index < current->next->index)
+// 			return (0);
+// 		current = current->next;
+// 	}
+// 	return (1);
+// }
 
 void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 {
@@ -70,6 +86,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	int		size;
 	int		sorted;
 	t_stack	*current;
+	int		next_count;
 
 	set_index_to_value(*a);
 	sorted = sorted_count(*a);
@@ -83,8 +100,17 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		{
 			if ((*a)->next->index == sorted)
 			{
-				rotate_a(a, b, ms);
-				print_op(RA);
+				next_count = count_consecutive(*b, sorted, 1);
+				if ((*b)->next->index != sorted + next_count)
+				{
+					rotate_ab(a, b, ms);
+					print_op(RR);
+				}
+				else
+				{
+					rotate_a(a, b, ms);
+					print_op(RA);
+				}
 				sorted++;
 			}
 			else
@@ -100,29 +126,37 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if (current->index < index)
 		{
-			ms->count += push_b(a, b, ms);
+			push_b(a, b, ms);
 			print_op(PB);
 		}
 		else
 		{
-			if (!(is_ascending(*b)) && (*b)->next->index != sorted)
+			next_count = count_consecutive(*b, sorted, 1);
+			if ((*b)->next->index != sorted + next_count)
 			{
-				ms->count = rotate_ab(a, b, ms);
+				rotate_ab(a, b, ms);
 				print_op(RR);
 			}
 			else
-			{	ms->count += rotate_a(a, NULL, ms);
+			{
+				rotate_a(a, NULL, ms);
 				print_op(RA);
 			}
 		}
 		current = (*a)->next;
+		if (ft_stacksize(*b) == size / 2)
+		{
+			i--;
+			break ;
+		}
 	}
 	while (++i < size / 2 + size % 2)
 	{
-		if (!is_discending(*b) && (*b)->next->index != sorted)
+		next_count = count_consecutive(*b, sorted, 1);
+		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b))
 		{
 			rotate_rev_ab(a, b, ms);
-			print_op(RRR);
+			print_op(RR);
 		}
 		else
 		{
@@ -149,14 +183,22 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if (current->index < half_size)
 		{
-			ms->count += push_b(a, b, ms);
+			push_b(a, b, ms);
 			print_op(PB);
 			(*b)->next->pos = --i;
 		}
 		else
 		{
-			ms->count += rotate_a(a, NULL, ms);
-			print_op(RA);
+			if ((*b)->next->index < 25)
+			{
+				rotate_ab(a, b, ms);
+				print_op(RR);
+			}
+			else
+			{
+				rotate_a(a, NULL, ms);
+				print_op(RA);
+			}
 		}
 		current = (*a)->next;
 	}
@@ -196,34 +238,35 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack *current;
 	int		index;
-	int		pos;
 	int		count;
 	int		next_count;
-	int		prev_count;
 
 	index = 0;
-	pos = 1;
 	set_index_to_value(*b);
-	current = (*b)->next;
-		set_index_to_value(*b);
 	current = (*b)->next;
 	while (*b != (*b)->next)
 	{
 		if (current->index == index)
 		{
 			next_count = count_consecutive(*b, index, 1);
-			prev_count = count_consecutive(*b, index, 0);
-			if (next_count >= prev_count)
+			count = next_count;
+			while (1)
 			{
-				count = next_count;
-				while (pos--)
+				current = (*b)->next;
+				if (current->index == index + next_count)
 				{
-					current = (*b)->next;
-					if (current->index == index + next_count)
+					push_a(a, b, ms);
+					print_op(PA);
+					if (next_count == 0)
+						break ;
+					next_count--;
+				}
+				else
+				{
+					if (!next_count && get_current_pos(*b, index) > ft_stacksize(*b) / 2)
 					{
-						push_a(a, b, ms);
-						print_op(PA);
-						next_count--;
+						rotate_rev_b(a, b, ms);
+						print_op(RRB);
 					}
 					else
 					{
@@ -232,43 +275,27 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 					}
 				}
 			}
-			else
-			{
-				count = prev_count;
-				while (pos++ != ft_stacksize(*b))
-				{
-					current = (*b)->prev;
-					if (current->index == index + prev_count)
-					{
-						push_a(a, b, ms);
-						print_op(PA);
-						prev_count--;
-					}
-					else
-					{
-						rotate_rev_b(a, b, ms);
-						print_op(RB);
-					}
-				}
-			}
 			while (count + 1 > 0)
 			{
-				rotate_a(a, b, ms);
-				print_op(RA);
+				next_count = count_consecutive(*b, index, 1);
+				if ((*b)->next->index != index + next_count)
+				{
+					rotate_ab(a, b, ms);
+					print_op(RR);
+				}
+				else
+				{
+					rotate_a(a, b, ms);
+					print_op(RA);
+				}
 				index++;
 				count--;
 			}
-			pos = 1;
 			current = (*b)->next;
 		}
 		else
-		{
 			current = current->next;
-			pos++;
-		}
 	}
-	// if (sorted_count(*a) > 20)
-	// 	ms->state = END;
 	set_index_to_value(*a);
 	if (in_order(*a))
 		ms->state = END;
@@ -281,6 +308,7 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 {
 	int	sorted;
+	int	next_count;
 
 	set_index_to_value(*a);
 	sorted = sorted_count(*a);
@@ -288,13 +316,22 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if ((*a)->next->index == sorted)
 		{
-			ms->count += rotate_a(a, b, ms);
-			print_op(RA);
+			next_count = count_consecutive(*b, sorted, 1);
+			if ((*b)->next->index != sorted + next_count)
+			{
+				rotate_ab(a, b, ms);
+				print_op(RR);
+			}
+			else
+			{
+				rotate_a(a, b, ms);
+				print_op(RA);
+			}
 			sorted++;
 		}
 		else
 		{
-			ms->count += push_b(a, b, ms);
+			push_b(a, b, ms);
 			print_op(PB);
 		}
 	}
@@ -312,8 +349,6 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 	int		push_count;
 	t_stack	*current;
 
-	// if (ft_stacksize(*b) <= 4)
-	// 	ms->state = QUICK_SORT_B;
 	if (ft_stacksize(*b) <= 16)
 		ms->state = SIMPLE_SORT;
 	else
@@ -333,12 +368,11 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 			}
 			else
 			{
-				ms->count += rotate_b(NULL, b, ms);
+				rotate_b(NULL, b, ms);
 				print_op(RB);
 			}
 			current = (*b)->next;
 		}
-		ms->count += push_count;
 		add_trans_list(&ms->trans_list, push_count);
 		if (ft_stacksize(*b) <= 16)
 			ms->state = SIMPLE_SORT;
