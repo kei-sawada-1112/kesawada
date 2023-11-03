@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 20:04:49 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/25 08:26:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:27:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*ft_stacknew(int value, int pos)
+t_stack	*ft_stacknew(int value)
 {
 	t_stack	*new;
 
@@ -22,7 +22,6 @@ t_stack	*ft_stacknew(int value, int pos)
 	new->value = value;
 	new->is_separator = 0;
 	new->index = 0;
-	new->pos = pos;
 	new->next = new;
 	new->prev = new;
 	return (new);
