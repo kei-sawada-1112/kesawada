@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/03 10:57:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:27:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,10 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	while (++i < size / 2 + size % 2)
 	{
 		next_count = count_consecutive(*b, sorted, 1);
-		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b))
+		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b) / 2)
 		{
 			rotate_rev_ab(a, b, ms);
-			print_op(RR);
+			print_op(RRR);
 		}
 		else
 		{
@@ -164,7 +164,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 			print_op(RRA);
 		}
 	}
-	if (ft_stacksize(*b) < 16)
+	if (ft_stacksize(*b) <= 16)
 		ms->state = SIMPLE_SORT;
 	else
 		ms->state = B_TO_A;
@@ -179,13 +179,19 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	half_size = ft_stacksize(*a) / 2 + ft_stacksize(*a) % 2;
 	i = half_size;
 	current = (*a)->next;
+	set_index_to_value(*a);
 	while (i > 0)
 	{
 		if (current->index < half_size)
 		{
+			// if ((*b)->next->index < 25)
+			// {
+			// 	rotate_b(a, b, ms);
+			// 	print_op(RB);
+			// }
 			push_b(a, b, ms);
 			print_op(PB);
-			(*b)->next->pos = --i;
+			--i;
 		}
 		else
 		{
@@ -336,7 +342,7 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 		}
 	}
 	delone_trans_list(&ms->trans_list);
-	if (ft_stacksize(*b) < 16)
+	if (ft_stacksize(*b) <= 16)
 		ms->state = SIMPLE_SORT;
 	else
 	 	ms->state = B_TO_A;
@@ -364,7 +370,7 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 			{
 				push_count += push_a(a, b, ms);
 				print_op(PA);
-				(*a)->next->pos = --i;
+				--i;
 			}
 			else
 			{

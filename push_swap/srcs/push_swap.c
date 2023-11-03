@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/31 14:12:20 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:18:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static t_ms	*init_ms(t_stack *a)
 	t_ms	*ms;
 
 	ms = malloc(sizeof(t_ms));
+	if (!ms)
+		return (NULL);
 	ms->op = INIT;
 	ms->count = 0;
 	ms->min_turn = 12;
@@ -72,14 +74,13 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	t_stack	*tmp;
 
 	len = 0;
-	// static t_operation func[] =
-	// {
-	// 	swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
-	// 	push_a, swap_ab, rotate_b,\
-	// 	rotate_ab, rotate_rev_b, rotate_rev_ab
-	// };
 	init(a, b, size, argv);
 	ms = init_ms(*a);
+	if (!ms)
+	{
+		write(2, "Error\n", 6);
+		exit(1);
+	}
 	tmp = *a;
 	if (size == 2)
 	{
@@ -104,13 +105,6 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 		ms->state = A_TO_B;
 	while (ms->state != END)
 		handle_process(a, b, ms);
-	// while (ms->actual_op)
-	// {
-	// 	print_op(ms->actual_op->op);
-	// 	func[ms->actual_op->op](a, b, ms);
-	// 	ms->actual_op = ms->actual_op->next;
-	// }
-	// ft_printf("count : %d\n", ms->count);
 	free(ms->actual_op);
 	free(ms->op_list);
 	free(ms);

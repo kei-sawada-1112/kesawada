@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 17:45:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:28:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	is_numstr(char *str)
 	return (0);
 }
 
-void	append_stack(t_stack **stack, int num, int pos)
+void	append_stack(t_stack **stack, int num)
 {
 	t_stack	*new_stack;
 
-	new_stack = ft_stacknew(num, pos);
+	new_stack = ft_stacknew(num);
 	if (!(*stack)->prev)
 		*stack = new_stack;
 	else
@@ -47,25 +47,24 @@ static void	init_stack(t_stack **a, int size, char **argv, int no_arg)
 	{
 		if (!is_numstr(argv[i]))
 		{
-			ft_printf("Error\n");
+			write(2, "Error\n", 6);
 			exit (1);
 		}
 		num = ft_strtol(argv[i], 10);
 		if (num > INT_MAX || num < INT_MIN)
 		{
-			ft_printf("Error\n");
+			write(2, "Error\n", 6);
 			exit (1);
 		}
 		array[i] = num;
-		append_stack(a, num, i - 1 + no_arg);
+		append_stack(a, num);
 	}
-	set_index_to_value(*a);
 }
 
 static void	set_separator(t_stack **a, t_stack **b)
 {
-	*a = ft_stacknew(0, 0);
-	*b = ft_stacknew(0, 0);
+	*a = ft_stacknew(0);
+	*b = ft_stacknew(0);
 	(*a)->index = INT_MIN;
 	(*a)->is_separator = 1;
 	(*b)->index = INT_MIN;
@@ -85,7 +84,14 @@ void	init(t_stack **a, t_stack **b, int argc, char **argv)
 		no_arg = 1;
 		argv = ft_split(argv[1], ' ');
 		while (argv[len])
+		{
+			if (!is_numstr(argv[len]))
+			{
+				write(2, "Error\n", 6);
+				exit(1);
+			}
 			len++;
+		}
 		argc = len;
 	}
 	init_stack(a, argc, argv, no_arg);
