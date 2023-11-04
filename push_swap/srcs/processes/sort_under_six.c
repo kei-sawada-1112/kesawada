@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/29 17:16:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 01:30:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	rev_count(t_stack *b)
 int	check_valid_operation(t_ms *ms, int operation)
 {
 	if (ms->op == SA && (operation == SA ||\
-		operation == SS))
+		operation == SS || operation == RA || operation == RR))
 		return (0);
 	if (ms->op == SB && (operation == SB ||\
-		operation == SS))
+		operation == SS || operation == RB || operation == RR))
 		return (0);
 	if (ms->op == SS && (operation == SS ||\
 		operation == SA || operation == SB))
@@ -64,16 +64,16 @@ int	check_valid_operation(t_ms *ms, int operation)
 		return (0);
 	if (ms->op == PB && operation == PA)
 		return (0);
-	if (ms->op == RA && operation == RRA)
+	if (ms->op == RA && (operation == RRA || operation == RR))
 		return (0);
-	if (ms->op == RB && operation == RRB)
+	if (ms->op == RB && (operation == RRB || operation == RR))
 		return (0);
 	if (ms->op == RR && (operation == RR ||
 		operation == RA || operation == RB))
 		return (0);
-	if (ms->op == RRA && operation == RA)
+	if (ms->op == RRA && (operation == RA || operation == RRR))
 		return (0);
-	if (ms->op == RRB && operation == RB)
+	if (ms->op == RRB && (operation == RB || operation == RRR))
 		return (0);
 	if (ms->op == RRR && (operation == RRR ||
 		operation == RRA || operation == RRB))
@@ -105,33 +105,26 @@ int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 	return (f[op](a, b, ms));
 }
 
-int	is_qualified(t_stack *b, t_ms *ms, int count)
+int	get_min_pos(t_stack *a)
 {
-	int	i;
+	int		count;
 
-	i = 1;
-	b = b->next;
-	while (!b->next->is_separator)
+	count = 1;
+	a = a->next;
+	while (!a->index)
 	{
-		if (b->index > b->next->index)
-		{
-			if (++i + 1 + count >= ms->min_turn)
-				return (0);
-		}
-		b = b->next;
+		count++;
+		a = a->next;
 	}
-	return (1);
+	return (count);
 }
 
-// void	print_under_six(t_stack **a, t_stack **b, t_ms *ms)
-// {
-// 	while (ms->actual_op)
-// 	{
-// 		print_op(ms->actual_op->op);
-// 		execute(a, b, ms, ms->actual_op->op);
-// 		ms->actual_op = ms->actual_op->next;
-// 	}
-// }
+int	is_qualified(t_stack *a, t_stack *b, t_ms *ms, int count)
+{
+	if (ft_stacksize(b) + count + get_min_pos(a) + 1 >= ms->min_turn)
+		return (0);
+	return (1);
+}
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 {
@@ -149,7 +142,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!is_qualified(*b, ms, count) || !check_valid_operation(ms, op) || ms->min_turn <= count)
+		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(ms, op) || ms->min_turn <= count)
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;

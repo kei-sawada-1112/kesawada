@@ -67,6 +67,8 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
+bonus: all
+
 debug: all
 
 re: fclean all

@@ -38,16 +38,16 @@ $(UTILS)\
 $(PROCESSES)\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
-TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
+# TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 
-BSRCS = $(SRC_DIR)/push_swap_bonus.c\
-$(BUTILS)\
+# BSRCS = $(SRC_DIR)/push_swap.c\
+# $(BUTILS)\
 
-BOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSRCS:.c=.o)))
+# BOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSRCS:.c=.o)))
 
-ifeq ($(MAKECMDGOALS), bonus)
-	OBJS = $(BOBJS)
-endif
+# ifeq ($(MAKECMDGOALS), bonus)
+# 	OBJS = $(BOBJS)
+# endif
 
 vpath %.c \
 $(SRC_DIR) \
@@ -57,11 +57,7 @@ $(PROCESS_DIR) \
 all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
 $(LIBFT):
-	@if [ "$(MAKECMDGOALS)" = "debug" ]; then \
-		make debug -C $(LIBFT_DIR); \
-	else \
-		make -C $(LIBFT_DIR); \
-	fi
+	@make $(MAKECMDGOALS) -C $(LIBFT_DIR);
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -83,7 +79,7 @@ $(OBJ_DIR)/%.o: %.c $(INC_DIR)/push_swap.h
 
 bonus: all
 
-debug: all
+debug: fclean all
 
 clean:
 	@make -C $(LIBFT_DIR) clean

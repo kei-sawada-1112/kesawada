@@ -56,11 +56,7 @@ $(UTILS_DIR)
 all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
 $(LIBFT):
-	@if [ "$(MAKECMDGOALS)" = "debug" ]; then \
-		make debug -C $(LIBFT_DIR); \
-	else \
-		make -C $(LIBFT_DIR); \
-	fi
+	@make $(MAKECMDGOALS) -C $(LIBFT_DIR);
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -74,6 +70,8 @@ $(NAME): $(OBJS)
 $(OBJ_DIR)/%.o: %.c $(INC_DIR)/ft_printf.h
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
+bonus: all
+
 debug: all
 
 clean:
@@ -86,4 +84,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re debug $(LIBFT)
+.PHONY: all clean fclean re bonus debug $(LIBFT)
