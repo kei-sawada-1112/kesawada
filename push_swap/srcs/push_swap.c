@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 01:25:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 01:48:28 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 	f[ms->state](a, b, ms);
 }
 
-static t_ms	*init_ms(t_stack *a)
+static t_ms	*init_ms()
 {
 	t_ms	*ms;
 
@@ -63,7 +63,6 @@ static t_ms	*init_ms(t_stack *a)
 	ms->op_list = NULL;
 	ms->actual_op = NULL;
 	ms->trans_list = NULL;
-	ms->size = ft_stacksize(a);
 	return (ms);
 }
 
@@ -75,7 +74,8 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 
 	len = 0;
 	init(a, b, size, argv);
-	ms = init_ms(*a);
+	ms = init_ms();
+	set_index_to_value(*a);
 	if (!ms)
 	{
 		write(2, "Error\n", 6);
@@ -93,7 +93,6 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	}
 	if (size <= 7)
 	{
-		set_index_to_value(*a);
 		sort_under_six(a, b, ms, 0);
 		while (ms->actual_op)
 		{

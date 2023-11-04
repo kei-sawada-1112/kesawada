@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 01:30:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 01:38:36 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	get_min_pos(t_stack *a)
 
 	count = 1;
 	a = a->next;
-	while (!a->index)
+	while (a->index == 0)
 	{
 		count++;
 		a = a->next;
@@ -142,7 +142,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(ms, op) || ms->min_turn <= count)
+		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(ms, op))
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;

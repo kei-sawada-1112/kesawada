@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/03 17:56:57 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 01:45:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,6 @@ static int	get_current_pos(t_stack *b, int index)
 		pos++;
 	}
 }
-
-// int	is_ascending(t_stack *b)
-// {
-// 	t_stack	*current;
-
-// 	current = b->next;
-// 	while (!current->next->is_separator)
-// 	{
-// 		if (current->index > current->next->index)
-// 			return (0);
-// 		current = current->next;
-// 	}
-// 	return (1);
-// }
-
-// int	is_discending(t_stack *b)
-// {
-// 	t_stack	*current;
-
-// 	current = b->next;
-// 	while (!current->next->is_separator)
-// 	{
-// 		if (current->index < current->next->index)
-// 			return (0);
-// 		current = current->next;
-// 	}
-// 	return (1);
-// }
 
 void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 {
@@ -324,17 +296,19 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 {
 	int		i;
+	int		size;
 	int		half_size;
 	int		push_count;
 	t_stack	*current;
 
-	if (ft_stacksize(*b) <= 16)
+	size = ft_stacksize(*b);
+	if (size <= 16)
 		ms->state = SIMPLE_SORT;
 	else
 	{
 		set_index_to_value(*b);
-		half_size = ft_stacksize(*b) / 2 - !(ft_stacksize(*b) % 2);
-		i = ft_stacksize(*b) / 2;
+		half_size = size / 2 - !(size % 2);
+		i = size / 2;
 		push_count = 0;
 		current = (*b)->next;
 		while (i > 0)
@@ -353,7 +327,5 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 			current = (*b)->next;
 		}
 		add_trans_list(&ms->trans_list, push_count);
-		if (ft_stacksize(*b) <= 16)
-			ms->state = SIMPLE_SORT;
 	}
 }

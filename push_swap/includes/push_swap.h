@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/03 17:56:23 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 01:47:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct	s_ms
 	int					limit_count;
 	int					count;
 	int					min_turn;
-	int					size;
 }	t_ms;
 
 typedef void	(*t_push_swap_process)(t_stack **, t_stack **, t_ms *);
