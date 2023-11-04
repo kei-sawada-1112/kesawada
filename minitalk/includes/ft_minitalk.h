@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:03:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/04 17:45:39 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/04 18:39:12 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ unsigned int	check_first_byte(unsigned char *str);
 void			print_invalid_bytes(unsigned char *str, unsigned int *bytes, unsigned int *byte_idx);
 void			kill_if_error_exit(unsigned int c, unsigned int pid);
 void			check_bytes(t_client *client);
-// void			kill_and_catch_error(t_client *client, int signum, volatile sig_atomic_t *g_client_pid);
+void			kill_and_catch_error(t_client *client, int signum, volatile sig_atomic_t *g_client_pid);
 
 #endif

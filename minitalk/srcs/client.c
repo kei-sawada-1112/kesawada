@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 11:53:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:13:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 
-volatile sig_atomic_t	g_receiver;
+static volatile sig_atomic_t	g_receiver;
 
 static int	handshake(unsigned char c, int pid)
 {
@@ -118,7 +118,7 @@ int	main(int argc, char **argv)
 			break ;
 		ft_printf("%sAwaiting handshake with\
  the server...\n%s", CYAN, RESET);
-		sleep(3);
+		sleep(1);
 	}
 	connect_server(server_pid, argv);
 }
