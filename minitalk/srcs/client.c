@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/04 19:13:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:35:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ Resending the bit.\n%s", YELLOW, RESET);
 
 static void	client_handler(int signum)
 {
-	(void)signum;
 	if (signum == SIGUSR2)
 		g_receiver = 2;
 	if (signum == SIGUSR1)
