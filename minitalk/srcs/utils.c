@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 12:11:32 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/20 18:10:47 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:43:30 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk.h"
 
-void	show_minitalk_display(int pid)
+void	show_minitalk_display(unsigned int pid)
 {
 	ft_printf("%s╭─────────────────────────────\
 ──────────────────────────────╮\n", CYAN);
@@ -44,7 +44,7 @@ void	initialize_client(t_client *client)
 	client->bytes = 0;
 }
 
-int	check_first_byte(unsigned char *str)
+unsigned int	check_first_byte(unsigned char *str)
 {
 	if ((*str & 0b11111000) == 0b11110000)
 		return (4);
@@ -56,7 +56,8 @@ int	check_first_byte(unsigned char *str)
 		return (1);
 }
 
-void	print_invalid_bytes(unsigned char *str, int *bytes, int *byte_idx)
+void	print_invalid_bytes(unsigned char *str, unsigned int *bytes, \
+		unsigned int *byte_idx)
 {
 	unsigned char	*tmp;
 
@@ -69,7 +70,7 @@ void	print_invalid_bytes(unsigned char *str, int *bytes, int *byte_idx)
 	*byte_idx = 0;
 }
 
-void	kill_if_error_exit(unsigned int c, int pid)
+void	kill_if_error_exit(unsigned int c, unsigned int pid)
 {
 	if (c & 128)
 	{
