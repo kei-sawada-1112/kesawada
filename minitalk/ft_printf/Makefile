@@ -79,7 +79,7 @@ $(UTILS_DIR)
 all: $(LIBFT) $(OBJ_DIR) $(NAME)
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@make $(MAKECMDGOALS) -C $(LIBFT_DIR)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -106,14 +106,14 @@ $(OBJ_DIR)/%.o: %.c
 
 bonus: all
 
-debug: fclean bonus
+debug: fclean all
 
 clean:
 	@make -C $(LIBFT_DIR) clean
 	@rm -f $(OBJS) $(BOBJS)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@make fclean -C $(LIBFT_DIR)
 	@rm -f $(NAME)
 
 re: fclean all

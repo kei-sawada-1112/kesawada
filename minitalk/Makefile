@@ -6,17 +6,23 @@ SRC_DIR 	= srcs
 OBJ_DIR 	= objs
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
+DEBUG_FLAGS = -g -fsanitize=address
+ifeq ($(MAKECMDGOALS), debug)
+	CFLAGS += $(DEBUG_FLAGS)
+endif
 PRINTF_DIR  = ft_printf
 PRINTF  	= $(PRINTF_DIR)/libftprintf.a
 LIB			= -L ft_printf -lftprintf
 
 SERVER_SRCS = $(SRC_DIR)/server.c\
-$(SRC_DIR)/utils.c
+$(SRC_DIR)/utils.c\
+$(SRC_DIR)/utils2.c
 SERVER_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SERVER_SRCS:.c=.o)))
 TMP_SERVER_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SERVER_SRCS:.c=.o)))
 
 BSERVER_SRCS = $(SRC_DIR)/server_bonus.c\
-$(SRC_DIR)/utils_bonus.c
+$(SRC_DIR)/utils_bonus.c\
+$(SRC_DIR)/utils2_bonus.c
 BSERVER_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSERVER_SRCS:.c=.o)))
 
 CLIENT_SRCS = $(SRC_DIR)/client.c\
@@ -50,13 +56,13 @@ $(NAME): $(PRINTF) $(OBJ_DIR) $(CLIENT) $(SERVER)
 	fi
 
 $(SERVER): $(SERVER_OBJS)
-	$(CC) $(LIB) -o $@ $^
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^
 
 $(CLIENT): $(CLIENT_OBJS)
-	$(CC) $(LIB) -o $@ $^
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^
 
 $(PRINTF):
-	@make -C ft_printf
+	@make $(MAKECMDGOALS) -C ft_printf
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -73,6 +79,8 @@ fclean: clean
 	@rm -f $(SERVER) $(CLIENT)
 
 bonus: all
+
+debug: fclean all
 
 re: fclean all
 

@@ -1,5 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+DEBUGFLAGS = -g -fsanitize=address
+ifeq ($(MAKECMDGOALS), debug)
+	CFLAGS += $(DEBUGFLAGS)
+endif
 NAME = libft.a
 SRCS = ft_atoi.c\
 ft_bzero.c\
@@ -54,8 +58,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
+debug: all
+
 clean:
 	rm -f $(OBJS) $(BOBJS)
+
+bonus: all
 
 fclean: clean
 	rm -f $(NAME)

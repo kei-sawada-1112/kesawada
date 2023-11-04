@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client copy.c                                      :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/21 10:51:11 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:16:28 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_bonus.h"
 
-volatile sig_atomic_t	g_receiver;
+static volatile sig_atomic_t	g_receiver;
 
 static int	handshake(unsigned char c, int pid)
 {
@@ -38,7 +38,7 @@ static int	handshake(unsigned char c, int pid)
 		if (g_receiver == 2)
 			return (1);
 		g_receiver = 0;
-		usleep(100);
+		usleep(10000);
 		c <<= 1;
 	}
 	return (0);
@@ -64,7 +64,7 @@ Resending the bit.\n%s", YELLOW, RESET);
 			}
 			usleep(100);
 		}
-		usleep(100);
+		usleep(20);
 		c <<= 1;
 		g_receiver = 0;
 	}
@@ -89,7 +89,7 @@ static void	connect_server(int pid, char **argv)
  successfully!\n%s", GREEN, pid, RESET);
 	ft_printf("%sSending text to the\
  server...\n%s", CYAN, RESET);
-	usleep(100);
+	usleep(10000);
 	g_receiver = 0;
 	while (argv[2][i])
 	{
@@ -118,7 +118,7 @@ int	main(int argc, char **argv)
 			break ;
 		ft_printf("%sAwaiting handshake with\
  the server...\n%s", CYAN, RESET);
-		sleep(3);
+		sleep(1);
 	}
 	connect_server(server_pid, argv);
 }
