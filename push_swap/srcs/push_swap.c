@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:06:10 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:17:03 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 {
 	static	t_push_swap_process f[] =
 	{
-		send_a_to_b, send_b_to_a, quick_sort_b, \
+		send_a_to_b, send_b_to_a, \
 		send_under_half, simple_sort, back_to_b,
 	};
 

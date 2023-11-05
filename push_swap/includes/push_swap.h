@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:00:27 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:18:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ enum e_state_ps
 {
 	A_TO_B,
 	B_TO_A,
-	QUICK_SORT_B,
-	A_TO_B_NEXT,
+	SEND_UNDER_HALF,
 	SIMPLE_SORT,
 	BACK_TO_B,
 	END
@@ -110,11 +109,11 @@ void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms);
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms);
-void	quick_sort_b(t_stack **a, t_stack **b, t_ms *ms);
-void	sorted_to_bottom(t_stack **a, t_stack **b, t_ms *ms);
 void	send_under_half(t_stack **a, t_stack **b, t_ms *ms);
 void	simple_sort(t_stack **a, t_stack **b, t_ms *ms);
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms);
+
+int		get_current_pos(t_stack *b, int index);
 
 void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count);
 

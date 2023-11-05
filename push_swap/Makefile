@@ -18,8 +18,6 @@ LIB = -L $(LIBFT_DIR) -lft
 PROCESS_DIR = $(SRC_DIR)/processes
 PROCESSES = $(PROCESS_DIR)/a_to_b.c\
 $(PROCESS_DIR)/sort_under_six.c\
-$(PROCESS_DIR)/sort_func.c\
-$(PROCESS_DIR)/sorted_to_bottom.c\
 $(PROCESS_DIR)/sort_under_16.c\
 
 UTILS_DIR = $(SRC_DIR)/utils
@@ -30,6 +28,7 @@ $(UTILS_DIR)/move_utils.c\
 $(UTILS_DIR)/move_utils2.c\
 $(UTILS_DIR)/move_utils3.c\
 $(UTILS_DIR)/operation_utils.c\
+$(UTILS_DIR)/write_utils.c\
 
 BUTILS = $(UTILS_DIR)/utils_bonus.c
 
@@ -38,16 +37,6 @@ $(UTILS)\
 $(PROCESSES)\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
-# TMP_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
-
-# BSRCS = $(SRC_DIR)/push_swap.c\
-# $(BUTILS)\
-
-# BOBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(BSRCS:.c=.o)))
-
-# ifeq ($(MAKECMDGOALS), bonus)
-# 	OBJS = $(BOBJS)
-# endif
 
 vpath %.c \
 $(SRC_DIR) \
