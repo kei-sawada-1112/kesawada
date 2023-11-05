@@ -24,6 +24,7 @@ UTILS_DIR = $(SRC_DIR)/utils
 UTILS = $(UTILS_DIR)/stack_utils.c\
 $(UTILS_DIR)/stack_utils2.c\
 $(UTILS_DIR)/stack_utils3.c\
+$(UTILS_DIR)/stack_utils4.c\
 $(UTILS_DIR)/move_utils.c\
 $(UTILS_DIR)/move_utils2.c\
 $(UTILS_DIR)/move_utils3.c\

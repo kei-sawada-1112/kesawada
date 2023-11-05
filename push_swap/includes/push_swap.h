@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:18:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:47:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ void	add_operation(t_op_list **list, int op);
 void	delone_operation(t_op_list **list);
 void	clear_operation(t_op_list **list);
 void	copy_operation(t_ms *ms, t_op_list *list);
+
+void	free_all(t_stack *a, t_stack *b, t_ms *ms);
+t_ms	*init_ms(void);
 
 void	add_trans_list(t_trans_list **list, int count);
 void	delone_trans_list(t_trans_list **list);

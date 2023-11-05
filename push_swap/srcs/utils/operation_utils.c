@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 08:41:31 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:02:03 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 21:13:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void	copy_operation(t_ms *ms, t_op_list *list)
 		add_operation(&ms->actual_op, op);
 		list = list->next;
 	}
-	// clear_operation(&list);
+	clear_operation(&list);
 }
