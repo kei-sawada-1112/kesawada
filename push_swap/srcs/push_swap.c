@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 01:48:28 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 10:02:30 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static t_ms	*init_ms()
 		return (NULL);
 	ms->op = INIT;
 	ms->count = 0;
-	ms->min_turn = 12;
-	ms->limit_count = 12;
+	ms->min_turn = 15;
+	ms->limit_count = 15;
 	ms->op_list = NULL;
 	ms->actual_op = NULL;
 	ms->trans_list = NULL;
@@ -75,12 +75,14 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	len = 0;
 	init(a, b, size, argv);
 	ms = init_ms();
-	set_index_to_value(*a);
 	if (!ms)
 	{
 		write(2, "Error\n", 6);
 		exit(1);
 	}
+	set_index_to_value(*a);
+	if (in_order(*a))
+		return ;
 	tmp = *a;
 	if (size == 2)
 	{

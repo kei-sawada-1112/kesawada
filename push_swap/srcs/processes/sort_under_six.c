@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 02:34:43 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 09:59:11 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,25 @@ int	rev_count(t_stack *b)
 	return (max);
 }
 
-int	check_valid_operation(t_ms *ms, int operation)
+int	check_valid_operation(t_stack *a, t_ms *ms, int op)
 {
-	if (ms->op == SA && (operation == SA ||\
-		operation == SS || operation == RA || operation == RR))
+	 if (a->next->index < a->next->next->index && (op == SA || op == SS || op == RA || op == RRA))
 		return (0);
-	if (ms->op == SB && (operation == SB ||\
-		operation == SS || operation == RB || operation == RR))
-		return (0);
-	if (ms->op == SS && (operation == SS ||\
-		operation == SA || operation == SB))
-		return (0);
-	if (ms->op == PA && operation == PB)
-		return (0);
-	if (ms->op == PB && operation == PA)
-		return (0);
-	if (ms->op == RA && (operation == RRA || operation == RR))
-		return (0);
-	if (ms->op == RB && (operation == RRB || operation == RR))
-		return (0);
-	if (ms->op == RR && (operation == RR ||
-		operation == RA || operation == RB))
-		return (0);
-	if (ms->op == RRA && (operation == RA || operation == RRR))
-		return (0);
-	if (ms->op == RRB && (operation == RB || operation == RRR))
-		return (0);
-	if (ms->op == RRR && (operation == RRR ||
-		operation == RRA || operation == RRB))
+	if ((ms->op == SA && (op == SA ||\
+		op == SS || op == RA || op == RR)) \
+		|| (ms->op == SB && (op == SB ||\
+		op == SS || op == RB || op == RR))\
+		|| (ms->op == SS && (op == SS||\
+		op == SA || op == SB))\
+		|| (ms->op == PA && op == PB) || (ms->op == PB && op == PA)\
+		|| (ms->op == RA && (op == RRA || op == RR))\
+		|| (ms->op == RB && (op == RRB || op == RR))\
+		|| (ms->op == RR && (op == RR ||
+		op == RA || op == RB))\
+		|| (ms->op == RRA && (op == RA || op == RRR))\
+		|| (ms->op == RRB && (op == RB || op == RRR))\
+		|| (ms->op == RRR && (op == RRR ||
+		op == RRA || op == RRB)))
 		return (0);
 	return (1);
 }
@@ -142,7 +133,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(ms, op))
+		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(*a, ms, op))
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;
