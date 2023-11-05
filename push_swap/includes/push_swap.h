@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 01:47:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:00:27 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,14 @@ t_stack		*ft_stacklast(t_stack *stack);
 void		ft_addstack_front(t_stack **stack, t_stack **new);
 void		ft_addstack_back(t_stack **stack, t_stack **new);
 int			ft_stacksize(t_stack *a);
+int			is_valid_value(t_stack *a);
+void		error_and_exit();
 
 int 		get_median(t_stack *stack, int size);
 void		set_index_to_value(t_stack *stack);
 
 void	print_op(int op);
+int		execute_and_write(t_stack **a, t_stack **b, t_ms *ms, int op);
 
 int		swap_a(t_stack **a, t_stack **b, t_ms *ms);
 int		swap_b(t_stack **a, t_stack **b, t_ms *ms);

@@ -6,37 +6,11 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 10:02:30 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:06:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	print_op(int op)
-{
-	if (op == SA)
-		write(1, "sa\n", 3);
-	if (op == SB)
-		write(1, "sb\n", 3);
-	if (op == SS)
-		write(1, "ss\n", 3);
-	if (op == PA)
-		write(1, "pa\n", 3);
-	if (op == PB)
-		write(1, "pb\n", 3);
-	if (op == RA)
-		write(1, "ra\n", 3);
-	if (op == RB)
-		write(1, "rb\n", 3);
-	if (op == RR)
-		write(1, "rr\n", 3);
-	if (op == RRA)
-		write(1, "rra\n", 4);
-	if (op == RRB)
-		write(1, "rrb\n", 4);
-	if (op == RRR)
-		write(1, "rrr\n", 4);
-}
 
 static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 {
@@ -47,6 +21,19 @@ static void	handle_process(t_stack **a, t_stack **b, t_ms *ms)
 	};
 
 	f[ms->state](a, b, ms);
+}
+
+static void	free_all(t_stack *a, t_ms *ms)
+{
+	a = a->prev->prev;
+	while(a)
+	{
+		free(a->next);
+		a = a->prev;
+	}
+	clear_operation(&ms->actual_op);
+	clear_operation(&ms->op_list);
+	free(ms);
 }
 
 static t_ms	*init_ms()
@@ -74,15 +61,12 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 
 	len = 0;
 	init(a, b, size, argv);
-	ms = init_ms();
-	if (!ms)
-	{
-		write(2, "Error\n", 6);
-		exit(1);
-	}
 	set_index_to_value(*a);
 	if (in_order(*a))
 		return ;
+	ms = init_ms();
+	if (!ms)
+		error_and_exit();
 	tmp = *a;
 	if (size == 2)
 	{
@@ -96,19 +80,19 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 	if (size <= 7)
 	{
 		sort_under_six(a, b, ms, 0);
-		while (ms->actual_op)
+		t_op_list *current;
+		current = ms->actual_op;
+		while (current)
 		{
-			print_op(ms->actual_op->op);
-			ms->actual_op = ms->actual_op->next;
+			print_op(current->op);
+			current = current->next;
 		}
 	}
 	else
 		ms->state = A_TO_B;
 	while (ms->state != END)
 		handle_process(a, b, ms);
-	free(ms->actual_op);
-	free(ms->op_list);
-	free(ms);
+	free_all(*a, ms);
 }
 
 int main(int argc, char **argv)
@@ -121,23 +105,7 @@ int main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 	push_swap(&a, &b, argc, argv);
-	// a = a->next;
-	// b = b->next;
-	// while (a->next && !a->is_separator)
-	// {
-	// 	// ft_printf("index: %d\n", a->index);
-	// 	ft_printf("%d\n", a->value);
-	// 	// ft_printf("value: %d\n", a->next->value);
-	// 	// ft_printf("value: %d\n", a->next->next->value);
-	// 	// ft_printf("*-----------*\n");
-	// 	a = a->next;
-	// }
-	// while (b->next && !b->is_separator)
-	// {
-	// 	ft_printf("b  %d\n", b->value);
-	// 	b = b->next;
-	// }
 	free(a);
 	free(b);
-	// system("leaks a.out");
+	// system("leaks push_swap");
 }

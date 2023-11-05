@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/03 13:28:36 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 10:49:46 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,20 @@ static void	init_stack(t_stack **a, int size, char **argv, int no_arg)
 	while (argv[++i])
 	{
 		if (!is_numstr(argv[i]))
-		{
-			write(2, "Error\n", 6);
-			exit (1);
-		}
+			error_and_exit();
 		num = ft_strtol(argv[i], 10);
 		if (num > INT_MAX || num < INT_MIN)
-		{
-			write(2, "Error\n", 6);
-			exit (1);
-		}
+			error_and_exit();
 		array[i] = num;
 		append_stack(a, num);
+	}
+	if (!is_valid_value(*a))
+		error_and_exit();
+	if (is_numstr(argv[0]))
+	{
+		while(i--)
+			free(argv[i]);
+		free(argv);
 	}
 }
 
@@ -86,10 +88,7 @@ void	init(t_stack **a, t_stack **b, int argc, char **argv)
 		while (argv[len])
 		{
 			if (!is_numstr(argv[len]))
-			{
-				write(2, "Error\n", 6);
-				exit(1);
-			}
+				error_and_exit();
 			len++;
 		}
 		argc = len;

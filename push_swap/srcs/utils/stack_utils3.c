@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:22:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/29 17:30:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 10:14:02 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,24 @@ void set_index_to_value(t_stack *stack)
 		current->index = count;
 		current = current->next;
 	}
+}
+
+int	is_valid_value(t_stack *a)
+{
+	t_stack	*current;
+	t_stack	*checker;
+
+	current = a->next;
+	while (!current->is_separator)
+	{
+		checker = current->next;
+		while (!checker->is_separator)
+		{
+			if (current->value == checker->value)
+				return (0);
+			checker = checker->next;
+		}
+		current = current->next;
+	}
+	return (1);
 }
