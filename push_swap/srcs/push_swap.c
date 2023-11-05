@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:17:03 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/05 11:34:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	push_swap(t_stack **a, t_stack **b, int size, char **argv)
 		}
 		size = len + 1;
 	}
-	if (size <= 7)
+	if (size <= 6)
 	{
 		sort_under_six(a, b, ms, 0);
 		t_op_list *current;
