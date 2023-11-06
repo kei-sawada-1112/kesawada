@@ -16,7 +16,7 @@ LIBFT = ${LIBFT_DIR}/libf.a
 LIB = -L $(LIBFT_DIR) -lft
 
 PROCESS_DIR = $(SRC_DIR)/processes
-PROCESSES = $(PROCESS_DIR)/a_to_b.c\
+PROCESSES = $(PROCESS_DIR)/quick_sort.c\
 $(PROCESS_DIR)/sort_under_six.c\
 $(PROCESS_DIR)/sort_under_16.c\
 
@@ -30,6 +30,7 @@ $(UTILS_DIR)/move_utils2.c\
 $(UTILS_DIR)/move_utils3.c\
 $(UTILS_DIR)/operation_utils.c\
 $(UTILS_DIR)/write_utils.c\
+$(UTILS_DIR)/sort_utils.c\
 
 BUTILS = $(UTILS_DIR)/utils_bonus.c
 
