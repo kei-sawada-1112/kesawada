@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   a_to_b.c                                           :+:      :+:    :+:   */
+/*   quick_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:05:43 by kesawada         ###   ########.fr       */
+/*   Created: 2023/11/06 11:24:37 by kesawada          #+#    #+#             */
+/*   Updated: 2023/11/06 11:36:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,53 +36,6 @@ static void	send_under_16(t_stack **a, t_stack **b, t_ms *ms, int i)
 	return ;
 }
 
-void	bottom_to_top(t_stack **a, t_stack **b, t_ms *ms, int *i)
-{
-	int	next_count;
-	int	sorted;
-	int	size;
-
-	sorted = sorted_count(*a);
-	size = ft_stacksize(*a) - sorted;
-	while (++(*i) < size / 2 + size % 2)
-	{
-		next_count = count_consecutive(*b, sorted);
-		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b) / 2)
-			execute_and_write(a, b, ms, RRR);
-		else
-			execute_and_write(a, b, ms, RRA);
-	}
-}
-
-void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
-{
-	t_stack	*current;
-	int		index;
-	int		next_count;
-	int		sorted;
-	int		size;
-
-	sorted = sorted_count(*a);
-	size = ft_stacksize(*a) - sorted;
-	index = (ft_stacksize(*a) + sorted_count(*a)) / 2;
-	current = (*a)->next;
-	while (ft_stacksize(*b) != size / 2)
-	{
-		if (current->index < index)
-			execute_and_write(a, b, ms, PB);
-		else
-		{
-			next_count = count_consecutive(*b, sorted);
-			if (next_count && (*b)->next->index != sorted + next_count)
-				execute_and_write(a, b, ms, RR);
-			else
-				execute_and_write(a, b, ms, RA);
-		}
-		current = (*a)->next;
-		(*i)--;
-	}
-}
-
 void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 {
 	int	i;
@@ -100,7 +53,6 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		return ;
 	}
 	push_b_and_rotate(a, b, ms, &i);
-	// bottom_to_top(a, b, ms, &i);
 	while (i++ < size / 2 + size % 2)
 	{
 		next_count = count_consecutive(*b, sorted);
@@ -109,10 +61,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		else
 			execute_and_write(a, b, ms, RRA);
 	}
-	if (ft_stacksize(*b) <= 16)
-		ms->state = SIMPLE_SORT;
-	else
-		ms->state = B_TO_A;
+	set_state(*b, ms);
 }
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -141,7 +90,7 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		current = (*a)->next;
 	}
-	ms->state = B_TO_A;
+	set_state(*b, ms);
 }
 
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -166,10 +115,7 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 			execute_and_write(a, b, ms, PB);
 	}
 	delone_trans_list(&ms->trans_list);
-	if (ft_stacksize(*b) <= 16)
-		ms->state = SIMPLE_SORT;
-	else
-	 	ms->state = B_TO_A;
+	set_state(*b, ms);
 }
 
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
@@ -181,26 +127,22 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*current;
 
 	size = ft_stacksize(*b);
-	if (size <= 16)
-		ms->state = SIMPLE_SORT;
-	else
+	set_index_to_value(*b);
+	half_size = size / 2 - !(size % 2);
+	i = size / 2;
+	push_count = 0;
+	current = (*b)->next;
+	while (i > 0)
 	{
-		set_index_to_value(*b);
-		half_size = size / 2 - !(size % 2);
-		i = size / 2;
-		push_count = 0;
-		current = (*b)->next;
-		while (i > 0)
+		if (current->index > half_size)
 		{
-			if (current->index > half_size)
-			{
-				push_count += execute_and_write(a, b, ms, PA);
-				--i;
-			}
-			else
-				execute_and_write(a, b, ms, RB);
-			current = (*b)->next;
+			push_count += execute_and_write(a, b, ms, PA);
+			--i;
 		}
-		add_trans_list(&ms->trans_list, push_count);
+		else
+			execute_and_write(a, b, ms, RB);
+		current = (*b)->next;
 	}
+	add_trans_list(&ms->trans_list, push_count);
+	set_state(*b, ms);
 }

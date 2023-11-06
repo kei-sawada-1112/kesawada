@@ -6,13 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:11:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:18:29 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:46:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	count_consecutive(t_stack *start, int index)
+int	count_descending(t_stack *start, int index)
 {
 	int		count;
 	t_stack *current;
@@ -49,7 +49,7 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if (current->index == index)
 		{
-			next_count = count_consecutive(*b, index);
+			next_count = count_descending(*b, index);
 			count = next_count;
 			while (1)
 			{
@@ -71,7 +71,7 @@ void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 			}
 			while (count + 1 > 0)
 			{
-				next_count = count_consecutive(*b, push_count);
+				next_count = count_descending(*b, push_count);
 				if ((*b)->next->index != push_count + next_count)
 					execute_and_write(a, b, ms, RR);
 				else

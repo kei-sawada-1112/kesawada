@@ -6,78 +6,60 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:00:49 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:44:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	in_order(t_stack *a)
+// int	rev_count(t_stack *b)
+// {
+// 	int	max;
+// 	int	count;
+
+// 	max = 0;
+// 	count = 0;
+// 	while (!b->next->is_separator)
+// 	{
+// 		if (b->index - 1 == b->next->index)
+// 		{
+// 			count++;
+// 			if (count > max)
+// 				max = count;
+// 			b = b->next;
+// 			continue ;
+// 		}
+// 		b = b->next;
+// 		count = 0;
+// 	}
+// 	return (max);
+// }
+
+int	is_valid_op(t_stack *a, t_ms *ms, int op)
 {
-	if (a->prev == a->next)
+	if (a->next->index < a->next->next->index && \
+		(op == SA || op == SS || op == RA || op == RRA))
 		return (0);
-	a = a->next;
-	while (!a->next->is_separator)
-	{
-		if (!(a->value < a->next->value))
-			return (0);
-		a = a->next;
-	}
-	return (1);
-}
-
-int	rev_count(t_stack *b)
-{
-	int	max;
-	int	count;
-
-	max = 0;
-	count = 0;
-	while (!b->next->is_separator)
-	{
-		if (b->index - 1 == b->next->index)
-		{
-			count++;
-			if (count > max)
-				max = count;
-			b = b->next;
-			continue ;
-		}
-		b = b->next;
-		count = 0;
-	}
-	return (max);
-}
-
-int	check_valid_operation(t_stack *a, t_ms *ms, int op)
-{
-	 if (a->next->index < a->next->next->index && (op == SA || op == SS || op == RA || op == RRA))
-		return (0);
-	if ((ms->op == SA && (op == SA ||\
-		op == SS || op == RA || op == RR)) \
-		|| (ms->op == SB && (op == SB ||\
-		op == SS || op == RB || op == RR))\
-		|| (ms->op == SS && (op == SS||\
-		op == SA || op == SB))\
-		|| (ms->op == PA && op == PB) || (ms->op == PB && op == PA)\
-		|| (ms->op == RA && (op == RRA || op == RR))\
-		|| (ms->op == RB && (op == RRB || op == RR))\
-		|| (ms->op == RR && (op == RR ||
-		op == RA || op == RB))\
-		|| (ms->op == RRA && (op == RA || op == RRR))\
-		|| (ms->op == RRB && (op == RB || op == RRR))\
-		|| (ms->op == RRR && (op == RRR ||
-		op == RRA || op == RRB)))
+	if ((ms->op == SA && (op == SA || op == SS || op == RA || op == RR)) \
+		|| (ms->op == SB && (op == SB || op == SS || op == RB || op == RR)) \
+		|| (ms->op == SS && (op == SS || op == SA || op == SB)) \
+		|| (ms->op == PA && op == PB) || (ms->op == PB && op == PA) \
+		|| (ms->op == RA && (op == RRA || op == RR)) \
+		|| (ms->op == RB && (op == RRB || op == RR)) \
+		|| (ms->op == RR && (op == RR || op == RA || op == RB)) \
+		|| (ms->op == RRA && (op == RA || op == RRR)) \
+		|| (ms->op == RRB && (op == RB || op == RRR)) \
+		|| (ms->op == RRR && (op == RRR || op == RRA || op == RRB)))
 		return (0);
 	return (1);
 }
 
 int	execute(t_stack **a, t_stack **b, t_ms *ms, int op)
 {
-	static t_operation f[] =
+	static t_operation	f[] = \
 	{
-		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
-		push_a, swap_ab, rotate_b,\
+		swap_a, push_b, rotate_a, rotate_rev_a, swap_b, \
+		push_a, swap_ab, rotate_b, \
 		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
 
@@ -86,28 +68,14 @@ int	execute(t_stack **a, t_stack **b, t_ms *ms, int op)
 
 int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 {
-	static t_operation f[] =
+	static t_operation	f[] = \
 	{
-		swap_a, push_a, rotate_rev_a, rotate_a, swap_b,\
-		push_b, swap_ab, rotate_rev_b,\
+		swap_a, push_a, rotate_rev_a, rotate_a, swap_b, \
+		push_b, swap_ab, rotate_rev_b, \
 		rotate_rev_ab, rotate_b, rotate_ab
 	};
 
 	return (f[op](a, b, ms));
-}
-
-int	get_min_pos(t_stack *a)
-{
-	int		count;
-
-	count = 1;
-	a = a->next;
-	while (a->index == 0)
-	{
-		count++;
-		a = a->next;
-	}
-	return (count);
 }
 
 int	is_qualified(t_stack *a, t_stack *b, t_ms *ms, int count)
@@ -133,7 +101,7 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	op = -1;
 	while (++op < 11)
 	{
-		if (!is_qualified(*a, *b, ms, count) || !check_valid_operation(*a, ms, op))
+		if (!is_qualified(*a, *b, ms, count) || !is_valid_op(*a, ms, op))
 			continue ;
 		if (!execute(a, b, ms, op))
 			continue ;

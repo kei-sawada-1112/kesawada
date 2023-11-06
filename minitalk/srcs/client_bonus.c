@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/04 19:36:29 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 13:53:48 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	handshake(unsigned char c, int pid)
 	return (0);
 }
 
-static void	send_binary(unsigned char c, int pid)
+static void	send_binary(unsigned char c, int pid, int *sended)
 {
 	int	bit_idx;
 	int	i;
@@ -67,6 +67,7 @@ Resending the bit.\n%s", YELLOW, RESET);
 		usleep(20);
 		c <<= 1;
 		g_receiver = 0;
+		(*sended)++;
 	}
 	return ;
 }
@@ -82,6 +83,7 @@ static void	client_handler(int signum)
 static void	connect_server(int pid, char **argv)
 {
 	int	i;
+	int	sended;
 
 	i = 0;
 	ft_printf("%sConnected to server: %d\
@@ -92,10 +94,12 @@ static void	connect_server(int pid, char **argv)
 	g_receiver = 0;
 	while (argv[2][i])
 	{
-		send_binary(argv[2][i], pid);
+		send_binary(argv[2][i], pid, &sended);
 		i++;
 	}
-	send_binary(ENT, pid);
+	ft_printf("%sSended %s%d %sbyte(s) to server \
+successfully!\n", GREEN, MAGENTA, sended / 8, GREEN);
+	send_binary(ENT, pid, &sended);
 }
 
 int	main(int argc, char **argv)

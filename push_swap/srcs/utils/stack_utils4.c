@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:08:24 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 21:50:24 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:43:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,32 @@ t_ms	*init_ms(void)
 	ms->actual_op = NULL;
 	ms->trans_list = NULL;
 	return (ms);
+}
+
+int	get_min_pos(t_stack *a)
+{
+	int		count;
+
+	count = 1;
+	a = a->next;
+	while (a->index == 0)
+	{
+		count++;
+		a = a->next;
+	}
+	return (count);
+}
+
+int	in_order(t_stack *a)
+{
+	if (a->prev == a->next)
+		return (0);
+	a = a->next;
+	while (!a->next->is_separator)
+	{
+		if (!(a->value < a->next->value))
+			return (0);
+		a = a->next;
+	}
+	return (1);
 }
