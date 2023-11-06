@@ -6,86 +6,67 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:49:07 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 11:17:53 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:05:43 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	sorted_count(t_stack *a)
+static void	send_under_16(t_stack **a, t_stack **b, t_ms *ms, int i)
 {
-	int	max;
-	int	count;
+	int	next_count;
+	int	sorted;
 
-	max = 0;
-	count = 1;
-	while (!a->next->is_separator)
+	sorted = sorted_count(*a);
+	while (i-- > 0)
 	{
-		if (a->index + 1 == a->next->index)
+		if ((*a)->next->index == sorted)
 		{
-			count++;
-			if (count > max)
-				max = count;
-			a = a->next;
-			continue ;
+			next_count = count_consecutive(*b, sorted);
+			if ((*b)->next->index != sorted + next_count)
+				execute_and_write(a, b, ms, RR);
+			else
+				execute_and_write(a, b, ms, RA);
+			sorted++;
 		}
-		a = a->next;
-		count = 1;
+		else
+			execute_and_write(a, b, ms, PB);
 	}
-	return (max);
+	ms->state = SIMPLE_SORT;
+	return ;
 }
 
-int	get_current_pos(t_stack *b, int index)
+void	bottom_to_top(t_stack **a, t_stack **b, t_ms *ms, int *i)
 {
-	t_stack	*current;
-	int		pos;
+	int	next_count;
+	int	sorted;
+	int	size;
 
-	current = b->next;
-	pos = 1;
-	while (1)
+	sorted = sorted_count(*a);
+	size = ft_stacksize(*a) - sorted;
+	while (++(*i) < size / 2 + size % 2)
 	{
-		if (current->index == index)
-			return (pos);
-		current = current->next;
-		pos++;
+		next_count = count_consecutive(*b, sorted);
+		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b) / 2)
+			execute_and_write(a, b, ms, RRR);
+		else
+			execute_and_write(a, b, ms, RRA);
 	}
 }
 
-void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
+void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
 {
-	int		i;
-	int		index;
-	int		size;
-	int		sorted;
 	t_stack	*current;
+	int		index;
 	int		next_count;
+	int		sorted;
+	int		size;
 
-	set_index_to_value(*a);
 	sorted = sorted_count(*a);
 	size = ft_stacksize(*a) - sorted;
 	index = (ft_stacksize(*a) + sorted_count(*a)) / 2;
 	current = (*a)->next;
-	i = size;
-	if (i < 16)
-	{
-		while (i-- > 0)
-		{
-			if ((*a)->next->index == sorted)
-			{
-				next_count = count_consecutive(*b, sorted);
-				if ((*b)->next->index != sorted + next_count)
-					execute_and_write(a, b, ms, RR);
-				else
-					execute_and_write(a, b, ms, RA);
-				sorted++;
-			}
-			else
-				execute_and_write(a, b, ms, PB);
-		}
-		ms->state = SIMPLE_SORT;
-		return ;
-	}
-	while (i-- > 0)
+	while (ft_stacksize(*b) != size / 2)
 	{
 		if (current->index < index)
 			execute_and_write(a, b, ms, PB);
@@ -98,13 +79,29 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 				execute_and_write(a, b, ms, RA);
 		}
 		current = (*a)->next;
-		if (ft_stacksize(*b) == size / 2)
-		{
-			i--;
-			break ;
-		}
+		(*i)--;
 	}
-	while (++i < size / 2 + size % 2)
+}
+
+void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
+{
+	int	i;
+	int	size;
+	int	sorted;
+	int	next_count;
+
+	set_index_to_value(*a);
+	sorted = sorted_count(*a);
+	size = ft_stacksize(*a) - sorted;
+	i = ft_stacksize(*a) - sorted_count(*a);
+	if (i < 16)
+	{
+		send_under_16(a, b, ms, i);
+		return ;
+	}
+	push_b_and_rotate(a, b, ms, &i);
+	// bottom_to_top(a, b, ms, &i);
+	while (i++ < size / 2 + size % 2)
 	{
 		next_count = count_consecutive(*b, sorted);
 		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b) / 2)
