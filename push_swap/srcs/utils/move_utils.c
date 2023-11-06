@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/29 16:58:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:03:59 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ int	swap_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*first;
 	t_stack	*second;
 	t_stack	*third;
-	(void)ms;
 
-	(void)b;
-	if((*a)->next == (*a)->prev)
+	(void)(ms + (*b)->index);
+	if ((*a)->next == (*a)->prev)
 		return (0);
 	first = (*a)->next;
 	second = first->next;
@@ -47,10 +46,9 @@ int	swap_b(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*first;
 	t_stack	*second;
 	t_stack	*third;
-	(void)ms;
 
-	(void)a;
-	if((*b)->next == (*b)->prev)
+	(void)(ms + (*a)->index);
+	if ((*b)->next == (*b)->prev)
 		return (0);
 	first = (*b)->next;
 	second = first->next;
@@ -72,16 +70,16 @@ int	swap_b(t_stack **a, t_stack **b, t_ms *ms)
 	return (1);
 }
 
-int swap_ab(t_stack **a, t_stack **b, t_ms *ms)
+int	swap_ab(t_stack **a, t_stack **b, t_ms *ms)
 {
 	(void)ms;
 	return (swap_a(a, NULL, ms) | swap_b(NULL, b, ms));
 }
 
-int push_b(t_stack **a, t_stack **b, t_ms *ms)
+int	push_b(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack	*a_nil;
-	t_stack *a_first;
+	t_stack	*a_first;
 
 	(void)ms;
 	if ((*a)->next->is_separator)
@@ -94,12 +92,12 @@ int push_b(t_stack **a, t_stack **b, t_ms *ms)
 	return (1);
 }
 
-int push_a(t_stack **a, t_stack **b, t_ms *ms)
+int	push_a(t_stack **a, t_stack **b, t_ms *ms)
 {
 	t_stack	*b_nil;
-	t_stack *b_first;
-	(void)ms;
+	t_stack	*b_first;
 
+	(void)ms;
 	if ((*b)->next->is_separator)
 		return (0);
 	b_nil = *b;

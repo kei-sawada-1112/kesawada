@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 09:57:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:12:20 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:47:18 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
 			execute_and_write(a, b, ms, PB);
 		else
 		{
-			next_count = count_consecutive(*b, sorted);
+			next_count = count_descending(*b, sorted);
 			if (next_count && (*b)->next->index != sorted + next_count)
 				execute_and_write(a, b, ms, RR);
 			else

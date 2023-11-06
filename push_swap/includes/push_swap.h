@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 21:47:44 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:46:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	clear_operation(t_op_list **list);
 void	copy_operation(t_ms *ms, t_op_list *list);
 
 void	free_all(t_stack *a, t_stack *b, t_ms *ms);
+int		get_min_pos(t_stack *a);
 t_ms	*init_ms(void);
 
 void	add_trans_list(t_trans_list **list, int count);
@@ -130,9 +131,12 @@ void	delone_trans_list(t_trans_list **list);
 
 int		in_order(t_stack *a);
 int		sorted_count(t_stack *a);
+int		get_current_pos(t_stack *a, int index);
+void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i);
+void	set_state(t_stack *b, t_ms *ms);
 
 int		is_numstr(char *str);
 
-int		count_consecutive(t_stack *start, int index);
+int		count_descending(t_stack *start, int index);
 
 #endif

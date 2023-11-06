@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 10:18:28 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 10:28:08 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 13:59:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	print_op(int op)
 
 int	execute_and_write(t_stack **a, t_stack **b, t_ms *ms, int op)
 {
-	static t_operation f[] =
+	static t_operation	f[] = \
 	{
-		swap_a, push_b, rotate_a, rotate_rev_a, swap_b,\
-		push_a, swap_ab, rotate_b,\
+		swap_a, push_b, rotate_a, rotate_rev_a, \
+		swap_b, push_a, swap_ab, rotate_b, \
 		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
 
@@ -51,7 +51,7 @@ int	execute_and_write(t_stack **a, t_stack **b, t_ms *ms, int op)
 	return (f[op](a, b, ms));
 }
 
-void	error_and_exit()
+void	error_and_exit(void)
 {
 	write(2, "Error\n", 6);
 	exit(1);

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:24:52 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/26 21:44:19 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:04:43 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	rotate_rev_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*first;
 	t_stack	*last_second;
 	t_stack	*nil;
-	(void)ms;
 
+	(void)ms;
 	(void)b;
 	if ((*a)->next == (*a)->prev)
 		return (0);
@@ -42,8 +42,8 @@ int	rotate_rev_b(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*first;
 	t_stack	*last_second;
 	t_stack	*nil;
-	(void)ms;
 
+	(void)ms;
 	(void)a;
 	if ((*b)->next == (*b)->prev)
 		return (0);
@@ -65,9 +65,9 @@ int	rotate_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*last;
 	t_stack	*first;
 	t_stack	*second;
-	t_stack *nil;
-	(void)ms;
+	t_stack	*nil;
 
+	(void)ms;
 	(void)b;
 	if ((*a)->next == (*a)->prev)
 		return (0);
@@ -89,9 +89,9 @@ int	rotate_b(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*last;
 	t_stack	*first;
 	t_stack	*second;
-	t_stack *nil;
-	(void)ms;
+	t_stack	*nil;
 
+	(void)ms;
 	(void)a;
 	if ((*b)->next == (*b)->prev)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:24:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:36:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:46:45 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	send_under_16(t_stack **a, t_stack **b, t_ms *ms, int i)
 	{
 		if ((*a)->next->index == sorted)
 		{
-			next_count = count_consecutive(*b, sorted);
+			next_count = count_descending(*b, sorted);
 			if ((*b)->next->index != sorted + next_count)
 				execute_and_write(a, b, ms, RR);
 			else
@@ -55,7 +55,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 	push_b_and_rotate(a, b, ms, &i);
 	while (i++ < size / 2 + size % 2)
 	{
-		next_count = count_consecutive(*b, sorted);
+		next_count = count_descending(*b, sorted);
 		if (!next_count && get_current_pos(*b, sorted) > ft_stacksize(*b) / 2)
 			execute_and_write(a, b, ms, RRR);
 		else
@@ -104,7 +104,7 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 	{
 		if ((*a)->next->index == sorted)
 		{
-			next_count = count_consecutive(*b, sorted);
+			next_count = count_descending(*b, sorted);
 			if ((*b)->next->index != sorted + next_count)
 				execute_and_write(a, b, ms, RR);
 			else
