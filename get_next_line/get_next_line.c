@@ -6,23 +6,23 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/02 19:03:07 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:20:37 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// static void	init_param(t_ms *new, int fd)
-// {
-// 	new->fd = fd;
-// 	new->state = LETTER;
-// 	new->tmp_buffer = NULL;
-// 	new->cap = BUFFER_SIZE;
-// 	new->tmp_len = 0;
-// 	new->copied_len = 0;
-// 	new->count = 0;
-// 	new->next = NULL;
-// }
+static void	init_param(t_ms *new, int fd)
+{
+	new->fd = fd;
+	new->state = LETTER;
+	new->tmp_buffer = NULL;
+	new->cap = BUFFER_SIZE;
+	new->tmp_len = 0;
+	new->copied_len = 0;
+	new->count = 0;
+	new->next = NULL;
+}
 
 static t_ms	*init_ms(int fd)
 {
@@ -31,8 +31,6 @@ static t_ms	*init_ms(int fd)
 	new = malloc(sizeof(t_ms));
 	if (!new)
 		return (NULL);
-	*new = (t_ms){0};
-	new->fd = fd;
 	new->cap = BUFFER_SIZE;
 	new->buffer = malloc(new->cap + (size_t)1);
 	if (!new->buffer)
@@ -48,6 +46,7 @@ static t_ms	*init_ms(int fd)
 		return (NULL);
 	}
 	new->buffer[new->bytes_read] = '\0';
+	init_param(new, fd);
 	return (new);
 }
 
@@ -104,7 +103,8 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	t_ms		*c_ms;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX \
+		|| read(fd, &next_line, 0) < 0)
 		return (NULL);
 	dummy.fd = INT_MIN;
 	c_ms = get_current_ms(&dummy, fd);

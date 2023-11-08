@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/30 15:27:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:20:50 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	read_letter(t_ms *ms)
 {
-	int	i;
+	size_t	i;
 
 	i = ms->copied_len;
-	while (i < BUFFER_SIZE)
+	while (i < ms->cap)
 	{
-		if (i == ms->bytes_read && ms->bytes_read < BUFFER_SIZE)
+		if (i == (size_t)ms->bytes_read && (size_t)ms->bytes_read < ms->cap)
 		{
 			ms->state = GNL_EOF;
 			return ;
@@ -102,7 +102,7 @@ void	set_tmp_buffer(t_ms *ms)
 void	re_read(t_ms *ms)
 {
 	set_tmp_buffer(ms);
-	ms->bytes_read = read(ms->fd, ms->buffer, BUFFER_SIZE);
+	ms->bytes_read = read(ms->fd, ms->buffer, ms->cap);
 	if (ms->bytes_read < 0)
 		return ;
 	ms->buffer[ms->bytes_read] = '\0';

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
-/*   Updated: 2023/10/30 13:53:06 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:21:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_ms
 	size_t			tmp_len;
 	size_t			count;
 	size_t			copied_len;
+	size_t			cap;
 	int				bytes_read;
 	struct s_ms		*next;
 }	t_ms;
