@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/02 14:20:37 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:19:16 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static t_ms	*init_ms(int fd)
 	if (!new)
 		return (NULL);
 	new->cap = BUFFER_SIZE;
-	new->buffer = malloc(new->cap + (size_t)1);
+	new->buffer = malloc(BUFFER_SIZE + 1);
 	if (!new->buffer)
 	{
 		free(new);
 		return (NULL);
 	}
-	new->bytes_read = read(fd, new->buffer, new->cap);
+	new->bytes_read = read(fd, new->buffer, BUFFER_SIZE);
 	if (new->bytes_read < 0)
 	{
 		free(new->buffer);
@@ -103,8 +103,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	t_ms		*c_ms;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX \
-		|| read(fd, &next_line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	dummy.fd = INT_MIN;
 	c_ms = get_current_ms(&dummy, fd);

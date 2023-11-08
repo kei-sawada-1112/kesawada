@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/02 14:20:50 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:00:51 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	set_tmp_buffer(t_ms *ms)
 void	re_read(t_ms *ms)
 {
 	set_tmp_buffer(ms);
-	ms->bytes_read = read(ms->fd, ms->buffer, ms->cap);
+	ms->bytes_read = read(ms->fd, ms->buffer, BUFFER_SIZE);
 	if (ms->bytes_read < 0)
 		return ;
 	ms->buffer[ms->bytes_read] = '\0';
