@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 13:53:55 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:07:52 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,11 @@ Awaiting next client connection.\n%s", RED, client->pid, CYAN, RESET);
 
 static void	server_handler(int signum, siginfo_t *info, void *context)
 {
-	sig_atomic_t	encoded_pid;
-
 	(void)context;
-	encoded_pid = 0;
 	if (signum == SIGUSR2)
-		encoded_pid = info->si_pid | 1U << 30;
+		g_client_pid = info->si_pid | 1U << 30;
 	else if (signum == SIGUSR1)
-		encoded_pid = info->si_pid;
-	g_client_pid = encoded_pid;
+		g_client_pid = info->si_pid;
 }
 
 int	main(void)
@@ -99,8 +95,6 @@ int	main(void)
 	static t_client		client;
 
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGUSR1);
-	sigaddset(&sa.sa_mask, SIGUSR2);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = server_handler;
 	sigaction(SIGUSR1, &sa, NULL);
