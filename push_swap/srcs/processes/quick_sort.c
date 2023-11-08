@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:24:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:46:45 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:56:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,9 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 		current = (*b)->next;
 	}
 	add_trans_list(&ms->trans_list, push_count);
-	set_state(*b, ms);
+	if (ft_stacksize(*b) <= 25)
+		ms->state = SIMPLE_SORT;
+	else
+		ms->state = B_TO_A;
+	// set_state(*b, ms);
 }

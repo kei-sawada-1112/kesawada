@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:48:09 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 14:03:59 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:32:24 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	swap_a(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*second;
 	t_stack	*third;
 
-	(void)(ms + (*b)->index);
+	(void)(ms);
+	(void)(b);
 	if ((*a)->next == (*a)->prev)
 		return (0);
 	first = (*a)->next;
@@ -47,7 +48,8 @@ int	swap_b(t_stack **a, t_stack **b, t_ms *ms)
 	t_stack	*second;
 	t_stack	*third;
 
-	(void)(ms + (*a)->index);
+	(void)(ms);
+	(void)a;
 	if ((*b)->next == (*b)->prev)
 		return (0);
 	first = (*b)->next;
