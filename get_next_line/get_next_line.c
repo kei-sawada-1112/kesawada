@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 10:36:00 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/08 18:19:16 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:35:19 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ static int	endline_function(t_ms *dummy, t_ms *ms, char **next_line)
 		prev = dummy;
 		while (prev->next && prev->next != ms)
 			prev = prev->next;
-		if (!prev->next)
-			return (0);
-		prev->next = ms->next;
+		if (prev->next)
+			prev->next = ms->next;
 		free(ms);
 		return (0);
 	}
@@ -114,7 +113,10 @@ char	*get_next_line(int fd)
 		if (c_ms->state == LETTER)
 			read_letter(c_ms);
 		else if (c_ms->state == NEED_READ)
-			re_read(c_ms);
+		{
+			if (re_read(c_ms) == -1)
+				return (NULL);
+		}
 		else if (c_ms->state == NEWLINE || c_ms->state == GNL_EOF)
 		{
 			if (!endline_function(&dummy, c_ms, &next_line))
