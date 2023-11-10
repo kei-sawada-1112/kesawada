@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 11:36:51 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/02 14:21:44 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:47:44 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ enum e_state
 	NEWLINE,
 	NEED_READ,
 	GNL_EOF,
+	ERROR
 };
 
 typedef struct s_ms
@@ -45,8 +46,8 @@ typedef struct s_ms
 
 void	read_letter(t_ms *ms);
 void	set_next_line(t_ms *ms, char **next_line);
-void	set_tmp_buffer(t_ms *ms);
-void	re_read(t_ms *ms);
+int		set_tmp_buffer(t_ms *ms);
+int		re_read(t_ms *ms);
 
 char	*get_next_line(int fd);
 

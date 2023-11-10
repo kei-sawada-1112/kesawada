@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/08 20:27:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:59:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,17 +105,13 @@ int	re_read(t_ms *ms)
 {
 	if (set_tmp_buffer(ms) == -1)
 	{
-		free(ms->tmp_buffer);
-		free(ms->buffer);
-		free(ms);
+		ms->state = ERROR;
 		return (-1);
 	}
 	ms->bytes_read = read(ms->fd, ms->buffer, BUFFER_SIZE);
 	if (ms->bytes_read < 0)
 	{
-		free(ms->tmp_buffer);
-		free(ms->buffer);
-		free(ms);
+		ms->state = ERROR;
 		return (-1);
 	}
 	ms->buffer[ms->bytes_read] = '\0';

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:31:48 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/02 13:53:29 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:07:07 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ void	set_param(t_ms *ms)
 	ms->state = LETTER;
 	ms->tmp_len = 0;
 	ms->count = 0;
-	if (ms->tmp_buffer)
-		free(ms->tmp_buffer);
+	free(ms->tmp_buffer);
 	ms->tmp_buffer = NULL;
 }
 
@@ -55,7 +54,10 @@ void	set_next_line(t_ms *ms, char **next_line)
 	next_len = ms->count + ms->tmp_len;
 	*next_line = malloc(next_len + 1);
 	if (!*next_line)
+	{
+		ms->state = ERROR;
 		return ;
+	}
 	i = 0;
 	while (i < ms->tmp_len)
 	{
@@ -71,7 +73,7 @@ void	set_next_line(t_ms *ms, char **next_line)
 	set_param(ms);
 }
 
-void	set_tmp_buffer(t_ms *ms)
+int	set_tmp_buffer(t_ms *ms)
 {
 	size_t	i;
 	char	*tmp_tmp;
@@ -80,7 +82,7 @@ void	set_tmp_buffer(t_ms *ms)
 	tmp_tmp_len = ms->bytes_read - ms->copied_len;
 	tmp_tmp = (char *)malloc(ms->tmp_len + tmp_tmp_len + 1);
 	if (!tmp_tmp)
-		return ;
+		return (-1);
 	i = 0;
 	while (i < ms->tmp_len)
 	{
@@ -93,20 +95,28 @@ void	set_tmp_buffer(t_ms *ms)
 		i++;
 	}
 	tmp_tmp[i] = '\0';
-	if (ms->tmp_buffer)
-		free(ms->tmp_buffer);
+	free(ms->tmp_buffer);
 	ms->tmp_buffer = tmp_tmp;
 	ms->tmp_len += tmp_tmp_len;
+	return (1);
 }
 
-void	re_read(t_ms *ms)
+int	re_read(t_ms *ms)
 {
-	set_tmp_buffer(ms);
-	ms->bytes_read = read(ms->fd, ms->buffer, ms->cap);
+	if (set_tmp_buffer(ms) == -1)
+	{
+		ms->state = ERROR;
+		return (-1);
+	}
+	ms->bytes_read = read(ms->fd, ms->buffer, BUFFER_SIZE);
 	if (ms->bytes_read < 0)
-		return ;
+	{
+		ms->state = ERROR;
+		return (-1);
+	}
 	ms->buffer[ms->bytes_read] = '\0';
 	ms->state = LETTER;
 	ms->copied_len = 0;
 	ms->count = 0;
+	return (1);
 }
