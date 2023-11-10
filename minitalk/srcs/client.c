@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:59:56 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/08 20:05:27 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:42:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ Resending the bit.\n%s", YELLOW, RESET);
 			}
 			usleep(100);
 		}
-		usleep(10);
+		usleep(20);
 		c <<= 1;
 		g_receiver = 0;
 		(*sended)++;

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 15:37:50 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/08 20:07:52 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:51:14 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static void	process(t_client *client)
 	unsigned int	sended_pid;
 	unsigned int	signal;
 
-	if (g_client_pid & (1U << 30))
+	if (g_client_pid & (1 << 30))
 	{
-		sended_pid = g_client_pid & ~(1U << 30);
+		sended_pid = g_client_pid & ~(1 << 30);
 		signal = 2;
 	}
 	else
@@ -84,7 +84,7 @@ static void	server_handler(int signum, siginfo_t *info, void *context)
 {
 	(void)context;
 	if (signum == SIGUSR2)
-		g_client_pid = info->si_pid | 1U << 30;
+		g_client_pid = info->si_pid | 1 << 30;
 	else if (signum == SIGUSR1)
 		g_client_pid = info->si_pid;
 }
