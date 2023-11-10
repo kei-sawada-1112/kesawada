@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 09:57:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/10 20:12:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:55:01 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	get_current_pos(t_stack *b, int index)
 	}
 }
 
-void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
+void	push_b_and_rotate(t_stack **a, t_stack **b, int *i)
 {
 	t_stack	*current;
 	int		index;
@@ -66,14 +66,14 @@ void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
 	while (ft_stacksize(*b) != size / 2)
 	{
 		if (current->index < index)
-			execute_and_write(a, b, ms, PB);
+			execute_and_write(a, b, PB);
 		else
 		{
 			next_count = count_descending(*b, sorted);
 			if (next_count && (*b)->next->index != sorted + next_count)
-				execute_and_write(a, b, ms, RR);
+				execute_and_write(a, b, RR);
 			else
-				execute_and_write(a, b, ms, RA);
+				execute_and_write(a, b, RA);
 		}
 		current = (*a)->next;
 		(*i)--;

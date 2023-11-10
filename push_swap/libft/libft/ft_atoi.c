@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 18:29:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 15:26:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 21:10:55 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ int	ft_atoi(const char *str)
 	lim = LONG_MAX / 10;
 	sign = 1;
 	str = check_space_and_sign(str, &sign);
-	if (*(str + 1) == '\0')
-	{
-		write(2, "Error\n", 6);
-		exit(1);
-	}
 	while (*str >= '0' && *str <= '9')
 	{
 		if (sign == 1)

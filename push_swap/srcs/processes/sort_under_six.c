@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:07:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:44:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:57:34 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_valid_op(t_stack *a, t_ms *ms, int op)
 	return (1);
 }
 
-int	execute(t_stack **a, t_stack **b, t_ms *ms, int op)
+int	execute(t_stack **a, t_stack **b, int op)
 {
 	static t_operation	f[] = \
 	{
@@ -63,10 +63,10 @@ int	execute(t_stack **a, t_stack **b, t_ms *ms, int op)
 		rotate_ab, rotate_rev_b, rotate_rev_ab
 	};
 
-	return (f[op](a, b, ms));
+	return (f[op](a, b));
 }
 
-int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
+int	execute_rev(t_stack **a, t_stack **b, int op)
 {
 	static t_operation	f[] = \
 	{
@@ -75,7 +75,7 @@ int	execute_rev(t_stack **a, t_stack **b, t_ms *ms, int op)
 		rotate_rev_ab, rotate_b, rotate_ab
 	};
 
-	return (f[op](a, b, ms));
+	return (f[op](a, b));
 }
 
 int	is_qualified(t_stack *a, t_stack *b, t_ms *ms, int count)
@@ -103,12 +103,12 @@ void	sort_under_six(t_stack **a, t_stack **b, t_ms *ms, int count)
 	{
 		if (!is_qualified(*a, *b, ms, count) || !is_valid_op(*a, ms, op))
 			continue ;
-		if (!execute(a, b, ms, op))
+		if (!execute(a, b, op))
 			continue ;
 		ms->op = op;
 		add_operation(&ms->op_list, op);
 		sort_under_six(a, b, ms, count + 1);
-		execute_rev(a, b, ms, op);
+		execute_rev(a, b, op);
 		delone_operation(&ms->op_list);
 	}
 	ms->state = END;

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 10:18:28 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 13:59:41 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:54:22 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_op(int op)
 		write(1, "rrr\n", 4);
 }
 
-int	execute_and_write(t_stack **a, t_stack **b, t_ms *ms, int op)
+int	execute_and_write(t_stack **a, t_stack **b, int op)
 {
 	static t_operation	f[] = \
 	{
@@ -48,7 +48,7 @@ int	execute_and_write(t_stack **a, t_stack **b, t_ms *ms, int op)
 	};
 
 	print_op(op);
-	return (f[op](a, b, ms));
+	return (f[op](a, b));
 }
 
 void	error_and_exit(void)

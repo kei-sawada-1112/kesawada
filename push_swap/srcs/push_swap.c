@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:35:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/10 20:14:17 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 21:06:56 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int	main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 	push_swap(&a, &b, argc, argv);
-	// system("leaks push_swap");
+	system("leaks push_swap");
 }
