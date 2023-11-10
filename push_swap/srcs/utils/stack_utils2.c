@@ -6,26 +6,13 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:00:05 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 21:49:46 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:11:52 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_numstr(char *str)
-{
-	if (!str || *str == '\0')
-		return (0);
-	while (*str == '-' || *str == '+')
-		str++;
-	while (ft_isdigit(*str))
-		str++;
-	if (*str == '\0')
-		return (1);
-	return (0);
-}
-
-void	append_stack(t_stack **stack, int num)
+static void	append_stack(t_stack **stack, int num)
 {
 	t_stack	*new_stack;
 
@@ -36,13 +23,26 @@ void	append_stack(t_stack **stack, int num)
 		ft_addstack_back(stack, &new_stack);
 }
 
+static void	free_array_noargs(char **argv, int i)
+{
+	if (is_numstr(argv[0]))
+	{
+		while (i--)
+			free(argv[i]);
+		free(argv);
+	}
+}
+
 static void	init_stack(t_stack **a, int size, char **argv, int no_arg)
 {
 	long	num;
 	int		i;
-	int		array[size];
+	int		*array;
 
 	i = 0 - no_arg;
+	array = malloc(sizeof(int) * size);
+	if (!array)
+		error_and_exit();
 	while (argv[++i])
 	{
 		if (!is_numstr(argv[i]))
@@ -55,12 +55,8 @@ static void	init_stack(t_stack **a, int size, char **argv, int no_arg)
 	}
 	if (!is_valid_value(*a))
 		error_and_exit();
-	if (is_numstr(argv[0]))
-	{
-		while(i--)
-			free(argv[i]);
-		free(argv);
-	}
+	free_array_noargs(argv, i);
+	free(array);
 }
 
 static void	set_separator(t_stack **a, t_stack **b)

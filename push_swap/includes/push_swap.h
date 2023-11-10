@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 18:36:35 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:46:56 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:13:30 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ int		rotate_rev_a(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_b(t_stack **a, t_stack **b, t_ms *ms);
 int		rotate_rev_ab(t_stack **a, t_stack **b, t_ms *ms);
 
-void	append_stack(t_stack **stack, int num);
-
 void	init(t_stack **a, t_stack **b, int argc, char **argv);
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms);
@@ -133,7 +131,7 @@ int		in_order(t_stack *a);
 int		sorted_count(t_stack *a);
 int		get_current_pos(t_stack *a, int index);
 void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i);
-void	set_state(t_stack *b, t_ms *ms);
+void	set_state(t_stack *b, t_ms *ms, int border);
 
 int		is_numstr(char *str);
 

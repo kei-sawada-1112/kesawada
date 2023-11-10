@@ -6,15 +6,15 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:22:23 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/05 10:14:02 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:00:10 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int ft_stacksize(t_stack *a)
+int	ft_stacksize(t_stack *a)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	a = a->next;
@@ -61,7 +61,7 @@ void	delone_trans_list(t_trans_list **list)
 	}
 }
 
-void set_index_to_value(t_stack *stack)
+void	set_index_to_value(t_stack *stack)
 {
 	t_stack	*current;
 	t_stack	*checker;

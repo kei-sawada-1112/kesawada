@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 09:57:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:47:18 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:12:41 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,23 @@ void	push_b_and_rotate(t_stack **a, t_stack **b, t_ms *ms, int *i)
 	}
 }
 
-void	set_state(t_stack *b, t_ms *ms)
+void	set_state(t_stack *b, t_ms *ms, int border)
 {
-	if (ft_stacksize(b) <= 16)
+	if (ft_stacksize(b) <= border)
 		ms->state = SIMPLE_SORT;
 	else
 		ms->state = B_TO_A;
+}
+
+int	is_numstr(char *str)
+{
+	if (!str || *str == '\0')
+		return (0);
+	while (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		str++;
+	if (*str == '\0')
+		return (1);
+	return (0);
 }

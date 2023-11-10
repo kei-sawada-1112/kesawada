@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:24:52 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 14:04:43 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:59:55 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,3 @@ int	rotate_b(t_stack **a, t_stack **b, t_ms *ms)
 	first->next = nil;
 	return (1);
 }
-

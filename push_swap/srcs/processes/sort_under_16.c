@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:11:01 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 11:46:14 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:13:51 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	count_descending(t_stack *start, int index)
 {
 	int		count;
-	t_stack *current;
+	t_stack	*current;
 
 	count = 0;
 	current = start->next;
@@ -27,15 +27,15 @@ int	count_descending(t_stack *start, int index)
 			current = start;
 		}
 		else if (current->index == index + count)
-			break;
+			break ;
 		current = current->next;
 	}
 	return (count);
 }
 
-void simple_sort(t_stack **a, t_stack **b, t_ms *ms)
+void	simple_sort(t_stack **a, t_stack **b, t_ms *ms)
 {
-	t_stack *current;
+	t_stack	*current;
 	int		index;
 	int		count;
 	int		next_count;

@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:24:37 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 14:56:22 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:15:54 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	send_under_half(t_stack **a, t_stack **b, t_ms *ms)
 		else
 			execute_and_write(a, b, ms, RRA);
 	}
-	set_state(*b, ms);
+	set_state(*b, ms, 16);
 }
 
 void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -90,7 +90,7 @@ void	send_a_to_b(t_stack **a, t_stack **b, t_ms *ms)
 		}
 		current = (*a)->next;
 	}
-	set_state(*b, ms);
+	set_state(*b, ms, 16);
 }
 
 void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
@@ -115,7 +115,7 @@ void	back_to_b(t_stack **a, t_stack **b, t_ms *ms)
 			execute_and_write(a, b, ms, PB);
 	}
 	delone_trans_list(&ms->trans_list);
-	set_state(*b, ms);
+	set_state(*b, ms, 16);
 }
 
 void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
@@ -144,9 +144,5 @@ void	send_b_to_a(t_stack **a, t_stack **b, t_ms *ms)
 		current = (*b)->next;
 	}
 	add_trans_list(&ms->trans_list, push_count);
-	if (ft_stacksize(*b) <= 25)
-		ms->state = SIMPLE_SORT;
-	else
-		ms->state = B_TO_A;
-	// set_state(*b, ms);
+	set_state(*b, ms, 16);
 }
