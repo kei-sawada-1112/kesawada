@@ -6,7 +6,7 @@
 /*   By: kesawada <kesawada@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:08:24 by kesawada          #+#    #+#             */
-/*   Updated: 2023/11/06 13:58:58 by kesawada         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:53:59 by kesawada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,12 @@ void	delone_stack(t_stack **a)
 {
 	t_stack	*current;
 
-	if (!a || !*a)
-		return ;
-	current = *a;
-	if ((*a)->next)
+	current = (*a)->next;
+	if (!current->is_separator)
 	{
-		*a = (*a)->next;
+		(*a)->next = (*a)->next->next;
 		free(current);
-	}
-	else
-	{
-		free(current);
-		*a = NULL;
+		current = NULL;
 	}
 }
 
